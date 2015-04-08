@@ -13,12 +13,12 @@
     </head>
     <body>
         <p class="large">Temperature</p>
-        <form id="updateUsername">
-            <label for="username">Type temperature</label>
-            <input type="text" id="username" name="username" />
+        <form id="updateTemperature">
+            <label for="temperature">Type temperature</label>
+            <input type="text" id="temperature" name="temperature" />
             <input type="submit"/>
         </form>
-        <p id="displayName"><p/>
+        <div id="displayTemp"></div>
         <hr/>
         <p class="small">NTUU KPI</p>
     </body>
