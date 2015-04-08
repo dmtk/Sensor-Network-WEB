@@ -4,6 +4,7 @@
     <head>
         <meta charset="utf-8">
         <title>Temperature</title>
+        <meta name="author" content="Dmytro Martynyuk"/>
         <meta name="description" content="Sensor network"/>
         <meta name="keywords" content="AJAX"/>
         
@@ -18,7 +19,7 @@
             <input type="text" id="temperature" name="temperature" />
             <input type="submit"/>
         </form>
-        <div id="displayTemp"></div>
+        <p id="displayTemp"></p>
         <hr/>
         <p class="small">NTUU KPI</p>
     </body>
