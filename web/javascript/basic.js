@@ -9,7 +9,7 @@ $(document).ready(function(){
                 if(data.isValid){
                     
                     $('#displayTemp').html('Temperature is: '+ data.temperature);
-                    $('#displayTemp').delay(300).slideDown(1000);
+                    $('#displayTemp').slideDown(500);
                 }
                 else{
                     alert('Please enter a valid value!');
