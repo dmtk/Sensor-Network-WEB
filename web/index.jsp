@@ -17,7 +17,9 @@
         <form id="updateTemperature">
             <label for="temperature">Type temperature</label>
             <input type="text" id="temperature" name="temperature" />
+            
             <input type="submit"/>
+            
         </form>
         <p id="displayTemp"></p>
         <hr/>
