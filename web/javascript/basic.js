@@ -1,6 +1,7 @@
 $(document).ready(function () {
     show();
     setInterval('show()', 1000);
+    
 });
 function show()
 {

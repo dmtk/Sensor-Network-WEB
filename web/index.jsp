@@ -18,7 +18,7 @@
             <fieldset>
                 <legend>jQuery Ajax Form data Submit Request</legend>
                 <label for="temperature">Type temperature</label>
-                <input id="temperature" type="submit"/>
+                <input id="temperature" type="submit" value="Очистити" method="GET"/>
             </fieldset>
         </form>
         <fieldset>

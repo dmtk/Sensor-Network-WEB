@@ -12,7 +12,7 @@ public class ComPort {
     boolean started = false;
 
     public void start(String comPortName) {
-        
+
         //Передаём в конструктор имя порта
         serialPort = new SerialPort(comPortName);
         try {
@@ -37,19 +37,24 @@ public class ComPort {
 
     private class PortReader implements SerialPortEventListener {
 
+        private String portdata = "";
+
         public void serialEvent(SerialPortEvent event) {
 
             if (event.isRXCHAR() && event.getEventValue() > 0) {
                 try {
                     //Получаем ответ от устройства, обрабатываем данные и т.д.
-                    String portdata = serialPort.readString(event.getEventValue());
-                    if(portdata!=null&&portdata.length()!=0){
-                        data+=portdata;                        
+                    String rxChar = serialPort.readString(event.getEventValue());
+                    if (rxChar != null) {
+                        portdata += rxChar;
+                        if ("\n".equals(rxChar)) {
+                            data = portdata;
+                            portdata="";
+                        }
                     }
-                                                       
+
                     //И снова отправляем запрос
                     //serialPort.writeString("Get data");
-
                 } catch (SerialPortException ex) {
                     System.out.println(ex);
                 }
@@ -60,8 +65,12 @@ public class ComPort {
     }
 
     public String getData() {
-        System.out.print(this);
-        System.out.print(data);
         return data;
     }
+
+    public void setData(String line) {
+        data = line;
+
+    }
+
 }
