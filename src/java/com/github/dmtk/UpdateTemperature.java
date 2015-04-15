@@ -21,26 +21,10 @@ public class UpdateTemperature extends HttpServlet {
         Thread myThready;
         comport = new ComPort();
         myThready = new Thread(() -> {
-            comport.start();
+            comport.start("COM3");
         });
         myThready.start();
-        /*
-         if (!started) {
-         started = true;
-         Thread myThready = new Thread(new Runnable() {
-         @Override
-         public void run() {
-
-         start();
-         started = false;
-
-         }
-         });
-         myThready.start();
-            
-
-         }
-         */
+        
     }
 
     @Override
@@ -56,13 +40,9 @@ public class UpdateTemperature extends HttpServlet {
         Map<String, Object> map = new HashMap<>();
         boolean isValid = false;
         String temperature = request.getParameter("temperature");
-        
-        if (temperature != null && temperature.trim().length() != 0) {
-            isValid = true;
-            temperature = comport.getData();
-            map.put("temperature", temperature);
-
-        }
+        isValid = true;
+        temperature = comport.getData();
+        map.put("temperature", temperature);
         map.put("isValid", isValid);
         write(response, map);
     }

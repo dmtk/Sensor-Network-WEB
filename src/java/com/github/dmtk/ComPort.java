@@ -8,17 +8,13 @@ import jssc.SerialPortException;
 public class ComPort {
 
     private static SerialPort serialPort;
-    private static String data = " C";
+    private static String data = "";
     boolean started = false;
 
-    public ComPort() {
-
-    }
-
-    public void start() {
-        System.out.print("Method start");
+    public void start(String comPortName) {
+        
         //Передаём в конструктор имя порта
-        serialPort = new SerialPort("COM3");
+        serialPort = new SerialPort(comPortName);
         try {
             //Открываем порт
             serialPort.openPort();
@@ -48,10 +44,7 @@ public class ComPort {
                     //Получаем ответ от устройства, обрабатываем данные и т.д.
                     String portdata = serialPort.readString(event.getEventValue());
                     if(portdata!=null&&portdata.length()!=0){
-                        data+=portdata;
-                        if("\n".equals(portdata)){
-                            System.out.print(data);
-                        }
+                        data+=portdata;                        
                     }
                                                        
                     //И снова отправляем запрос
