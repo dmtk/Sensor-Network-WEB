@@ -14,7 +14,7 @@ function show()
         success: function (data) {
             if (data.isValid) {
 
-                $('#displayTemp').html('Temperature is: ' + data.temperature);
+                $('#displayTemp').html(data.temperature);
                 $('#displayTemp').slideDown(500);
             }
             else {

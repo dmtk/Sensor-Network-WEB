@@ -40,8 +40,25 @@ public class ComPort {
         private String portdata = "";
 
         public void serialEvent(SerialPortEvent event) {
-
-            if (event.isRXCHAR() && event.getEventValue() > 0) {
+             if (event.isRXCHAR() && event.getEventValue() > 0) {
+                try {
+                    //Получаем ответ от устройства, обрабатываем данные и т.д.
+                    //data = serialPort.readString();
+                    //И снова отправляем запрос
+                    //serialPort.writeString("Get data");
+                    
+                    String receiveddata = bytesToHex(serialPort.readBytes(event.getEventValue()));
+                    if("AA".equals(receiveddata)&&(!data.endsWith("AA"))){
+                        //System.out.println(data);
+                        data=data+"<br>"+receiveddata;
+                    }else data=data+" "+receiveddata;
+                } catch (SerialPortException ex) {
+                    System.out.println(ex);
+                }
+            }
+            
+            
+            /*if (event.isRXCHAR() && event.getEventValue() > 0) {
                 try {
                     //Получаем ответ от устройства, обрабатываем данные и т.д.
                     String rxChar = serialPort.readString(event.getEventValue());
@@ -58,10 +75,22 @@ public class ComPort {
                 } catch (SerialPortException ex) {
                     System.out.println(ex);
                 }
-            }
+            }*/
 
         }
 
+    }
+    
+    final protected static char[] hexArray = "0123456789ABCDEF".toCharArray();
+
+    public static String bytesToHex(byte[] bytes) {
+        char[] hexChars = new char[bytes.length * 2];
+        for (int j = 0; j < bytes.length; j++) {
+            int v = bytes[j] & 0xFF;
+            hexChars[j * 2] = hexArray[v >>> 4];
+            hexChars[j * 2 + 1] = hexArray[v & 0x0F];
+        }
+        return new String(hexChars);
     }
 
     public String getData() {

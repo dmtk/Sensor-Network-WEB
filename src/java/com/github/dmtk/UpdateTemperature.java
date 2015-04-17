@@ -34,9 +34,7 @@ public class UpdateTemperature extends HttpServlet {
         if(clear!=null){
             comport.setData("");
         }
-        
-
-    }
+   }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
