@@ -1,9 +1,4 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.ajax.servlets;
+package com.github.dmtk;
 
 import com.google.gson.Gson;
 import java.io.IOException;
@@ -18,14 +13,28 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/update"})
 public class UpdateTemperature extends HttpServlet {
 
-    public UpdateTemperature(){
-        super();
+    private static ComPort comport;
+
+    public UpdateTemperature() {
+
+        //super();
+        Thread myThready;
+        comport = new ComPort();
+        myThready = new Thread(() -> {
+            comport.start("COM3");
+        });
+        myThready.start();
+        
     }
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
-    }
+        String clear = request.getParameter("clear");
+        if(clear!=null){
+            comport.setData("");
+        }
+   }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -34,16 +43,13 @@ public class UpdateTemperature extends HttpServlet {
         Map<String, Object> map = new HashMap<>();
         boolean isValid = false;
         String temperature = request.getParameter("temperature");
-        if (temperature != null && temperature.trim().length() != 0) {
-            isValid = true;
-            map.put("temperature", temperature);
-
-        }
+        isValid = true;
+        temperature = comport.getData();
+        map.put("temperature", temperature);
         map.put("isValid", isValid);
         write(response, map);
     }
 
-   
     @Override
     public String getServletInfo() {
         return "Short description";
