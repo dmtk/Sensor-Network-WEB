@@ -15,22 +15,33 @@ public class UpdateTemperature extends HttpServlet {
 
     private static ComPort comport;
 
+    @Override
+    public void init() {
+
+        Thread myThready;
+        comport = new ComPort();
+        myThready = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                comport.start("COM3");
+            }
+        });
+
+        myThready.start();
+    }
+
     public UpdateTemperature() {
 
-        comport = new ComPort();
-        comport.start("COM3");
-        
-        
     }
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String clear = request.getParameter("clear");
-        if(clear!=null){
-            comport.setData("");
+        if (clear != null) {
+            //comport.setData("");
         }
-   }
+    }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -40,7 +51,7 @@ public class UpdateTemperature extends HttpServlet {
         boolean isValid = false;
         String temperature = request.getParameter("temperature");
         isValid = true;
-        temperature = comport.getData();
+        //temperature = comport.getData();
         map.put("temperature", temperature);
         map.put("isValid", isValid);
         write(response, map);
