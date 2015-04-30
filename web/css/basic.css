@@ -1,0 +1,18 @@
+@CHARSET "UTF-8";
+body{
+    margin: 0px auto;
+    width: 1000px;
+    background-color: #EEEEEE;
+    font-family:'Helvetica Neue',Helvetica,Arial,sans-serif
+ }
+ p.large{
+    font-size: 20px;
+    
+ }
+ p.small{
+     font-size: 15px;
+ }
+ p#displayTemp{
+     display: none;
+ }
+
