@@ -51,7 +51,7 @@ public class UpdateTemperature extends HttpServlet {
         boolean isValid = false;
         String temperature = request.getParameter("temperature");
         isValid = true;
-        //temperature = comport.getData();
+        temperature = comport.getData();
         map.put("temperature", temperature);
         map.put("isValid", isValid);
         write(response, map);
