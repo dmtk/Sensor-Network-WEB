@@ -1,13 +1,26 @@
 @CHARSET "UTF-8";
 
- p.large{
+.login{
+    max-width: 330px;
+    padding-top: 9em;
+    padding-bottom: 9em;
+    margin: 0px auto;
+    margin-top: 0px;
+    margin-right-value: auto;
+    margin-bottom: 0px;
+    margin-left-value: auto;
+
+}
+
+
+p.large{
     font-size: 20px;
-    
- }
- p.small{
-     font-size: 15px;
- }
- p#displayTemp{
-     display: none;
- }
+
+}
+p.small{
+    font-size: 15px;
+}
+p#displayTemp{
+    display: none;
+}
 
