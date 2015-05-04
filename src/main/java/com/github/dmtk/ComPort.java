@@ -40,7 +40,7 @@ public class ComPort {
         private String portdata = "";
 
         public void serialEvent(SerialPortEvent event) {
-             if (event.isRXCHAR() && event.getEventValue() > 0) {
+             /*if (event.isRXCHAR() && event.getEventValue() > 0) {
                 try {
                     //Получаем ответ от устройства, обрабатываем данные и т.д.
                     //data = serialPort.readString();
@@ -55,10 +55,9 @@ public class ComPort {
                 } catch (SerialPortException ex) {
                     System.out.println(ex);
                 }
-            }
-            
-            
-            /*if (event.isRXCHAR() && event.getEventValue() > 0) {
+            }*/
+                        
+            if(event.isRXCHAR() && event.getEventValue() > 0){
                 try {
                     //Получаем ответ от устройства, обрабатываем данные и т.д.
                     String rxChar = serialPort.readString(event.getEventValue());
@@ -75,7 +74,7 @@ public class ComPort {
                 } catch (SerialPortException ex) {
                     System.out.println(ex);
                 }
-            }*/
+            }
 
         }
 

@@ -18,7 +18,7 @@ public class UpdateTemperature extends HttpServlet {
     @Override
     public void init() {
 
-        /*Thread myThready;
+        Thread myThready;
         comport = new ComPort();
         myThready = new Thread(new Runnable() {
             @Override
@@ -27,7 +27,7 @@ public class UpdateTemperature extends HttpServlet {
             }
         });
 
-        myThready.start();*/
+        myThready.start();
     }
 
     public UpdateTemperature() {
@@ -49,7 +49,7 @@ public class UpdateTemperature extends HttpServlet {
         boolean isValid = false;
         String temperature = request.getParameter("temperature");
         isValid = true;
-        temperature = "test";//comport.getData();
+        temperature = comport.getData();
         map.put("temperature", temperature);
         map.put("isValid", isValid);
         write(response, map);

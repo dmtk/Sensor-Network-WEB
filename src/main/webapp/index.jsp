@@ -38,11 +38,13 @@
                 </div>
             </div>
         </nav>
+        
+        <br>
         <div class="container-fluid">
             <div class="row">
                 <tr>
                     <td>
-                        <div class="col-sm-3 col-md-2 sidebar">
+                        <div class="col-md-2 sidebar">
                             <ul class="nav nav-sidebar">
                                 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
                                 <li><a href="reports.jsp" >Reports</a></li>
@@ -50,13 +52,13 @@
                                 <li><a href="#" >Export</a></li>
                             </ul>
                             <ul class="nav nav-sidebar">
-                                <li><a href=""  >Map</a></li>
+                                <li><a href="" >Map</a></li>
                                 <li><a href="" >Raw data</a></li>
                                 <li><a href="" >API</a></li>
                             </ul>
                         </div>
                     </td><td>
-                        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                        <div class="col-md-9 col-md-offset-1 main">
                             <h1 class="page-header" >Control panel</h1>
 
                             <div class="row placeholders">
@@ -212,8 +214,5 @@
                 </tr>
             </div>
         </div>
-
-
-
     </body>
 </html>
