@@ -39,19 +39,7 @@ public class UpdateTemperature extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SensorNode node1 = new SensorNode();
-        SensorNode node2 = new SensorNode();
-        SensorNode node3 = new SensorNode();
-        request.setAttribute("node1", node1);
-        HttpSession session = request.getSession();
-        session.setAttribute("node2", node2);
-        
-        ServletContext context = getServletContext();
-        context.setAttribute("node3", node3);
-        
-        request.getRequestDispatcher("index.jsp").forward(request, response);
-        
-        
+           
     }
 
     @Override

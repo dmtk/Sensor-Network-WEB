@@ -3,6 +3,7 @@ package com.github.dmtk;
 public class SensorNode {
     private String name;
     private int id;
+    private int parentid;
     
     SensorNode(){
         id=(int) Math.round(Math.random()*100);
