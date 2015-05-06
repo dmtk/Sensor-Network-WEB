@@ -19,14 +19,14 @@
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="index.jsp">Sub-1GHz sensor network</a>
+                    <a class="navbar-brand" href="overview">Sub-1GHz sensor network</a>
                 </div>
                 <div id="navbar" class="navbar-collapse collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="active" href="index.jsp">Control panel</a></li>
-                        <li><a href="settings.jsp">Settings</a></li>
-                        <li><a href="about.jsp">About</a></li>
-                        <li><a href="logout.jsp">Logout</a></li>
+                        <li><a class="active" href="overview">Control panel</a></li>
+                        <li><a href="settings">Settings</a></li>
+                        <li><a href="about">About</a></li>
+                        <li><a href="logout">Logout</a></li>
                     </ul>                    
                 </div>
             </div>
@@ -42,15 +42,16 @@
                     <td>
                         <div class="col-md-2 sidebar">
                             <ul class="nav nav-sidebar">
-                                <li><a href="index.jsp">Overview <span class="sr-only">(current)</span></a></li>
-                                <li><a href="reports.jsp" >Reports</a></li>
-                                <li><a href="analitics.jsp" >Analytics</a></li>
-                                <li><a href="export.jsp" >Export</a></li>
+                                <li><a href="overview">Overview <span class="sr-only">(current)</span></a></li>
+                                <li><a href="reports" >Reports</a></li>
+                                <li><a href="analitics" >Analytics</a></li>
+                                <li><a href="export" >Export</a></li>
+                                <li><a href="graphics" >Export</a></li>
                             </ul>
                             <ul class="nav nav-sidebar">
-                                <li><a href="map.jsp" >Map</a></li>
-                                <li><a href="rawdata.jsp" >Raw data</a></li>
-                                <li><a href="api.jsp" >API</a></li>
+                                <li><a href="map" >Map</a></li>
+                                <li><a href="rawdata" >Raw data</a></li>
+                                <li><a href="api" >API</a></li>
                             </ul>
                         </div>
                     </td><td>
@@ -93,10 +94,10 @@
                                     <tbody>
                                         <tr>
                                             <td><c:out value="${node1.id}"/></td>
-                                            <td ><c:out value="${node1.name}"/></td>
-                                            <td >ipsum</td>
-                                            <td >dolor</td>
-                                            <td >sit</td>
+                                            <td ><c:out value="${node1.type}"/></td>
+                                            <td ><c:out value="${node1.id}"/></td>
+                                            <td ><c:out value="${node1.value}"/></td>
+                                            <td ><c:out value="${node1.measuredQuantity}"/></td>
                                         </tr>
                                         <tr>
                                             <td><c:out value="${node2.id}"/></td>

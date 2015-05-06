@@ -3,7 +3,10 @@ package com.github.dmtk;
 public class SensorNode {
     private String name;
     private int id;
-    private int parentid;
+    private int parentid=1;
+    private String measuredQuantity="Temperature";
+    private String type = "Sensor";
+    private double value=28.5;
     
     SensorNode(){
         id=(int) Math.round(Math.random()*100);
@@ -39,6 +42,31 @@ public class SensorNode {
     
     public void setParentid(int parentid) {
         this.parentid = parentid;
+    }
+
+    public String getMeasuredQuantity() {
+        return measuredQuantity;
+    }
+
+    
+    public void setMeasuredQuantity(String measuredQuantity) {
+        this.measuredQuantity = measuredQuantity;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    public double getValue() {
+        return value;
+    }
+
+    public void setValue(double value) {
+        this.value = value;
     }
     
 }
