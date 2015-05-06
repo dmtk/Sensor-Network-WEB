@@ -9,6 +9,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 @WebServlet(urlPatterns = {"/update"})
 public class UpdateTemperature extends HttpServlet {
@@ -37,7 +38,13 @@ public class UpdateTemperature extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String clear = request.getParameter("clear");
+        SensorNode node1 = new SensorNode("node1",1);
+        SensorNode node2 = new SensorNode("node2",2);
+        SensorNode node3 = new SensorNode("node3",3);
+        request.setAttribute("node1", node1);
+        HttpSession session = request.getSession();
+        session.setAttribute("node", node2);
+        
         
     }
 
