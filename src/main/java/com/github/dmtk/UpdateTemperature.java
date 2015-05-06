@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -38,12 +39,17 @@ public class UpdateTemperature extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        SensorNode node1 = new SensorNode("node1",1);
-        SensorNode node2 = new SensorNode("node2",2);
-        SensorNode node3 = new SensorNode("node3",3);
+        SensorNode node1 = new SensorNode();
+        SensorNode node2 = new SensorNode();
+        SensorNode node3 = new SensorNode();
         request.setAttribute("node1", node1);
         HttpSession session = request.getSession();
-        session.setAttribute("node", node2);
+        session.setAttribute("node2", node2);
+        
+        ServletContext context = getServletContext();
+        context.setAttribute("node3", node3);
+        
+        request.getRequestDispatcher("index.jsp").forward(request, response);
         
         
     }

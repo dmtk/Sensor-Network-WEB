@@ -5,7 +5,7 @@ public class SensorNode {
     private int id;
     
     SensorNode(){
-        id=(int) Math.random()*100;
+        id=(int) Math.round(Math.random()*100);
         name=String.valueOf(id);
     }
     

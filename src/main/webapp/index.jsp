@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -29,11 +31,11 @@
                 </div>
             </div>
         </nav>
-        
+
         <br>
         <br>
         <br>
-        
+
         <div class="container-fluid">
             <div class="row">
                 <tr>
@@ -53,8 +55,10 @@
                         </div>
                     </td><td>
                         <div class="col-md-9 col-md-offset-1 main">
-                            <h1>Control panel</h1>
+                            <c:set var="now" value="<%=new java.util.Date()%>" />
 
+                            <p>Formatted Date (1): <fmt:formatDate type="time" 
+                                                                   value="${now}" /></p>
                             <div class="row placeholders">
                                 <div class="col-xs-6 col-sm-3 placeholder">
                                     <h4 >Sensor node 1</h4>
@@ -88,22 +92,22 @@
                                     </thead>
                                     <tbody>
                                         <tr>
-                                            <td>1,001</td>
-                                            <td >Lorem</td>
+                                            <td><c:out value="${node1.id}"/></td>
+                                            <td ><c:out value="${node1.name}"/></td>
                                             <td >ipsum</td>
                                             <td >dolor</td>
                                             <td >sit</td>
                                         </tr>
                                         <tr>
-                                            <td>1,002</td>
-                                            <td >amet</td>
+                                            <td><c:out value="${node2.id}"/></td>
+                                            <td ><c:out value="${node2.name}"/></td>
                                             <td >consectetur</td>
                                             <td >adipiscing</td>
                                             <td >elit</td>
                                         </tr>
                                         <tr>
-                                            <td>1,003</td>
-                                            <td >Integer</td>
+                                            <td><c:out value="${node3.id}"/></td>
+                                            <td ><c:out value="${node3.name}"/></td>
                                             <td >nec</td>
                                             <td >odio</td>
                                             <td >Praesent</td>
