@@ -30,5 +30,15 @@ public class SensorNode {
     public void setId(int id) {
         this.id = id;
     }
+
+    
+    public int getParentid() {
+        return parentid;
+    }
+
+    
+    public void setParentid(int parentid) {
+        this.parentid = parentid;
+    }
     
 }
