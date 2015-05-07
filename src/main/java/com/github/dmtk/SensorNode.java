@@ -7,7 +7,7 @@ public class SensorNode {
     private String measuredQuantity="Temperature";
     private String type = "Sensor";
     private double value=28.5;
-    
+    private String note="fdjkgljdfk";
     SensorNode(){
         id=(int) Math.round(Math.random()*100);
         name=String.valueOf(id);
@@ -67,6 +67,20 @@ public class SensorNode {
 
     public void setValue(double value) {
         this.value = value;
+    }
+
+    /**
+     * @return the note
+     */
+    public String getNote() {
+        return note;
+    }
+
+    /**
+     * @param note the note to set
+     */
+    public void setNote(String note) {
+        this.note = note;
     }
     
 }

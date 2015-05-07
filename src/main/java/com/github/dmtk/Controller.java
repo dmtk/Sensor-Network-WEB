@@ -1,11 +1,9 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.github.dmtk;
 
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.LinkedList;
+import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -20,19 +18,19 @@ public class Controller extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        
-        
-        SensorNode node1 = new SensorNode();
-        SensorNode node2 = new SensorNode();
-        SensorNode node3 = new SensorNode();
-        request.setAttribute("node1", node1);
-        HttpSession session = request.getSession();
-        session.setAttribute("node2", node2);
-        ServletContext context = getServletContext();
-        context.setAttribute("node3", node3);
+
+        List<SensorNode> sn = new LinkedList();
+        for (int i = 0; i < 100; i++) {
+            sn.add(new SensorNode());
+        }
+
+        request.setAttribute("sn", sn);
+        /*HttpSession session = request.getSession();
+         session.setAttribute("node2", node2);
+         ServletContext context = getServletContext();
+         context.setAttribute("node3", node3);*/
         request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
 
     }
 
-    
 }
