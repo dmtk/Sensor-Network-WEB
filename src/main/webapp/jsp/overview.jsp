@@ -11,9 +11,9 @@
         <meta name="keywords" content="AJAX"/>
         <script src="javascript/jquery-1.11.2.js"></script>
         <script src="javascript/bootstrap.js"></script>
-        <link rel="stylesheet" href="css/basic.css" media="screen" />
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/basic.css" rel="stylesheet">
     </head>
     <body>
         <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
