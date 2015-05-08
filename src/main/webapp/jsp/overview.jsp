@@ -50,8 +50,7 @@
                             </ul>
                             <ul class="nav nav-sidebar">
                                 <li><a href="map" >Map</a></li>
-                                <li><a href="rawdata" >Raw data</a></li>
-                                <li><a href="api" >API</a></li>
+                                <li><a href="rawdata" >Raw data</a></li>                                
                             </ul>
                         </div>
                     </td><td>

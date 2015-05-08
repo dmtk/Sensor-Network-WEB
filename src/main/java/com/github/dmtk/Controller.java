@@ -30,8 +30,8 @@ public class Controller extends HttpServlet {
                 nodes.add(new SensorNode("Sensor node #"+i,i));
             }
 
-            request.setAttribute("sn", sn);
-            request.setAttribute("nodes", nodes);
+            session.setAttribute("sn", sn);
+            session.setAttribute("nodes", nodes);
             request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
