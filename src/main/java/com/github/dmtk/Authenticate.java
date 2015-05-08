@@ -9,9 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "login", urlPatterns = {"/login"})
+@WebServlet(name = "authenticate", urlPatterns = {"/authenticate"})
 
-public class Login extends HttpServlet {
+public class Authenticate extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
@@ -32,7 +32,7 @@ public class Login extends HttpServlet {
 
         } else {
             
-            response.sendRedirect("jsp/login.jsp");
+            request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
         }
         
 

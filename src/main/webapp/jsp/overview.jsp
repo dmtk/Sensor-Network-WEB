@@ -46,7 +46,7 @@
                                 <li><a href="reports" >Reports</a></li>
                                 <li><a href="analitics" >Analytics</a></li>
                                 <li><a href="export" >Export</a></li>
-                                <li><a href="graphics" >Export</a></li>
+                                <li><a href="graphics" >Graphics</a></li>
                             </ul>
                             <ul class="nav nav-sidebar">
                                 <li><a href="map" >Map</a></li>
@@ -61,22 +61,14 @@
                             <p>Formatted Date (1): <fmt:formatDate type="time" 
                                             value="${now}" /></p>
                             <div class="row placeholders">
-                                <div class="col-xs-6 col-sm-3 placeholder">
-                                    <h4 >Sensor node 1</h4>
-                                    <span class="text-muted" >Something else</span>
-                                </div>
-                                <div class="col-xs-6 col-sm-3 placeholder">
-                                    <h4 >Sensor node 2</h4>
-                                    <span class="text-muted" >Something else</span>
-                                </div>
-                                <div class="col-xs-6 col-sm-3 placeholder">
-                                    <h4 >Sensor node 3</h4>
-                                    <span class="text-muted" >Something else</span>
-                                </div>
-                                <div class="col-xs-6 col-sm-3 placeholder">
-                                    <h4 >Sensor node 4</h4>
-                                    <span class="text-muted" >Something else  1</span>
-                                </div>
+                                <c:forEach var="nodes" items="${nodes}">
+
+                                    <div class="col-xs-6 col-sm-3 placeholder">
+                                        <h4 ><c:out value="${nodes.name}"/></h4>
+                                        <span class="text-muted" ><c:out value="${nodes.value}"/></span>
+                                    </div>
+                                </c:forEach>
+
                             </div>
 
                             <h2 class="sub-header" >Section title 2</h2>

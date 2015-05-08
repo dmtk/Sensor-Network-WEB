@@ -4,14 +4,14 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Login to sensor network monitoring</title>
-        <script src="../javascript/jquery-1.11.2.js"></script>
-        <script src="../javascript/bootstrap.js"></script>
+        <script src="javascript/jquery-1.11.2.js"></script>
+        <script src="javascript/bootstrap.js"></script>
         <!-- Bootstrap core CSS -->
-        <link href="../css/bootstrap.css" rel="stylesheet">
-        <link href="../css/basic.css" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/basic.css" rel="stylesheet">
     </head>
     <body>
-        <form class="login" role="form" action="../login" method="post">
+        <form class="login" role="form" action="authenticate" method="post">
             <div class="form-group">
                 <label for="login">Login</label>
                 <input type="login" class="form-control" name="login"  placeholder="Login">

@@ -6,8 +6,6 @@
 package com.github.dmtk;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -25,7 +23,7 @@ public class Logout extends HttpServlet {
 
         HttpSession session = request.getSession();
         session.invalidate();
-        response.sendRedirect("jsp/login.jsp");
+        request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
         
 
     }

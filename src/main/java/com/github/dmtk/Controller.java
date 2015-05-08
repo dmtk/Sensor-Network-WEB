@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "Controller", urlPatterns = {"/controller", "/index.html","/jsp"})
+@WebServlet(name = "Controller", urlPatterns = {"/controller", "/index.html","/jsp","/overview"})
 public class Controller extends HttpServlet {
 
     @Override
@@ -24,12 +24,17 @@ public class Controller extends HttpServlet {
             for (int i = 0; i < 100; i++) {
                 sn.add(new SensorNode());
             }
+            
+            List<SensorNode> nodes = new LinkedList();
+            for (int i = 0; i < 8; i++) {
+                nodes.add(new SensorNode("Sensor node #"+i,i));
+            }
 
             request.setAttribute("sn", sn);
+            request.setAttribute("nodes", nodes);
             request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
         } else {
-            response.sendRedirect("jsp/login.jsp");
-    
+            request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
         }
 
     }
