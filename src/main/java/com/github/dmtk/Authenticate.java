@@ -20,7 +20,7 @@ public class Authenticate extends HttpServlet {
         
         String login = (String) request.getParameter("login");
         String password = (String) request.getParameter("password");
-        System.out.println("st");
+        
         if ("admin".equals(login)) {
             
             boolean authenticated = true;

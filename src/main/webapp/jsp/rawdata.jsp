@@ -7,9 +7,9 @@
         <meta name="author" content="Dmytro Martynyuk"/>
         <meta name="description" content="Sensor network"/>
         <meta name="keywords" content="AJAX"/>
-        <script src="../javascript/jquery-1.11.2.js"></script>
-        <script src="../javascript/basic.js"></script>
-        <link rel="stylesheet" href="../css/basic.css" media="screen" />
+        <script src="javascript/jquery-1.11.2.js"></script>
+        <script src="javascript/basic.js"></script>
+        <link rel="stylesheet" href="css/basic.css" media="screen" />
     </head>
     <body>
         <p class="large">Sub-1GHz sensor network </p>
