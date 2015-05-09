@@ -14,23 +14,32 @@
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/basic.css" rel="stylesheet">
+        <script>$(document).ready(function () {
+                $('[data-toggle="tooltip"]').tooltip();
+            });</script>
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="overview">Sub-1GHz sensor network</a>
+                    <a class="navbar-brand" href="overview">
+
+                        Sub-1GHz sensor network</a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse">
+                <div>
+                    <ul class="nav navbar-nav">
+
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="active" href="overview">Control panel</a></li>
                         <li><a href="settings">Settings</a></li>
                         <li><a href="about">About</a></li>
-                        <li><a href="logout">Logout</a></li>
-                    </ul>                    
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
+                        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
+
 
         <br>
         <br>
@@ -42,15 +51,13 @@
                     <td>
                         <div class="col-md-2 sidebar">
                             <ul class="nav nav-sidebar">
-                                <li><a href="overview">Overview <span class="sr-only">(current)</span></a></li>
-                                <li><a href="reports" >Reports</a></li>
-                                <li><a href="analitics" >Analytics</a></li>
-                                <li><a href="export" >Export</a></li>
-                                <li><a href="graphics" >Graphics</a></li>
-                            </ul>
-                            <ul class="nav nav-sidebar">
-                                <li><a href="map" >Map</a></li>
-                                <li><a href="rawdata" >Raw data</a></li>                                
+                                <li class="active"><a href="overview"><p><span class="glyphicon glyphicon-home"></span> Overview</p></a></li>
+                                <li><a href="reports" ><p><span class="glyphicon glyphicon-th-list"></span> Reports</p></a></li>
+                                <li><a href="analitics" ><p><span class="glyphicon glyphicon-stats"></span> Analytics</p></a></li>
+                                <li><a href="export" ><p><span class="glyphicon glyphicon-export"></span> Export</p></a></li>
+                                <li><a href="graphics" ><p><span class="glyphicon glyphicon-print"></span> Graphics</p></a></li>
+                                <li><a href="map" data-toggle="tooltip" title="Hooray!" data-placement="right"><p><span class="glyphicon glyphicon-map-marker"></span> Map</p></a></li>
+                                <li><a href="rawdata" ><p><span class="glyphicon glyphicon-flash"></span> Raw data</p></a></li>                                
                             </ul>
                         </div>
                     </td><td>
@@ -59,15 +66,23 @@
 
                             <p>Formatted Date (1): <fmt:formatDate type="time" 
                                             value="${now}" /></p>
-                            <div class="row placeholders">
-                                <c:forEach var="nodes" items="${nodes}">
+                            <div class="panel panel-default panel-success">
+                                <div class="panel-heading">Panel Heading</div>
+                                <div class="panel-body">
+                                    <div class="row placeholders">
+                                        <c:forEach var="nodes" items="${nodes}">
 
-                                    <div class="col-xs-6 col-sm-3 placeholder">
-                                        <h4 ><c:out value="${nodes.name}"/></h4>
-                                        <span class="text-muted" ><c:out value="${nodes.value}"/></span>
-                                    </div>
-                                </c:forEach>
+                                            <div class="col-xs-6 col-sm-3 placeholder">
+                                                <div class="sensor" align="center">
+                                                    <br>
+                                                    <br>
+                                                    <b><c:out value="${nodes.name}"/></b>
+                                                    <span class="text-muted" ><c:out value="${nodes.value}"/></span>
+                                                </div>
+                                            </div>
+                                        </c:forEach>
 
+                                    </div></div>
                             </div>
 
                             <h2 class="sub-header" >Section title 2</h2>
@@ -80,7 +95,7 @@
                                             <th class="col-md-1"># sensor node</th>
                                             <th class="col-md-2">Value</th>
                                             <th class="col-md-3">Measurement quantity</th>
-                                            <th class="col-md-3">Note</th>
+                                            <th class="col-md-3">Label</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -91,12 +106,20 @@
                                                 <td class="col-md-1"><c:out value="${sn.id}"/></td>
                                                 <td class="col-md-2"><c:out value="${sn.value}"/></td>
                                                 <td class="col-md-3"><c:out value="${sn.measuredQuantity}"/></td>
-                                                <td class="col-md-3"><c:out value="${sn.note}"/></td>
+                                                <td class="col-md-3"><span class="label label-danger"><c:out value="${sn.note}"/></span></td>
                                             </tr>
-                                        </c:forEach>                                        
+                                        </c:forEach> 
+
                                     </tbody>
                                 </table>
                             </div>
+                            <ul class="pagination">
+                                <li><a href="#">1</a></li>
+                                <li class="active"><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                            </ul>
                         </div>
                     </td>
                 </tr>

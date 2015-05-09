@@ -1,64 +1,11 @@
 @CHARSET "UTF-8";
-
-.navbar-default {
-  background-color: #4c96ff;
-  border-color: #2a82ff;
-}
-.navbar-default .navbar-brand {
-  color: #ecf0f1;
-}
-.navbar-default .navbar-brand:hover, .navbar-default .navbar-brand:focus {
-  color: #f0f1ff;
-}
-.navbar-default .navbar-text {
-  color: #ecf0f1;
-}
-.navbar-default .navbar-nav > li > a {
-  color: #ecf0f1;
-}
-.navbar-default .navbar-nav > li > a:hover, .navbar-default .navbar-nav > li > a:focus {
-  color: #f0f1ff;
-}
-.navbar-default .navbar-nav > .active > a, .navbar-default .navbar-nav > .active > a:hover, .navbar-default .navbar-nav > .active > a:focus {
-  color: #f0f1ff;
-  background-color: #2a82ff;
-}
-.navbar-default .navbar-nav > .open > a, .navbar-default .navbar-nav > .open > a:hover, .navbar-default .navbar-nav > .open > a:focus {
-  color: #f0f1ff;
-  background-color: #2a82ff;
-}
-.navbar-default .navbar-toggle {
-  border-color: #2a82ff;
-}
-.navbar-default .navbar-toggle:hover, .navbar-default .navbar-toggle:focus {
-  background-color: #2a82ff;
-}
-.navbar-default .navbar-toggle .icon-bar {
-  background-color: #ecf0f1;
-}
-.navbar-default .navbar-collapse,
-.navbar-default .navbar-form {
-  border-color: #ecf0f1;
-}
-.navbar-default .navbar-link {
-  color: #ecf0f1;
-}
-.navbar-default .navbar-link:hover {
-  color: #f0f1ff;
+.sensor { 
+    border: 10px solid #4679bd;
+    border-radius: 150px;
+    height:150px;
+    width:150px;
 }
 
-@media (max-width: 767px) {
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a {
-    color: #ecf0f1;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > li > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > li > a:focus {
-    color: #f0f1ff;
-  }
-  .navbar-default .navbar-nav .open .dropdown-menu > .active > a, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:hover, .navbar-default .navbar-nav .open .dropdown-menu > .active > a:focus {
-    color: #f0f1ff;
-    background-color: #2a82ff;
-  }
-}
 
 .login{
     max-width: 330px;
@@ -69,6 +16,16 @@
     margin-bottom: 0px;
 
 
+}
+
+.image{
+    max-height: 580px;
+    max-width: 1280px;
+    padding-top: 9em;
+    padding-bottom: 9em;
+    margin: 0px auto;
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 p.large{

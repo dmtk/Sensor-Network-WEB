@@ -26,7 +26,7 @@ public class Controller extends HttpServlet {
             }
             
             List<SensorNode> nodes = new LinkedList();
-            for (int i = 0; i < 8; i++) {
+            for (int i = 0; i < 4; i++) {
                 nodes.add(new SensorNode("Sensor node #"+i,i));
             }
 
