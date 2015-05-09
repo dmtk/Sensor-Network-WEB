@@ -101,15 +101,13 @@
                                     <tbody>
                                         <c:forEach var="sn" items="${sn}">
                                             <tr>
-                                                <td class="col-md-1"><c:out value="${sn.id}"/></td>
+                                                <td class="col-md-1"><c:out value="${sn.number}"/></td>
                                                 <td class="col-md-2"><c:out value="${sn.type}"/></td>
-                                                <td class="col-md-1"><c:out value="${sn.id}"/></td>
+                                                <td class="col-md-1"><c:out value="${sn.number}"/></td>
                                                 <td class="col-md-2"><c:out value="${sn.value}"/></td>
                                                 <td class="col-md-3"><c:out value="${sn.measuredQuantity}"/></td>
                                                 <td class="col-md-3"><span class="label label-danger"><c:out value="${sn.note}"/></span></td>
-                                            </tr>
                                         </c:forEach> 
-
                                     </tbody>
                                 </table>
                             </div>

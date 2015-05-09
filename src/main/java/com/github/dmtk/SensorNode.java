@@ -1,21 +1,36 @@
 package com.github.dmtk;
 
-public class SensorNode {
+import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "nodes")
+public class SensorNode implements Serializable {
+
+    private static final long serialVersionUID = 1L;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
     private String name;
-    private int id;
-    private int parentid=1;
-    private String measuredQuantity="Temperature";
+    private int number;
+    private int parentid = 1;
+    private String measuredQuantity = "Temperature";
     private String type = "Sensor";
-    private double value=28.5;
-    private String note="fdjkgljdfk";
-    SensorNode(){
-        id=(int) Math.round(Math.random()*100);
-        name=String.valueOf(id);
+    private double value = 28.5;
+    private String note = "Warning";
+
+    SensorNode() {
+        number = (int) Math.round(Math.random() * 100);
+        name = String.valueOf(number);
     }
-    
-    SensorNode(String name, int id){
-        this.name=name;
-        this.id=id;
+
+    SensorNode(String name, int number) {
+        this.name = name;
+        this.number =number;
     }
 
     public String getName() {
@@ -26,20 +41,18 @@ public class SensorNode {
         this.name = name;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
-    
     public int getParentid() {
         return parentid;
     }
 
-    
     public void setParentid(int parentid) {
         this.parentid = parentid;
     }
@@ -48,7 +61,6 @@ public class SensorNode {
         return measuredQuantity;
     }
 
-    
     public void setMeasuredQuantity(String measuredQuantity) {
         this.measuredQuantity = measuredQuantity;
     }
@@ -69,18 +81,45 @@ public class SensorNode {
         this.value = value;
     }
 
-    /**
-     * @return the note
-     */
     public String getNote() {
         return note;
     }
 
-    /**
-     * @param note the note to set
-     */
     public void setNote(String note) {
         this.note = note;
     }
-    
+
+    public int getNumber() {
+        return number;
+    }
+
+    public void setId(int number) {
+        this.number =  number;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SensorNode)) {
+            return false;
+        }
+        SensorNode other = (SensorNode) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "com.github.dmtk.NewEntity[ id=" + id + " ]";
+    }
+
 }
