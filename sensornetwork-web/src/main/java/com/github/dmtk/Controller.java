@@ -16,23 +16,17 @@ import javax.servlet.http.HttpSession;
 
 public class Controller extends HttpServlet {
    
-   @EJB SensorNode node;
-    
+   @EJB SensorNodes nodes;
+    @EJB Events events;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
         if (session.getAttribute("authenticated") != null && session.getAttribute("authenticated").equals(true)) {
-
-            
-            List<SensorNode>sn =new LinkedList();
-            for(int i=0;i<10;i++){
-                sn.add(node);
-            }
-                       
-            session.setAttribute("sn", sn);
-            session.setAttribute("nodes", sn);
+        
+            session.setAttribute("events", events.getList());
+            session.setAttribute("nodes", nodes.getList());
             request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("jsp/login.jsp").forward(request, response);

@@ -72,7 +72,7 @@
                                     <div class="row placeholders">
                                         <c:forEach var="nodes" items="${nodes}">
 
-                                            <div class="col-xs-6 col-sm-3 placeholder">
+                                            <div class="col-md-2 placeholder">
                                                 <div class="sensor" align="center">
                                                     <br>
                                                     <br>
@@ -95,18 +95,22 @@
                                             <th class="col-md-1"># sensor node</th>
                                             <th class="col-md-2">Value</th>
                                             <th class="col-md-3">Measurement quantity</th>
+                                            <th class="col-md-2">Note</th>
+                                            <th class="col-md-3">Date</th>
                                             <th class="col-md-3">Label</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <c:forEach var="sn" items="${sn}">
+                                        <c:forEach var="event" items="${events}">
                                             <tr>
-                                                <td class="col-md-1"><c:out value="${sn.number}"/></td>
-                                                <td class="col-md-2"><c:out value="${sn.type}"/></td>
-                                                <td class="col-md-1"><c:out value="${sn.number}"/></td>
-                                                <td class="col-md-2"><c:out value="${sn.value}"/></td>
-                                                <td class="col-md-3"><c:out value="${sn.measuredQuantity}"/></td>
-                                                <td class="col-md-3"><span class="label label-danger"><c:out value="${sn.note}"/></span></td>
+                                                <td class="col-md-1"><c:out value="${event.source.name}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.type}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.number}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.value}"/></td>
+                                                <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.note}"/></td>
+                                                <td class="col-md-2"><c:out value="${event.date}"/></td>
+                                                <td class="col-md-1"><span class="label label-danger"><c:out value="${event.label}"/></span></td>
                                         </c:forEach> 
                                     </tbody>
                                 </table>
