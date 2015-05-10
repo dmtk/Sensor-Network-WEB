@@ -1,19 +1,11 @@
 package com.github.dmtk;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.ejb.Stateful;
 
-@Entity
-@Table(name = "nodes")
+@Stateful
 public class SensorNode implements Serializable {
 
-    private static final long serialVersionUID = 1L;
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String name;
     private int number;
