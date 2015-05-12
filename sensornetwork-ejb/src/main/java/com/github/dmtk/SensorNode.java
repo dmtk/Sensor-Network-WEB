@@ -1,13 +1,12 @@
 package com.github.dmtk;
 
 import java.io.Serializable;
-import javax.ejb.Stateful;
 
-@Stateful
+
 public class SensorNode implements Serializable {
 
     private Long id;
-    private String name;
+    private String name="Name";
     private int number;
     private int parentid = 1;
     private String measuredQuantity = "Temperature";
@@ -16,12 +15,10 @@ public class SensorNode implements Serializable {
     private String note = "Warning";
 
     SensorNode() {
-        number = (int) Math.round(Math.random() * 100);
-        name = String.valueOf(number);
+        
     }
 
-    SensorNode(String name, int number) {
-        this.name = name;
+    SensorNode(int number) {
         this.number =number;
     }
 

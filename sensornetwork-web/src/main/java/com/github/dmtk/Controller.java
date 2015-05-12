@@ -1,8 +1,6 @@
 package com.github.dmtk;
 
 import java.io.IOException;
-import java.util.LinkedList;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +14,7 @@ import javax.servlet.http.HttpSession;
 
 public class Controller extends HttpServlet {
    
-   @EJB SensorNodes nodes;
+    @EJB SensorNodes nodes;
     @EJB Events events;
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
@@ -39,5 +37,4 @@ public class Controller extends HttpServlet {
         doGet(request, response);
     }
 
-    
 }

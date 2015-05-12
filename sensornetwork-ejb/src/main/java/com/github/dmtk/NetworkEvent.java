@@ -6,6 +6,11 @@ public class NetworkEvent{
     private Date date;
     private String label;
 
+
+    NetworkEvent(){
+        date=new Date();
+    }
+    
     public SensorNode getSource() {
         return source;
     }
@@ -29,7 +34,8 @@ public class NetworkEvent{
     public void setLabel(String label) {
         this.label = label;
     }
-    
+
+
     
     
 }

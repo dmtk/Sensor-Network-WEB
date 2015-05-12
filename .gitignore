@@ -2,3 +2,6 @@
 /build/
 /nbproject/private/
 /target/
+/sensornetwork-ejb/target/
+/sensornetwork-web/target/
+/sensornetwork-ear/target/

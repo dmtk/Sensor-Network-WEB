@@ -1,7 +1,10 @@
 $(document).ready(function () {
     show();
     setInterval('show()', 1000);
-    
+
+});
+$(document).ready(function () {
+    $('[data-toggle="tooltip"]').tooltip();
 });
 function show()
 {

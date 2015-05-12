@@ -4,6 +4,7 @@ import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -13,22 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = {"/update"})
 public class UpdateTemperature extends HttpServlet {
-
-    private static ComPort comport;
-
+    
+    
+    @EJB private ComPortFacade comport;
+    
     @Override
-    public void init() {
-
-        Thread myThready;
-        comport = new ComPort();
-        myThready = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                comport.start("COM3");
-            }
-        });
-
-        myThready.start();
+    public void init(){
+        comport.emulate();
     }
 
     public UpdateTemperature() {

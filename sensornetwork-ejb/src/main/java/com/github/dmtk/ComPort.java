@@ -1,5 +1,8 @@
 package com.github.dmtk;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import jssc.SerialPort;
 import jssc.SerialPortEvent;
 import jssc.SerialPortEventListener;
@@ -10,7 +13,21 @@ public class ComPort {
     private static SerialPort serialPort;
     private static String data = "";
     boolean started = false;
-
+    
+    public void emulate(){
+        while(true){
+            int value = (int) Math.round(Math.random()*100-20);
+            int node = (int) Math.random()*8;
+            data = "Sensor "+node + "Value " + value; 
+            
+            try {
+                Thread.sleep(1000);
+            } catch (InterruptedException ex) {
+                Logger.getLogger(ComPort.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+    }
+        
     public void start(String comPortName) {
 
         //Передаём в конструктор имя порта

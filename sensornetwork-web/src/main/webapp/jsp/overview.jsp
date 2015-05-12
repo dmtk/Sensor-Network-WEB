@@ -14,9 +14,7 @@
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/basic.css" rel="stylesheet">
-        <script>$(document).ready(function () {
-                $('[data-toggle="tooltip"]').tooltip();
-            });</script>
+        
     </head>
     <body>
         <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
@@ -24,7 +22,7 @@
                 <div class="navbar-header">
                     <a class="navbar-brand" href="overview">
 
-                        Sub-1GHz sensor network</a>
+                        TI Sub-1GHz sensor network</a>
                 </div>
                 <div>
                     <ul class="nav navbar-nav">
@@ -40,7 +38,6 @@
             </div>
         </nav>
 
-
         <br>
         <br>
         <br>
@@ -55,29 +52,25 @@
                                 <li><a href="reports" ><p><span class="glyphicon glyphicon-th-list"></span> Reports</p></a></li>
                                 <li><a href="analitics" ><p><span class="glyphicon glyphicon-stats"></span> Analytics</p></a></li>
                                 <li><a href="export" ><p><span class="glyphicon glyphicon-export"></span> Export</p></a></li>
-                                <li><a href="graphics" ><p><span class="glyphicon glyphicon-print"></span> Graphics</p></a></li>
+                                <li><a href="graphics" ><p><span class="glyphicon glyphicon-signal"></span> Graphics</p></a></li>
                                 <li><a href="map" data-toggle="tooltip" title="Hooray!" data-placement="right"><p><span class="glyphicon glyphicon-map-marker"></span> Map</p></a></li>
                                 <li><a href="rawdata" ><p><span class="glyphicon glyphicon-flash"></span> Raw data</p></a></li>                                
                             </ul>
                         </div>
                     </td><td>
                         <div class="col-md-10 main">
-                            <c:set var="now" value="<%=new java.util.Date()%>" />
-
-                            <p>Formatted Date (1): <fmt:formatDate type="time" 
-                                            value="${now}" /></p>
                             <div class="panel panel-default panel-success">
-                                <div class="panel-heading">Panel Heading</div>
+                                <div class="panel-heading">Sensor nodes</div>
                                 <div class="panel-body">
                                     <div class="row placeholders">
-                                        <c:forEach var="nodes" items="${nodes}">
+                                        <c:forEach var="node" items="${nodes}">
 
                                             <div class="col-md-2 placeholder">
                                                 <div class="sensor" align="center">
                                                     <br>
                                                     <br>
-                                                    <b><c:out value="${nodes.name}"/></b>
-                                                    <span class="text-muted" ><c:out value="${nodes.value}"/></span>
+                                                    <b><c:out value="${node.type}"/> <c:out value="${node.number}"/></b><br>
+                                                    <span class="text-muted" ><c:out value="${node.value}"/></span>
                                                 </div>
                                             </div>
                                         </c:forEach>
@@ -85,19 +78,19 @@
                                     </div></div>
                             </div>
 
-                            <h2 class="sub-header" >Section title 2</h2>
+                            <h3 class="sub-header" >Network events</h3>
                             <div class="table-responsive" align="left">
                                 <table class="table table-striped table-bordered">
                                     <thead>
                                         <tr>
                                             <th class="col-md-1">#</th>
-                                            <th class="col-md-2">Type</th>
+                                            <th class="col-md-1">Type</th>
                                             <th class="col-md-1"># sensor node</th>
-                                            <th class="col-md-2">Value</th>
-                                            <th class="col-md-3">Measurement quantity</th>
-                                            <th class="col-md-2">Note</th>
-                                            <th class="col-md-3">Date</th>
-                                            <th class="col-md-3">Label</th>
+                                            <th class="col-md-1">Value</th>
+                                            <th class="col-md-2">Measurement quantity</th>
+                                            <th class="col-md-1">Note</th>
+                                            <th class="col-md-2">Date</th>
+                                            <th class="col-md-1">Label</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -109,15 +102,15 @@
                                                 <td class="col-md-1"><c:out value="${event.source.value}"/></td>
                                                 <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.note}"/></td>
-                                                <td class="col-md-2"><c:out value="${event.date}"/></td>
+                                                <td class="col-md-2"><fmt:formatDate type="time" value="${event.date}"/></td>
                                                 <td class="col-md-1"><span class="label label-danger"><c:out value="${event.label}"/></span></td>
                                         </c:forEach> 
                                     </tbody>
                                 </table>
                             </div>
                             <ul class="pagination">
-                                <li><a href="#">1</a></li>
-                                <li class="active"><a href="#">2</a></li>
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="#">2</a></li>
                                 <li><a href="#">3</a></li>
                                 <li><a href="#">4</a></li>
                                 <li><a href="#">5</a></li>

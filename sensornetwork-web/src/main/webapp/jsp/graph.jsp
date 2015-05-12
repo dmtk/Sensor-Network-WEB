@@ -6,6 +6,7 @@
         <title>JSP Page</title>
         <script src="javascript/jquery-1.11.2.js"></script>
         <script src="http://code.highcharts.com/highcharts.js"></script>
+        <script src="http://code.highcharts.com/highcharts-more.js"></script>
         <script src="http://code.highcharts.com/modules/exporting.js"></script>
         <script src="javascript/graph.js"></script>
         <script src="javascript/bootstrap.js"></script>
@@ -35,8 +36,10 @@
         <br>
         <br>
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-        <br>fgf<br>
+        
         <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+        
+        <div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
 
 
 
