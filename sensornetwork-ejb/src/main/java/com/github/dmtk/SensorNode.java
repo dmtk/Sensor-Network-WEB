@@ -1,10 +1,13 @@
 package com.github.dmtk;
 
 import java.io.Serializable;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
-
+@Entity
 public class SensorNode implements Serializable {
 
+    @Id
     private Long id;
     private String name="Name";
     private int number;
@@ -14,10 +17,9 @@ public class SensorNode implements Serializable {
     private double value = 28.5;
     private String note = "Warning";
 
-    SensorNode() {
-        
+    SensorNode(){
     }
-
+    
     SensorNode(int number) {
         this.number =number;
     }
@@ -95,7 +97,7 @@ public class SensorNode implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        
         if (!(object instanceof SensorNode)) {
             return false;
         }
