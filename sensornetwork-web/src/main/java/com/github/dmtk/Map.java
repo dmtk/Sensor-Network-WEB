@@ -14,17 +14,15 @@ import javax.servlet.http.HttpServletResponse;
 public class Map extends HttpServlet {
     @EJB
     private SensorNodeFacadeLocal sensorNodeFacade;
-    
        
-    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
     try {
         SensorNode s = new SensorNode();
-        int id =(int) (Math.random()*100);
-        s.setId(id);
-        s.setValue(id/23);
+        int number =(int) (Math.random()*100);
+        s.setNumber(number);
+        s.setValue(number/23);
         s.setName("Sensor");
         sensorNodeFacade.create(s);
                

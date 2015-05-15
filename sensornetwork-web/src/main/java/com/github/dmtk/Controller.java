@@ -9,22 +9,24 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-
 @WebServlet(name = "Controller", urlPatterns = {"/controller", "/index.html", "/jsp", "/overview"})
 
 public class Controller extends HttpServlet {
-   
-    @EJB SensorNodes nodes;
-    @EJB Events events;
+
+    @EJB
+    private NetworkEventFacadeLocal networkEventFacade;
+    @EJB
+    private SensorNodeFacadeLocal sensorNodeFacade;
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
         HttpSession session = request.getSession();
         if (session.getAttribute("authenticated") != null && session.getAttribute("authenticated").equals(true)) {
-        
-            session.setAttribute("events", events.getList());
-            session.setAttribute("nodes", nodes.getList());
+
+            session.setAttribute("events", networkEventFacade.findAll());
+            session.setAttribute("nodes", sensorNodeFacade.findAll());
             request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("jsp/login.jsp").forward(request, response);

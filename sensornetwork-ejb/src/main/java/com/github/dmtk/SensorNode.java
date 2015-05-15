@@ -2,25 +2,33 @@ package com.github.dmtk;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 @Entity
 public class SensorNode implements Serializable {
 
     @Id
+    @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private String name="Name";
     private int number;
+
+    public void setNumber(int number) {
+        this.number = number;
+    }
+    
     private int parentid = 1;
     private String measuredQuantity = "Temperature";
     private String type = "Sensor";
     private double value = 28.5;
     private String note = "Warning";
 
-    SensorNode(){
+    public SensorNode(){
     }
     
-    SensorNode(int number) {
+    public SensorNode(int number) {
         this.number =number;
     }
 
@@ -82,10 +90,6 @@ public class SensorNode implements Serializable {
 
     public int getNumber() {
         return number;
-    }
-
-    public void setId(int number) {
-        this.number =  number;
     }
 
     @Override

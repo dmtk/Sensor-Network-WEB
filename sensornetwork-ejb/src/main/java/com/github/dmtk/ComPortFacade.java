@@ -2,7 +2,9 @@ package com.github.dmtk;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
+
 
 @Stateless
 public class ComPortFacade {
@@ -12,7 +14,7 @@ public class ComPortFacade {
      return comport.getData();
      }*/
     
-    
+    @EJB NetworkController controller;
     private String data = "";
     public void emulate() {
 
@@ -25,7 +27,7 @@ public class ComPortFacade {
                     int node = (int) Math.round(Math.random() * 8);
                     data = "Sensor " + node + " Value " + value;
                     
-                    NetworkController.handle(node,value);
+                    controller.handle(node,value);
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {

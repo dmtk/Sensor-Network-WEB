@@ -14,9 +14,11 @@ import javax.servlet.http.HttpServletResponse;
 
 @WebServlet(urlPatterns = {"/update"})
 public class UpdateTemperature extends HttpServlet {
+    @EJB
+    private ComPortFacade comport;
     
     
-    @EJB private ComPortFacade comport;
+    
     
     @Override
     public void init(){
