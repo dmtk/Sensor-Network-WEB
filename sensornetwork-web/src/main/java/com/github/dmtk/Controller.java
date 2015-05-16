@@ -26,7 +26,7 @@ public class Controller extends HttpServlet {
         if (session.getAttribute("authenticated") != null && session.getAttribute("authenticated").equals(true)) {
 
             session.setAttribute("events", networkEventFacade.findAll());
-            session.setAttribute("nodes", sensorNodeFacade.findAll());
+            session.setAttribute("nodes", NetworkController.getActiveNodePull());
             request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
         } else {
             request.getRequestDispatcher("jsp/login.jsp").forward(request, response);

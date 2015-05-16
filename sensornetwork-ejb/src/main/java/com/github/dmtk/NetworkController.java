@@ -7,31 +7,30 @@ import java.util.List;
 import java.util.Map;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
-import javax.ejb.Startup;
 
 @Singleton
 public class NetworkController {
 
     private static Map<Integer, SensorNode> activeNodePull = new HashMap<Integer, SensorNode>();
 
-    @EJB SensorNodeFacade sensorNodeFacade;
-    @EJB NetworkEventFacade networkEventFacade;
+    @EJB
+    private SensorNodeFacadeLocal sensorNodeFacade;
+    @EJB
+    private NetworkEventFacadeLocal networkEventFacade;
 
     public NetworkController() {
-        
-            List<SensorNode> list;
-            try {
-                list = sensorNodeFacade.findAll();
-                Iterator i = list.iterator();
-                while (i.hasNext()) {
-                    SensorNode temp = (SensorNode) i.next();
-                    Integer id = temp.getNumber();
-                    activeNodePull.put(id, temp);
-                }
-            } catch (NullPointerException e) {
-                
+
+        try {
+            List<SensorNode> list = sensorNodeFacade.findAll();
+            Iterator i = list.iterator();
+            while (i.hasNext()) {
+                SensorNode temp = (SensorNode) i.next();
+                Integer id = temp.getId();
+                activeNodePull.put(id, temp);
             }
-        
+        } catch (NullPointerException e) {
+
+        }
 
     }
 

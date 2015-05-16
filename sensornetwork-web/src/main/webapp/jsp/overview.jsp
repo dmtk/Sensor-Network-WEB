@@ -47,14 +47,14 @@
                 <tr>
                     <td>
                         <div class="col-md-2 sidebar">
-                            <ul class="nav nav-sidebar">
-                                <li class="active"><a href="overview"><p><span class="glyphicon glyphicon-home"></span> Overview</p></a></li>
-                                <li><a href="reports" ><p><span class="glyphicon glyphicon-th-list"></span> Reports</p></a></li>
-                                <li><a href="analitics" ><p><span class="glyphicon glyphicon-stats"></span> Analytics</p></a></li>
-                                <li><a href="export" ><p><span class="glyphicon glyphicon-export"></span> Export</p></a></li>
-                                <li><a href="graphics" ><p><span class="glyphicon glyphicon-signal"></span> Graphics</p></a></li>
-                                <li><a href="map" data-toggle="tooltip" title="Hooray!" data-placement="right"><p><span class="glyphicon glyphicon-map-marker"></span> Map</p></a></li>
-                                <li><a href="rawdata" ><p><span class="glyphicon glyphicon-flash"></span> Raw data</p></a></li>                                
+                            <ul class="nav nav-pills nav-stacked">
+                                <li role="presentation" class="active"><a href="overview"><p><span class="glyphicon glyphicon-home"></span> Overview</p></a></li>
+                                <li role="presentation"><a href="reports" ><p><span class="glyphicon glyphicon-th-list"></span> Reports</p></a></li>
+                                <li role="presentation"><a href="analitics" ><p><span class="glyphicon glyphicon-stats"></span> Analytics</p></a></li>
+                                <li role="presentation"><a href="export" ><p><span class="glyphicon glyphicon-export"></span> Export</p></a></li>
+                                <li role="presentation"><a href="graphics" ><p><span class="glyphicon glyphicon-signal"></span> Graphics</p></a></li>
+                                <li role="presentation"><a href="map" data-toggle="tooltip" title="Hooray!" data-placement="right"><p><span class="glyphicon glyphicon-map-marker"></span> Map</p></a></li>
+                                <li role="presentation"><a href="rawdata" ><p><span class="glyphicon glyphicon-flash"></span> Raw data</p></a></li>                                
                             </ul>
                         </div>
                     </td><td>
@@ -96,9 +96,9 @@
                                     <tbody>
                                         <c:forEach var="event" items="${events}">
                                             <tr>
-                                                <td class="col-md-1"><c:out value="${event.source.name}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.id}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.type}"/></td>
-                                                <td class="col-md-1"><c:out value="${event.source.number}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.name}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.value}"/></td>
                                                 <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.note}"/></td>
