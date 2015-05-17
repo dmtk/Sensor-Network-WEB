@@ -18,10 +18,29 @@ public class NetworkController {
     @EJB
     private NetworkEventFacadeLocal networkEventFacade;
 
-    public NetworkController() {
+    public synchronized void handle(int id, int value) {
 
+        if (!activeNodePull.containsKey(id)) {
+            SensorNode sensorNode = new SensorNode(id);
+            sensorNode.setValue(value);
+            activeNodePull.put(id, sensorNode);
+            sensorNodeFacade.create(sensorNode);
+            NetworkEvent n = new NetworkEvent();
+            n.setSource(sensorNode);
+            networkEventFacade.create(n);
+        } else {
+            activeNodePull.get(id).setValue(value);
+            NetworkEvent n = new NetworkEvent();
+            n.setSource(activeNodePull.get(id));
+            networkEventFacade.edit(n);
+        }
+
+    }
+
+    public void readSensorNodes() {
         try {
             List<SensorNode> list = sensorNodeFacade.findAll();
+            System.out.println(list.size());
             Iterator i = list.iterator();
             while (i.hasNext()) {
                 SensorNode temp = (SensorNode) i.next();
@@ -29,28 +48,8 @@ public class NetworkController {
                 activeNodePull.put(id, temp);
             }
         } catch (NullPointerException e) {
-
+            e.printStackTrace();
         }
-
-    }
-
-    public void handle(int node, int value) {
-
-        if (!activeNodePull.containsKey(node)) {
-            SensorNode sensorNode = new SensorNode(node);
-            sensorNode.setValue(value);
-            activeNodePull.put(node, sensorNode);
-            sensorNodeFacade.create(sensorNode);
-            NetworkEvent n = new NetworkEvent();
-            n.setSource(sensorNode);
-            networkEventFacade.create(n);
-        } else {
-            activeNodePull.get(node).setValue(value);
-            NetworkEvent n = new NetworkEvent();
-            n.setSource(activeNodePull.get(node));
-            networkEventFacade.edit(n);
-        }
-
     }
 
     public static List getActiveNodePull() {

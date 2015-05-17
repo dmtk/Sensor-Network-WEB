@@ -16,21 +16,19 @@ public class SensorNode implements Serializable {
     private double value = 28.5;
     private Location loc;
     private String note = "Warning";
-    
-    private enum Type {
+    private String type = "SENSOR";
 
-        SENSOR, CONTROLLER
-    };
-    
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
     public SensorNode() {
-        
+
     }
 
     public SensorNode(Integer id) {
-
+        this.id = id;
     }
-    
-    
 
     public String getName() {
         return name;
@@ -45,7 +43,7 @@ public class SensorNode implements Serializable {
     }
 
     public void setId(int id) {
-        this.id = id;
+        this.setId((Integer) id);
     }
 
     public Long getParentid() {
@@ -112,14 +110,27 @@ public class SensorNode implements Serializable {
     public void setAdcValue(int adcValue) {
         this.adcValue = adcValue;
     }
-    
+
     public Location getLoc() {
         return loc;
     }
 
-    
     public void setLoc(Location loc) {
         this.loc = loc;
     }
-    
+
+    /**
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @param type the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
 }

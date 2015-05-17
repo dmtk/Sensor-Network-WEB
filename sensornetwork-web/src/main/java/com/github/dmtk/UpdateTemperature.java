@@ -17,9 +17,6 @@ public class UpdateTemperature extends HttpServlet {
     @EJB
     private ComPortFacade comport;
     
-    
-    
-    
     @Override
     public void init(){
         comport.emulate();

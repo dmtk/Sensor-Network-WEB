@@ -69,7 +69,7 @@
                                                 <div class="sensor" align="center">
                                                     <br>
                                                     <br>
-                                                    <b><c:out value="${node.type}"/> <c:out value="${node.number}"/></b><br>
+                                                    <b><c:out value="${node.type}"/> <c:out value="${node.id}"/></b><br>
                                                     <span class="text-muted" ><c:out value="${node.value}"/></span>
                                                 </div>
                                             </div>

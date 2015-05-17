@@ -15,6 +15,7 @@ public class ComPortFacade {
      }*/
     
     @EJB NetworkController controller;
+    
     private String data = "";
     public void emulate() {
 
@@ -22,12 +23,13 @@ public class ComPortFacade {
         myThready = new Thread(new Runnable() {
             @Override
             public void run() {
+                controller.readSensorNodes();
                 while (true) {
                     int value = (int) Math.round(Math.random() * 100 - 20);
-                    int node = (int) Math.round(Math.random() * 8);
-                    data = "Sensor " + node + " Value " + value;
+                    int id = (int) Math.round(Math.random() * 7+1);
+                    data = "Sensor " + id + " Value " + value;
+                    controller.handle(id,value);
                     
-                    controller.handle(node,value);
                     try {
                         Thread.sleep(1000);
                     } catch (InterruptedException ex) {
