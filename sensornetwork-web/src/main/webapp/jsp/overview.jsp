@@ -92,7 +92,7 @@
                                                 <td class="col-md-1"><c:out value="${event.source.value}"/></td>
                                                 <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.note}"/></td>
-                                                <td class="col-md-2"><fmt:formatDate type="time" value="${event.date}"/></td>
+                                                <td class="col-md-2"><fmt:formatDate type="both" value="${event.date}"/></td>
                                                 <td class="col-md-1"><span class="label label-danger"><c:out value="${event.label}"/></span></td>
                                                 </c:forEach> 
                                     </tbody>
