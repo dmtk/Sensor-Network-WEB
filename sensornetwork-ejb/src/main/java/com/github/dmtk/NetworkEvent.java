@@ -20,7 +20,7 @@ public class NetworkEvent implements Serializable {
     private String label;
 
     public NetworkEvent() {
-        date = new Date();
+        
     }
 
     public Long getId() {

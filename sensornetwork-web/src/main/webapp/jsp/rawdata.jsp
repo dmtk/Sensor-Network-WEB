@@ -1,3 +1,5 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
@@ -9,32 +11,52 @@
         <meta name="keywords" content="AJAX"/>
         <script src="javascript/jquery-1.11.2.js"></script>
         <script src="javascript/bootstrap.js"></script>
+        <script src="javascript/basic.js"></script>
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
-        <script src="javascript/basic.js"></script>
-        <link rel="stylesheet" href="css/basic.css" media="screen" />
+        <link href="css/basic.css" rel="stylesheet">
     </head>
     <body>
-        <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <nav id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
             <div class="container-fluid">
                 <div class="navbar-header">
-                    <a class="navbar-brand" href="overview">Sub-1GHz sensor network</a>
+                    <a class="navbar-brand" href="overview">
+                        TI Sub-1GHz sensor network</a>
                 </div>
-                <div id="navbar" class="navbar-collapse collapse">
+                <div>
+                    <ul class="nav navbar-nav">
+                        <li><a href="overview"><span class="glyphicon glyphicon-home"></span> Overview</a></li>
+                        <li><a href="reports" ><span class="glyphicon glyphicon-th-list"></span> Reports</a></li>
+                        <li><a href="analitics" ><span class="glyphicon glyphicon-stats"></span> Analytics</a></li>
+                        <li><a href="export" ><span class="glyphicon glyphicon-export"></span> Export</a></li>
+                        <li><a href="graphics" ><span class="glyphicon glyphicon-signal"></span> Graphics</a></li>
+                        <li><a href="map"><span class="glyphicon glyphicon-map-marker"></span> Map</a></li>
+                        <li class="active"><a href="rawdata" ><span class="glyphicon glyphicon-flash"></span> Raw data</a></li>                                
+                        <li><a href="settings"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
+                        <li><a href="about"><span class="glyphicon glyphicon-info-sign"></span>About</a></li>
+
+                    </ul>
                     <ul class="nav navbar-nav navbar-right">
-                        <li><a class="active" href="overview">Control panel</a></li>
-                        <li><a href="settings">Settings</a></li>
-                        <li><a href="about">About</a></li>
-                        <li><a href="logout">Logout</a></li>
-                    </ul>                    
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
+                        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
+                    </ul>
                 </div>
             </div>
         </nav>
         <br>
         <br>
         <br>
-                   
-        <p id="displayTemp"></p>
-        <p class="small">NTUU KPI</p>
+        <div class="main col-md-12">
+            <div class="panel panel-default panel-success">
+                <div class="panel-heading">Com port data</div>
+                <div class="panel-body">
+                    <p id="displayTemp"></p>
+                </div>
+            </div>
+        </div>
     </body>
 </html>
+
+
+
+

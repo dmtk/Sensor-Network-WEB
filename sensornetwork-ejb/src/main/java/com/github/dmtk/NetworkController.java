@@ -1,6 +1,7 @@
 package com.github.dmtk;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -27,10 +28,12 @@ public class NetworkController {
             sensorNodeFacade.create(sensorNode);
             NetworkEvent n = new NetworkEvent();
             n.setSource(sensorNode);
+            n.setDate(new Date());
             networkEventFacade.create(n);
         } else {
             activeNodePull.get(id).setValue(value);
             NetworkEvent n = new NetworkEvent();
+            n.setDate(new Date());
             n.setSource(activeNodePull.get(id));
             networkEventFacade.edit(n);
         }
