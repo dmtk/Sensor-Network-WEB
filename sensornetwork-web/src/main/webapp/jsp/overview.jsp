@@ -14,7 +14,6 @@
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
         <link href="css/basic.css" rel="stylesheet">
-
     </head>
     <body>
         <nav id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -85,7 +84,7 @@
                                     </thead>
                                     <tbody>
                                         <c:forEach var="event" items="${events}">
-                                            <tr>
+                                            <tr class="<c:out value="${event.label}"/>">
                                                 <td class="col-md-1"><c:out value="${event.source.id}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.type}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.name}"/></td>
@@ -93,8 +92,9 @@
                                                 <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.note}"/></td>
                                                 <td class="col-md-2"><fmt:formatDate type="both" value="${event.date}"/></td>
-                                                <td class="col-md-1"><span class="label label-danger"><c:out value="${event.label}"/></span></td>
-                                                </c:forEach> 
+                                                <td class="col-md-1"><span class="label label-<c:out value="${event.label}"/>"><c:out value="${event.label}"/></span></td>
+                                            </tr>
+                                        </c:forEach> 
                                     </tbody>
                                 </table>
                             </div>

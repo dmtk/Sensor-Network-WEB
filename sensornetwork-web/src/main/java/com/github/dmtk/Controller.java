@@ -1,6 +1,8 @@
 package com.github.dmtk;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
@@ -60,11 +62,15 @@ public class Controller extends HttpServlet {
                 request.getRequestDispatcher("jsp/settings.jsp").forward(request, response);
             } else {
                 int page = 1;
-                if(request.getAttribute("page")!=null){
-                   page = parseIntegerValue(request.getAttribute("page"));
+                if (request.getParameter("page") != null) {
+                    page = Integer.parseInt(request.getParameter("page"));
                 }
-                session.setAttribute("events", getSubList(networkEventFacade.findAll(), page, 20));
-                session.setAttribute("nodes", sensorNodeFacade.findAll());
+                int itemsPerPage = 20;
+                if (request.getParameter("items") != null) {
+                    itemsPerPage = Integer.parseInt(request.getParameter("items"));
+                }
+                request.setAttribute("events", getSubList(networkEventFacade.findAll(), page, itemsPerPage));
+                request.setAttribute("nodes", sensorNodeFacade.findAll());
                 request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
             }
         } else {
@@ -73,26 +79,19 @@ public class Controller extends HttpServlet {
 
     }
 
-    private Integer parseIntegerValue(Object obj) {
-        
-        Integer result = 0;
-        try {
-            result = Integer.parseInt((String) obj);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return result;
-    }
-
     private List<Object> getSubList(List inputList, int page, int itemsPerPage) {
 
         if (0 != inputList.size()) {
+            page--;//index starts from 0 in List<Object>
+
+            Collections.reverse(inputList);//last event become first in list
             int start = page * itemsPerPage;
             int end = (page + 1) * itemsPerPage;
             if (end >= inputList.size()) {
                 end = inputList.size() - 1;
             }
             List<Object> result = inputList.subList(start, end);
+
             return result;
         } else {
             return inputList;

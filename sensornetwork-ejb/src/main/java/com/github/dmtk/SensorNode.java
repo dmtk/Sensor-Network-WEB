@@ -16,7 +16,7 @@ public class SensorNode implements Serializable {
     private double value = 28.5;
     private Location loc;
     private String note = "Warning";
-    private String type = "SENSOR";
+    private NodeType type = NodeType.SENSOR;
 
     public void setId(Integer id) {
         this.id = id;
@@ -119,12 +119,14 @@ public class SensorNode implements Serializable {
         this.loc = loc;
     }
 
-    public String getType() {
+    public NodeType getType() {
         return type;
     }
 
-    public void setType(String type) {
+    public void setType(NodeType type) {
         this.type = type;
     }
+
+   
 
 }

@@ -29,12 +29,15 @@ public class NetworkController {
             NetworkEvent n = new NetworkEvent();
             n.setSource(sensorNode);
             n.setDate(new Date());
+            EventLabelTrigger.chooseLabel(n);
             networkEventFacade.create(n);
         } else {
             activeNodePull.get(id).setValue(value);
+            sensorNodeFacade.edit(activeNodePull.get(id));
             NetworkEvent n = new NetworkEvent();
             n.setDate(new Date());
             n.setSource(activeNodePull.get(id));
+            EventLabelTrigger.chooseLabel(n);
             networkEventFacade.edit(n);
         }
 

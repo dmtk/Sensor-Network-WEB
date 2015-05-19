@@ -16,7 +16,7 @@ public class NetworkEvent implements Serializable {
     @GeneratedValue(strategy=GenerationType.AUTO)
     private Long id;
     private SensorNode source;
-    private  @Temporal(TemporalType.DATE) java.util.Date date;
+    private  @Temporal(TemporalType.TIMESTAMP) java.util.Date date;
     private String label;
 
     public NetworkEvent() {
