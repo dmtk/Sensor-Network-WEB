@@ -49,24 +49,44 @@
                 <tr>
                     <td>
                         <div class="col-md-12 main">
-                            <div class="panel panel-default panel-success">
-                                <div class="panel-heading">Sensor nodes</div>
-                                <div class="panel-body">
-                                    <div class="row placeholders">
-                                        <c:forEach var="node" items="${nodes}">
-                                            <div class="col-md-2 placeholder">
-                                                <div class="sensor" align="center">
-                                                    <br>
-                                                    <br>
-                                                    <b><c:out value="${node.type}"/> <c:out value="${node.id}"/></b><br>
-                                                    <span class="text-muted" ><c:out value="${node.value}"/></span>
-                                                </div>
-                                                <br>
-                                                <br>
-                                            </div>
-                                        </c:forEach>
-                                    </div></div>
+                            <h3 class="sub-header" >Network events</h3>
+                            <div class="table-responsive" align="left">
+                                <table class="table table-striped table-bordered">
+                                    <thead>
+                                        <tr>
+                                            <th class="col-md-1">#</th>
+                                            <th class="col-md-1">Type</th>
+                                            <th class="col-md-1"># sensor node</th>
+                                            <th class="col-md-1">Value</th>
+                                            <th class="col-md-2">Measurement quantity</th>
+                                            <th class="col-md-1">Note</th>
+                                            <th class="col-md-2">Date</th>
+                                            <th class="col-md-1">Label</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <c:forEach var="event" items="${events}">
+                                            <tr class="<c:out value="${event.label}"/>">
+                                                <td class="col-md-1"><c:out value="${event.source.id}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.type}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.name}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.value}"/></td>
+                                                <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.source.note}"/></td>
+                                                <td class="col-md-2"><fmt:formatDate type="both" value="${event.date}"/></td>
+                                                <td class="col-md-1"><span class="label label-<c:out value="${event.label}"/>"><c:out value="${event.label}"/></span></td>
+                                            </tr>
+                                        </c:forEach> 
+                                    </tbody>
+                                </table>
                             </div>
+                            <ul class="pagination">
+                                <li class="active"><a href="#">1</a></li>
+                                <li><a href="overview?page=2">2</a></li>
+                                <li><a href="overview?page=3">3</a></li>
+                                <li><a href="overview?page=4">4</a></li>
+                                <li><a href="overview?page=5">5</a></li>
+                            </ul>
 
 
                         </div>

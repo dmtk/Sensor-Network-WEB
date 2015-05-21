@@ -1,7 +1,6 @@
 package com.github.dmtk;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import javax.ejb.EJB;
@@ -53,10 +52,20 @@ public class Controller extends HttpServlet {
                 session.invalidate();
                 request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
             } else if ("/map".equals(request.getServletPath())) {
+                request.setAttribute("nodes", sensorNodeFacade.findAll());
                 request.getRequestDispatcher("jsp/map.jsp").forward(request, response);
             } else if ("/rawdata".equals(request.getServletPath())) {
                 request.getRequestDispatcher("jsp/rawdata.jsp").forward(request, response);
             } else if ("/reports".equals(request.getServletPath())) {
+                int page = 1;
+                if (request.getParameter("page") != null) {
+                    page = Integer.parseInt(request.getParameter("page"));
+                }
+                int itemsPerPage = 20;
+                if (request.getParameter("items") != null) {
+                    itemsPerPage = Integer.parseInt(request.getParameter("items"));
+                }
+                request.setAttribute("events", getSubList(networkEventFacade.findAll(), page, itemsPerPage));
                 request.getRequestDispatcher("jsp/reports.jsp").forward(request, response);
             } else if ("/settings".equals(request.getServletPath())) {
                 request.getRequestDispatcher("jsp/settings.jsp").forward(request, response);
@@ -74,6 +83,9 @@ public class Controller extends HttpServlet {
                 request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
             }
         } else {
+
+            String initialPage = request.getServletPath();
+            session.setAttribute("initialPage", initialPage);
             request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
         }
 
@@ -105,18 +117,14 @@ public class Controller extends HttpServlet {
         if ("/authenticate".equals(request.getServletPath())) {
             String login = (String) request.getParameter("login");
             String password = (String) request.getParameter("password");
-
             if ("admin".equals(login)) {
-
                 boolean authenticated = true;
                 HttpSession session = request.getSession();
                 session.setAttribute("user", login);
                 session.setAttribute("password", password);
                 session.setAttribute("authenticated", authenticated);
-                doGet(request, response);
-
+                request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
             } else {
-
                 request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
             }
         }

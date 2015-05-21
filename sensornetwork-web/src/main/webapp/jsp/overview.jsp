@@ -61,8 +61,7 @@
                                                     <b><c:out value="${node.type}"/> <c:out value="${node.id}"/></b><br>
                                                     <span class="text-muted" ><c:out value="${node.value}"/></span>
                                                 </div>
-                                                <br>
-                                                <br>
+                                               
                                             </div>
                                         </c:forEach>
                                     </div></div>
