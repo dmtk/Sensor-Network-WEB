@@ -12,7 +12,6 @@
         <script src="javascript/bootstrap.js"></script>
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
-        <script src="javascript/basic.js"></script>
         <link rel="stylesheet" href="css/basic.css" media="screen" />
 
     </head>
@@ -37,7 +36,7 @@
 
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
-                         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
+                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
                         <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
                     </ul>
                 </div>
@@ -46,13 +45,11 @@
         <br>
         <br>
         <br>
+        Test<div id="displayTemp"></div>
+        <br>
+        <br>
+        <br>
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-        <div id="container2" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
         <div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-
-
-
     </body>
 </html>
