@@ -1,5 +1,7 @@
 package com.github.dmtk;
 
+import com.github.dmtk.entity.NetworkEventFacadeLocal;
+import com.github.dmtk.entity.SensorNodeFacadeLocal;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
@@ -95,12 +97,15 @@ public class Controller extends HttpServlet {
 
         if (0 != inputList.size()) {
             page--;//index starts from 0 in List<Object>
-
             Collections.reverse(inputList);//last event become first in list
             int start = page * itemsPerPage;
             int end = (page + 1) * itemsPerPage;
             if (end >= inputList.size()) {
+
                 end = inputList.size() - 1;
+                if (start > end) {
+                    start = 0;
+                }
             }
             List<Object> result = inputList.subList(start, end);
 
@@ -123,7 +128,7 @@ public class Controller extends HttpServlet {
                 session.setAttribute("user", login);
                 session.setAttribute("password", password);
                 session.setAttribute("authenticated", authenticated);
-                request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
+                doGet(request, response);
             } else {
                 request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
             }

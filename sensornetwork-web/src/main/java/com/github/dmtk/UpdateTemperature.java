@@ -1,5 +1,6 @@
 package com.github.dmtk;
 
+import com.github.dmtk.logic.NetworkController;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.HashMap;
@@ -15,21 +16,12 @@ import javax.servlet.http.HttpServletResponse;
 public class UpdateTemperature extends HttpServlet {
 
     @EJB
-    private ComPortFacade comport;
-
-    @Override
-    public void init() {
-        comport.emulate();
-    }
-
-    public UpdateTemperature() {
-
-    }
+    private NetworkController controller;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-
+        
     }
 
     @Override
@@ -40,15 +32,10 @@ public class UpdateTemperature extends HttpServlet {
         boolean isValid = false;
         String temperature = request.getParameter("temperature");
         isValid = true;
-        temperature = comport.getData();
+        temperature = controller.getData();
         map.put("temperature", temperature);
         map.put("isValid", isValid);
         write(response, map);
-    }
-
-    @Override
-    public String getServletInfo() {
-        return "Short description";
     }
 
     private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
