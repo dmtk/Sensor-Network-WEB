@@ -67,7 +67,7 @@ public class Controller extends HttpServlet {
                 if (request.getParameter("items") != null) {
                     itemsPerPage = Integer.parseInt(request.getParameter("items"));
                 }
-                request.setAttribute("events", getSubList(networkEventFacade.findAll(), page, itemsPerPage));
+                request.setAttribute("events", getSubList(networkEventFacade.findById(1), page, itemsPerPage));
                 request.getRequestDispatcher("jsp/reports.jsp").forward(request, response);
             } else if ("/settings".equals(request.getServletPath())) {
                 request.getRequestDispatcher("jsp/settings.jsp").forward(request, response);
