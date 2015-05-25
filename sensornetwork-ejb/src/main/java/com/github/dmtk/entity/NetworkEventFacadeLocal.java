@@ -20,6 +20,6 @@ public interface NetworkEventFacadeLocal {
 
     int count();
     
-    List<NetworkEvent> findById(int id);
+    List<NetworkEvent> findById(Integer id);
     
 }

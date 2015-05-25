@@ -59,7 +59,7 @@
                                                     <br>
                                                     <br>
                                                     <b><c:out value="${node.type}"/> <c:out value="${node.id}"/></b><br>
-                                                    <span class="text-muted" ><c:out value="${node.value}"/></span>
+                                                    <span class="text-muted" ><c:out value="${node.lastMeasuredValue}"/></span>
                                                 </div>
                                                
                                             </div>
@@ -87,7 +87,7 @@
                                                 <td class="col-md-1"><c:out value="${event.source.id}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.type}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.name}"/></td>
-                                                <td class="col-md-1"><c:out value="${event.source.value}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.value}"/></td>
                                                 <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.note}"/></td>
                                                 <td class="col-md-2"><fmt:formatDate type="both" value="${event.date}"/></td>

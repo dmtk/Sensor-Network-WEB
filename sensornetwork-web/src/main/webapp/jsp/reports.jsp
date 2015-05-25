@@ -70,7 +70,7 @@
                                                 <td class="col-md-1"><c:out value="${event.source.id}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.type}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.name}"/></td>
-                                                <td class="col-md-1"><c:out value="${event.source.value}"/></td>
+                                                <td class="col-md-1"><c:out value="${event.value}"/></td>
                                                 <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
                                                 <td class="col-md-1"><c:out value="${event.source.note}"/></td>
                                                 <td class="col-md-2"><fmt:formatDate type="both" value="${event.date}"/></td>
@@ -80,16 +80,7 @@
                                     </tbody>
                                 </table>
                             </div>
-                            <ul class="pagination">
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="overview?page=2">2</a></li>
-                                <li><a href="overview?page=3">3</a></li>
-                                <li><a href="overview?page=4">4</a></li>
-                                <li><a href="overview?page=5">5</a></li>
-                            </ul>
-
-
-                        </div>
+                          </div>
                     </td>
                 </tr>
             </div>

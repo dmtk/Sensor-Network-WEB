@@ -20,9 +20,9 @@ public class NetworkEventFacade extends AbstractFacade<NetworkEvent> implements 
         super(NetworkEvent.class);
     }
     
-   public List<NetworkEvent> findById(int id) {
-        TypedQuery<NetworkEvent> query = em.createNamedQuery("NetworkEvent.findById n WHERE n.source.id = : id", NetworkEvent.class);
-        query.setParameter("id", "%" + id + "%");
+   public List<NetworkEvent> findById(Integer id) {
+        TypedQuery<NetworkEvent> query = em.createNamedQuery("NetworkEvent.findById", NetworkEvent.class);
+        query.setParameter("id",id);
         return query.getResultList();
     }
 }

@@ -60,7 +60,7 @@
                                                     <br>
                                                     <br>
                                                     <b><c:out value="${node.type}"/> <c:out value="${node.id}"/></b><br>
-                                                    <span class="text-muted" ><c:out value="${node.value}"/></span>
+                                                    <span class="text-muted" ><c:out value="${node.lastMeasuredValue}"/></span>
                                                 </div>
                                             </div>
                                         </c:forEach>

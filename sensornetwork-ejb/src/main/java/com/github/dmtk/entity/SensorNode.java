@@ -15,7 +15,7 @@ public class SensorNode implements Serializable {
     private Long parentid;
     private String measuredQuantity = "Temperature";
     private int adcValue = 10; //quantized value received directly from analog-to-digital converter
-    private double value = 28.5;
+    private double lastMeasuredValue;
     private Location loc;
     private String note = "Warning";
     private NodeType type = NodeType.SENSOR;
@@ -62,14 +62,6 @@ public class SensorNode implements Serializable {
 
     public void setMeasuredQuantity(String measuredQuantity) {
         this.measuredQuantity = measuredQuantity;
-    }
-
-    public double getValue() {
-        return value;
-    }
-
-    public void setValue(double value) {
-        this.value = value;
     }
 
     public String getNote() {
@@ -127,6 +119,20 @@ public class SensorNode implements Serializable {
 
     public void setType(NodeType type) {
         this.type = type;
+    }
+
+    /**
+     * @return the lastMeasuredValue
+     */
+    public double getLastMeasuredValue() {
+        return lastMeasuredValue;
+    }
+
+    /**
+     * @param lastMeasuredValue the lastMeasuredValue to set
+     */
+    public void setLastMeasuredValue(double lastMeasuredValue) {
+        this.lastMeasuredValue = lastMeasuredValue;
     }
 
    

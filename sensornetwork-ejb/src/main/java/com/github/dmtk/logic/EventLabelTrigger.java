@@ -24,7 +24,7 @@ public class EventLabelTrigger{
     
     public static void chooseLabel(NetworkEvent e) {
         
-        double value = e.getSource().getValue();
+        double value = e.getValue();
         if ((dangerValuelow < value) && (value <= dangerValuehigh)) {
             e.setLabel("danger");
         } else if ((warningValuelow < value) && (value <= warningValuehigh)) {

@@ -33,7 +33,7 @@ function plot1(data) {
         },
         xAxis: {
             type: 'datetime',
-            minRange: 14 * 24 * 3600000 // fourteen days
+            minRange: 300 * 1000 // fourteen days
         },
         yAxis: {
             title: {
@@ -67,7 +67,7 @@ function plot1(data) {
         series: [{
                 type: 'area',
                 name: 'C',
-                pointInterval: 24*3600*1000,
+                pointInterval: 1000,
                 pointStart: Date.now(),
                 data: data}]
     });

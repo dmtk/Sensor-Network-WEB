@@ -30,20 +30,22 @@ public class NetworkController {
 
         if (!activeNodePull.containsKey(id)) {
             SensorNode sensorNode = new SensorNode(id);
-            sensorNode.setValue(value);
+            sensorNode.setLastMeasuredValue(value);
             activeNodePull.put(id, sensorNode);
             sensorNodeFacade.create(sensorNode);
             NetworkEvent n = new NetworkEvent();
             n.setSource(sensorNode);
             n.setDate(new Date());
+            n.setValue(value);
             EventLabelTrigger.chooseLabel(n);
             networkEventFacade.create(n);
         } else {
-            activeNodePull.get(id).setValue(value);
+            activeNodePull.get(id).setLastMeasuredValue(value);
             sensorNodeFacade.edit(activeNodePull.get(id));
             NetworkEvent n = new NetworkEvent();
             n.setDate(new Date());
             n.setSource(activeNodePull.get(id));
+            n.setValue(value);
             EventLabelTrigger.chooseLabel(n);
             networkEventFacade.edit(n);
         }

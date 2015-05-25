@@ -32,14 +32,14 @@ public class Plot extends HttpServlet {
             throws ServletException, IOException {
         System.out.println("plot post");
         
-        List listEvents= networkEventFacade.findAll().subList(0, 1000);
+        List listEvents= networkEventFacade.findById(4).subList(0, 40);
         
         double[] data = new double[listEvents.size()];
         Iterator it = listEvents.iterator();
         int j=0;
         while (it.hasNext()) {
             
-            data[j]=((NetworkEvent)it.next()).getSource().getValue();
+            data[j]=((NetworkEvent)it.next()).getValue();
             j++;
         }
         
