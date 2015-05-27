@@ -30,10 +30,7 @@ public class Plot extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        System.out.println("plot post");
-        
         List listEvents= networkEventFacade.findById(4).subList(0, 40);
-        
         double[] data = new double[listEvents.size()];
         Iterator it = listEvents.iterator();
         int j=0;
