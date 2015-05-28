@@ -46,20 +46,6 @@
         <br>
         <br>
         <br>
-        <div class="container-fluid">
-            <div class="row">
-                <tr>
-                    <td>
-                        <div class="col-md-12 main">
-                            <c:set var="now" value="<%=new java.util.Date()%>" />
-
-                            <p>Formatted Date (1): <fmt:formatDate type="time" 
-                                            value="${now}" /></p>
-
-                        </div>
-                    </td>
-                </tr>
-            </div>
-        </div>
+       //TO DO
     </body>
 </html>

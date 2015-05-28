@@ -9,7 +9,6 @@ function show()
         url: 'update',
         type: 'post',
         dataType: 'json',
-        data: $('#updateTemperature').serialize(),
         cache: false,
         success: function (data) {
             if (data.isValid) {

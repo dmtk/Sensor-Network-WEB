@@ -4,14 +4,16 @@ $(document).ready(function () {
 
 function show()
 {
+
+    var e = document.getElementById("sel1");
+    var nodeId = e.options[e.selectedIndex].text;
     $.ajax({
         url: 'plot',
         type: 'post',
         dataType: 'json',
-        cache: false,
+        data: "nodeId=" + nodeId,
         success: function (data) {
             if (data.isValid) {
-                               
                 plot1(data.temperature);
             }
         }
@@ -33,7 +35,7 @@ function plot1(data) {
         },
         xAxis: {
             type: 'datetime',
-            minRange: 300 * 1000 // fourteen days
+            minRange: 300 * 1000
         },
         yAxis: {
             title: {

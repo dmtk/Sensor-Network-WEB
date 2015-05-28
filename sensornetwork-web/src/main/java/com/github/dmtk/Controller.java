@@ -49,6 +49,7 @@ public class Controller extends HttpServlet {
             } else if ("/export".equals(request.getServletPath())) {
                 request.getRequestDispatcher("jsp/export.jsp").forward(request, response);
             } else if ("/graphics".equals(request.getServletPath())) {
+                request.setAttribute("nodes", sensorNodeFacade.findAll());
                 request.getRequestDispatcher("jsp/graph.jsp").forward(request, response);
             } else if ("/logout".equals(request.getServletPath())) {
                 session.invalidate();

@@ -1,4 +1,5 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
     <head>
@@ -33,7 +34,6 @@
                         <li><a href="rawdata" ><span class="glyphicon glyphicon-flash"></span> Raw data</a></li>                                
                         <li><a href="settings"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
                         <li><a href="about"><span class="glyphicon glyphicon-info-sign"></span>About</a></li>
-
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
                         <li><a href="#"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
@@ -45,11 +45,22 @@
         <br>
         <br>
         <br>
-        Test<div id="displayTemp"></div>
         <br>
         <br>
+        <br>
+
+        <div class="form-group center-block" style="width: 10%;">
+            <label for="sel1">Select node:</label>
+            <select class="form-control" id="sel1" onChange="javascript:show();">
+                <c:forEach var="node" items="${nodes}">
+                    <option><c:out value="${node.id}"/></option>                      
+                </c:forEach>
+            </select>
+        </div>
+        <br>
+
         <br>
         <div id="container" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
-        <div id="container3" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+
     </body>
 </html>

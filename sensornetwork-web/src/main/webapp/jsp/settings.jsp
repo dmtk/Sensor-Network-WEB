@@ -45,56 +45,6 @@
         <br>
         <br>
         <br>
-        <div class="container-fluid">
-            <div class="row">
-                <tr>
-                    <td>
-                        <div class="col-md-10 main">
-                            <c:set var="now" value="<%=new java.util.Date()%>" />
-
-                            <p>Formatted Date (1): <fmt:formatDate type="time" 
-                                            value="${now}" /></p>
-                            <div class="form-group">
-                                <label for="comment">Comment:</label>
-                                <textarea class="form-control" rows="5" id="comment"></textarea>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="">Option 1</label>
-                            </div>
-                            <div class="checkbox">
-                                <label><input type="checkbox" value="">Option 2</label>
-                            </div>
-                            <div class="checkbox disabled">
-                                <label><input type="checkbox" value="" disabled>Option 3</label>
-                            </div>
-                            <label class="checkbox-inline"><input type="checkbox" value="">Option 1</label>
-                            <label class="checkbox-inline"><input type="checkbox" value="">Option 2</label>
-                            <label class="checkbox-inline"><input type="checkbox" value="">Option 3</label>
-                            <div class="radio">
-                                <label><input type="radio" name="optradio">Option 1</label>
-                            </div>
-                            <div class="radio">
-                                <label><input type="radio" name="optradio">Option 2</label>
-                            </div>
-                            <div class="radio disabled">
-                                <label><input type="radio" name="optradio" disabled>Option 3</label>
-                            </div>
-                            <label class="radio-inline"><input type="radio" name="optradio">Option 1</label>
-                            <label class="radio-inline"><input type="radio" name="optradio">Option 2</label>
-                            <label class="radio-inline"><input type="radio" name="optradio">Option 3</label> 
-                            <div class="form-group">
-                                <label for="sel1">Select list:</label>
-                                <select class="form-control" id="sel1">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
-                                </select>
-                            </div>
-                        </div>
-                    </td>
-                </tr>
-            </div>
-        </div>
+        //TO DO
     </body>
 </html>
