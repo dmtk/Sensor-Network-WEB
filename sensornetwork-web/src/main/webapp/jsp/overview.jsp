@@ -4,110 +4,277 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <!-- start: Meta -->
         <meta charset="utf-8">
-        <title>Network</title>
-        <meta name="author" content="Dmytro Martynyuk"/>
-        <meta name="description" content="Sensor network"/>
-        <meta name="keywords" content="AJAX"/>
+        <title>Overview</title> 
+        <meta name="description" content="About"/>
+        <meta name="keywords" content="About" />
+        <meta name="author" content="AI"/>
+        <!-- end: Meta -->
+
+        <!-- start: Mobile Specific -->
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <!-- end: Mobile Specific -->
+
+        <!-- start: CSS -->
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap-responsive.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700">
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif">
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo">
+        <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Economica:700,400italic">
+        <!-- end: CSS -->
+
+        <!-- Le HTML5 shim, for IE6-8 support of HTML5 elements -->
+        <!--[if lt IE 9]>
+          <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+        <![endif]-->
+
+
+        <!-- Bootstrap core CSS
         <script src="javascript/jquery-1.11.2.js"></script>
         <script src="javascript/bootstrap.js"></script>
-        <!-- Bootstrap core CSS -->
-        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/bootstrap.css" rel="stylesheet"> -->
         <link href="css/basic.css" rel="stylesheet">
     </head>
     <body>
-        <nav id="custom-bootstrap-menu" class="navbar navbar-default navbar-fixed-top" role="navigation">
-            <div class="container-fluid">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="overview">
-                        TI Sub-1GHz sensor network</a>
-                </div>
-                <div>
-                    <ul class="nav navbar-nav">
-                        <li class="active"><a href="overview"><span class="glyphicon glyphicon-home"></span> Overview</a></li>
-                        <li><a href="reports" ><span class="glyphicon glyphicon-th-list"></span> Reports</a></li>
-                        <li><a href="analitics" ><span class="glyphicon glyphicon-stats"></span> Analytics</a></li>
-                        <li><a href="export" ><span class="glyphicon glyphicon-export"></span> Export</a></li>
-                        <li><a href="graphics" ><span class="glyphicon glyphicon-signal"></span> Graphics</a></li>
-                        <li><a href="map"><span class="glyphicon glyphicon-map-marker"></span> Map</a></li>
-                        <li><a href="rawdata" ><span class="glyphicon glyphicon-flash"></span> Raw data</a></li>                                
-                        <li><a href="settings"><span class="glyphicon glyphicon-cog"></span>Settings</a></li>
-                        <li><a href="about"><span class="glyphicon glyphicon-info-sign"></span>About</a></li>
-                    </ul>
-                    <ul class="nav navbar-nav navbar-right">
-                        <li><a href="#"><span class="glyphicon glyphicon-user"></span> Admin</a></li>
-                        <li><a href="logout"><span class="glyphicon glyphicon-log-out"></span>Logout</a></li>
-                    </ul>
-                </div>
-            </div>
-        </nav>
-        <br>
-        <br>
-        <br>
-        <div class="container-fluid">
-            <div class="row">
-                <tr>
-                    <td>
-                        <div class="col-md-12 main">
-                            <div class="panel panel-default panel-success">
-                                <div class="panel-heading">Sensor nodes</div>
-                                <div class="panel-body">
-                                    <div class="row placeholders">
-                                        <c:forEach var="node" items="${nodes}">
-                                            <div class="col-md-2 placeholder">
-                                                <div class="sensor" align="center">
-                                                    <br>
-                                                    <br>
-                                                    <b><c:out value="${node.type}"/> <c:out value="${node.id}"/></b><br>
-                                                    <span class="text-muted" ><c:out value="${node.lastMeasuredValue}"/></span>
-                                                </div>
-                                               
-                                            </div>
-                                        </c:forEach>
-                                    </div></div>
+        <!--start: Header -->
+        <header>
+
+            <!--start: Container -->
+            <div class="container">
+
+                <!--start: Row -->
+                <div class="row">
+
+                    <!--start: Logo -->
+                    <div class="logo span3">
+
+                        <a class="brand" href="#"><img src="img/logo.png"></a>
+
+                    </div>
+                    <!--end: Logo -->
+
+                    <!--start: Navigation -->
+                    <div class="span9">
+
+                        <div class="navbar navbar-inverse">
+                            <div class="navbar-inner">
+                                <div class="container">
+                                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
+                                        <span class="icon-bar"></span>
+
+                                    </a>
+                                    <div class="nav-collapse collapse">
+                                        <ul class="nav">
+
+                                            <li class="active"><a href="overview">Overview</a></li>
+                                            <li class="dropdown">
+                                                <a href="reports" class="dropdown-toggle" data-toggle="dropdown">Data <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="reports" >Reports</a></li>
+                                                    <li><a href="analitics" >Analytics</a></li>
+                                                    <li><a href="export" >Export</a></li>
+                                                    <li><a href="graphics" >Graphics</a></li>
+                                                    <li class="divider"></li>
+                                                    <li class="nav-header">Nav header</li>
+                                                    <li><a href="#">Separated link</a></li>
+                                                    <li><a href="#">One more separated link</a></li>
+                                                </ul>
+                                            </li>
+
+
+                                            <li><a href="map"> Map</a></li>
+                                            <li><a href="rawdata" >Realtime data</a></li>                                
+                                            <li><a href="settings">Settings</a></li>
+                                            <li><a href="about">About</a></li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${user}"/> <b class="caret"></b></a>
+                                                <ul class="dropdown-menu">
+                                                    <li><a href="#">Action</a></li>
+                                                    <li><a href="#">Another action</a></li>
+                                                    <li><a href="#">Something else here</a></li>
+                                                    <li class="divider"></li>
+                                                    <li class="nav-header">Nav header</li>
+                                                    <li><a href="#">Separated link</a></li>
+                                                    <li><a href="#">One more separated link</a></li>
+                                                    <li><a href="logout">Logout</a></li>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>
                             </div>
-                            <h3 class="sub-header" >Network events</h3>
-                            <div class="table-responsive" align="left">
-                                <table class="table table-striped table-bordered">
-                                    <thead>
-                                        <tr>
-                                            <th class="col-md-1">#</th>
-                                            <th class="col-md-1">Type</th>
-                                            <th class="col-md-1"># sensor node</th>
-                                            <th class="col-md-1">Value</th>
-                                            <th class="col-md-2">Measurement quantity</th>
-                                            <th class="col-md-1">Note</th>
-                                            <th class="col-md-2">Date</th>
-                                            <th class="col-md-1">Label</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <c:forEach var="event" items="${events}">
-                                            <tr class="<c:out value="${event.label}"/>">
-                                                <td class="col-md-1"><c:out value="${event.source.id}"/></td>
-                                                <td class="col-md-1"><c:out value="${event.source.type}"/></td>
-                                                <td class="col-md-1"><c:out value="${event.source.name}"/></td>
-                                                <td class="col-md-1"><c:out value="${event.value}"/></td>
-                                                <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
-                                                <td class="col-md-1"><c:out value="${event.source.note}"/></td>
-                                                <td class="col-md-2"><fmt:formatDate type="both" value="${event.date}"/></td>
-                                                <td class="col-md-1"><span class="label label-<c:out value="${event.label}"/>"><c:out value="${event.label}"/></span></td>
-                                            </tr>
-                                        </c:forEach> 
-                                    </tbody>
-                                </table>
-                            </div>
-                            <ul class="pagination">
-                                <li class="active"><a href="#">1</a></li>
-                                <li><a href="overview?page=2">2</a></li>
-                                <li><a href="overview?page=3">3</a></li>
-                                <li><a href="overview?page=4">4</a></li>
-                                <li><a href="overview?page=5">5</a></li>
-                            </ul>
                         </div>
-                    </td>
-                </tr>
+
+                    </div>	
+                    <!--end: Navigation -->
+
+                </div>
+                <!--end: Row -->
+
+            </div>
+            <!--end: Container-->			
+
+        </header>
+        <!--end: Header-->
+
+        <!--start: Wrapper-->
+        <div id="wrapper">
+            <div class="container">
+                <div class="row">
+                    <tr>
+                        <td>
+                            <div class="col-md-12 main">
+                                <div class="panel panel-success">
+                                    <div class="panel-heading">Sensor nodes</div>
+                                    <div class="panel-body">
+                                        <div class="row placeholders">
+                                            <c:forEach var="node" items="${nodes}">
+                                                <div class="col-md-2 placeholder">
+                                                    <div class="sensor" align="center">
+                                                        <br>
+                                                        <br>
+                                                        <b><c:out value="${node.type}"/> <c:out value="${node.id}"/></b><br>
+                                                        <span class="text-muted" ><c:out value="${node.lastMeasuredValue}"/></span>
+                                                    </div>
+
+                                                </div>
+                                            </c:forEach>
+                                        </div></div>
+                                </div>
+                                <h3 class="sub-header" >Network events</h3>
+                                <div class="table-responsive" align="left">
+                                    <table class="table table-striped table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th class="col-md-1">#</th>
+                                                <th class="col-md-1">Type</th>
+                                                <th class="col-md-1"># sensor node</th>
+                                                <th class="col-md-1">Value</th>
+                                                <th class="col-md-2">Measurement quantity</th>
+                                                <th class="col-md-1">Note</th>
+                                                <th class="col-md-2">Date</th>
+                                                <th class="col-md-1">Label</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <c:forEach var="event" items="${events}">
+                                                <tr class="<c:out value="${event.label}"/>">
+                                                    <td class="col-md-1"><c:out value="${event.source.id}"/></td>
+                                                    <td class="col-md-1"><c:out value="${event.source.type}"/></td>
+                                                    <td class="col-md-1"><c:out value="${event.source.name}"/></td>
+                                                    <td class="col-md-1"><c:out value="${event.value}"/></td>
+                                                    <td class="col-md-2"><c:out value="${event.source.measuredQuantity}"/></td>
+                                                    <td class="col-md-1"><c:out value="${event.source.note}"/></td>
+                                                    <td class="col-md-2"><fmt:formatDate type="both" value="${event.date}"/></td>
+                                                    <td class="col-md-1"><span class="label label-<c:out value="${event.label}"/>"><c:out value="${event.label}"/></span></td>
+                                                </tr>
+                                            </c:forEach> 
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination">
+                                    <ul>
+                                        <li class="active"><a href="#">1</a></li>
+                                        <li><a href="overview?page=2">2</a></li>
+                                        <li><a href="overview?page=3">3</a></li>
+                                        <li><a href="overview?page=4">4</a></li>
+                                        <li><a href="overview?page=5">5</a></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </td>
+                    </tr>
+                </div>
             </div>
         </div>
+
+        <!-- start: Footer Menu -->
+        <div id="footer-menu" class="hidden-tablet hidden-phone">
+
+            <!-- start: Container -->
+            <div class="container">
+
+                <!-- start: Row -->
+                <div class="row">
+
+
+
+                    <!-- start: Footer Menu Links-->
+                    <div class="span9">
+
+                        <div id="footer-menu-links">
+
+                            <ul id="footer-nav">
+
+
+                                <li><a href="overview">Overview</a></li>
+                                <li><a href="reports" >Reports</a></li>
+                                <li><a href="analitics" >Analytics</a></li>
+                                <li><a href="export" >Export</a></li>
+                                <li><a href="graphics" >Graphics</a></li>
+                                <li><a href="map"> Map</a></li>
+                                <li><a href="rawdata" >Realtime data</a></li>                                
+                                <li><a href="settings">Settings</a></li>
+                                <li><a href="about">About</a></li>
+
+
+
+                            </ul>
+
+                        </div>
+
+                    </div>
+                    <!-- end: Footer Menu Links-->
+
+                    <!-- start: Footer Menu Back To Top -->
+                    <div class="span1">
+
+                        <div id="footer-menu-back-to-top">
+                            <a href="#"></a>
+                        </div>
+
+                    </div>
+                    <!-- end: Footer Menu Back To Top -->
+
+                </div>
+                <!-- end: Row -->
+
+            </div>
+            <!-- end: Container  -->	
+
+        </div>	
+        <!-- end: Footer Menu -->
+
+
+
+        <!-- start: Copyright -->
+        <div id="copyright">
+
+            <!-- start: Container -->
+            <div class="container">
+
+                <p>
+                    &copy; 2016,  Designed by 
+                </p>
+
+            </div>
+            <!-- end: Container  -->
+
+        </div>	
+        <!-- end: Copyright -->
+
+        <!-- start: Java Script -->
+        <!-- Placed at the end of the document so the pages load faster -->
+        <script src="js/jquery-1.8.2.js"></script>
+        <script src="js/bootstrap.js"></script>
+        <script src="js/flexslider.js"></script>
+        <script src="js/carousel.js"></script>
+        <script src="js/jquery.cslider.js"></script>
+        <script src="js/slider.js"></script>
+        <script def src="js/custom.js"></script>
     </body>
+
 </html>

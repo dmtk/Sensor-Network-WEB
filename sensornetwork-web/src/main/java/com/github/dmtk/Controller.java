@@ -2,9 +2,8 @@ package com.github.dmtk;
 
 import com.github.dmtk.entity.NetworkEventFacadeLocal;
 import com.github.dmtk.entity.SensorNodeFacadeLocal;
+import com.github.dmtk.logic.NetworkController;
 import java.io.IOException;
-import java.util.Collections;
-import java.util.List;
 import javax.ejb.EJB;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -13,11 +12,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-@WebServlet(name = "Controller", urlPatterns = {
+/*@WebServlet(name = "Controller", urlPatterns = {
     "/analitics",
     "/controller",
     "/export",
-    "/index.html",
     "/jsp",
     "/overview",
     "/about",
@@ -27,92 +25,92 @@ import javax.servlet.http.HttpSession;
     "/rawdata",
     "/reports",
     "/graphics",
-    "/authenticate"})
-
+    "/authenticate",
+    "/reconnect",
+    "/guest"})*/
 public class Controller extends HttpServlet {
 
-    @EJB
+    /*@EJB
     private NetworkEventFacadeLocal networkEventFacade;
     @EJB
     private SensorNodeFacadeLocal sensorNodeFacade;
+    @EJB
+    private NetworkController controller;
 
     @Override
+
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
 
-        HttpSession session = request.getSession();
+        
+        if ("/guest".equals(request.getServletPath())) {
+            
+
+        }
         if (session.getAttribute("authenticated") != null && session.getAttribute("authenticated").equals(true)) {
-            if ("/about".equals(request.getServletPath())) {
-                request.getRequestDispatcher("jsp/about.jsp").forward(request, response);
-            } else if ("/analitics".equals(request.getServletPath())) {
-                request.getRequestDispatcher("jsp/analitics.jsp").forward(request, response);
-            } else if ("/export".equals(request.getServletPath())) {
-                request.getRequestDispatcher("jsp/export.jsp").forward(request, response);
-            } else if ("/graphics".equals(request.getServletPath())) {
-                request.setAttribute("nodes", sensorNodeFacade.findAll());
-                request.getRequestDispatcher("jsp/graph.jsp").forward(request, response);
-            } else if ("/logout".equals(request.getServletPath())) {
-                session.invalidate();
-                request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-            } else if ("/map".equals(request.getServletPath())) {
-                request.setAttribute("nodes", sensorNodeFacade.findAll());
-                request.getRequestDispatcher("jsp/map.jsp").forward(request, response);
-            } else if ("/rawdata".equals(request.getServletPath())) {
-                request.getRequestDispatcher("jsp/rawdata.jsp").forward(request, response);
-            } else if ("/reports".equals(request.getServletPath())) {
-                int page = 1;
-                if (request.getParameter("page") != null) {
-                    page = Integer.parseInt(request.getParameter("page"));
-                }
-                int itemsPerPage = 20;
-                if (request.getParameter("items") != null) {
-                    itemsPerPage = Integer.parseInt(request.getParameter("items"));
-                }
-                request.setAttribute("events", getSubList(networkEventFacade.findAll(), page, itemsPerPage));
-                request.getRequestDispatcher("jsp/reports.jsp").forward(request, response);
-            } else if ("/settings".equals(request.getServletPath())) {
-                request.getRequestDispatcher("jsp/settings.jsp").forward(request, response);
-            } else {
-                int page = 1;
-                if (request.getParameter("page") != null) {
-                    page = Integer.parseInt(request.getParameter("page"));
-                }
-                int itemsPerPage = 20;
-                if (request.getParameter("items") != null) {
-                    itemsPerPage = Integer.parseInt(request.getParameter("items"));
-                }
-                request.setAttribute("events", getSubList(networkEventFacade.findAll(), page, itemsPerPage));
-                request.setAttribute("nodes", sensorNodeFacade.findAll());
-                request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
+            String path = request.getServletPath();
+
+            switch (path) {
+
+                case "/about":
+                    request.getRequestDispatcher("jsp/about.jsp").forward(request, response);
+                    break;
+                case "/analitics":
+
+                    request.setAttribute("avg", networkEventFacade.getAvg(1));
+                    request.getRequestDispatcher("jsp/analitics.jsp").forward(request, response);
+
+                    break;
+                case "/export":
+                    request.getRequestDispatcher("jsp/export.jsp").forward(request, response);
+                    break;
+                case "/graphics":
+                    request.setAttribute("nodes", sensorNodeFacade.findAll());
+                    request.getRequestDispatcher("jsp/graph.jsp").forward(request, response);
+                    break;
+                case "/logout":
+                    session.invalidate();
+                    request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
+                    break;
+                case "/map":
+                    request.setAttribute("nodes", sensorNodeFacade.findAll());
+                    request.getRequestDispatcher("jsp/map.jsp").forward(request, response);
+                    break;
+                case "/rawdata":
+                    request.getRequestDispatcher("jsp/rawdata.jsp").forward(request, response);
+                    break;
+                case "/reports":
+                    int page = 1;
+                    if (request.getParameter("page") != null) {
+                        page = Integer.parseInt(request.getParameter("page"));
+                    }
+                    int itemsPerPage = 20;
+                    if (request.getParameter("items") != null) {
+                        itemsPerPage = Integer.parseInt(request.getParameter("items"));
+                    }
+                    request.setAttribute("events", networkEventFacade.findByDate(itemsPerPage));
+                    request.getRequestDispatcher("jsp/reports.jsp").forward(request, response);
+                    break;
+                case "/settings":
+                    request.getRequestDispatcher("jsp/settings.jsp").forward(request, response);
+                    break;
+                case "/reconnect":
+                    controller.reconnect();
+                    request.getRequestDispatcher("jsp/rawdata.jsp").forward(request, response);
+                    break;
+                default:
+
+                    int itemsPerWebPage = 20;
+                    request.setAttribute("events", networkEventFacade.findByDate(itemsPerWebPage));
+                    request.setAttribute("nodes", sensorNodeFacade.findAll());
+                    request.getRequestDispatcher("jsp/overview.jsp").forward(request, response);
+                    break;
             }
         } else {
 
             String initialPage = request.getServletPath();
             session.setAttribute("initialPage", initialPage);
             request.getRequestDispatcher("jsp/login.jsp").forward(request, response);
-        }
-
-    }
-
-    private List<Object> getSubList(List inputList, int page, int itemsPerPage) {
-
-        if (0 != inputList.size()) {
-            page--;//index starts from 0 in List<Object>
-            Collections.reverse(inputList);//last event become first in list
-            int start = page * itemsPerPage;
-            int end = (page + 1) * itemsPerPage;
-            if (end >= inputList.size()) {
-
-                end = inputList.size() - 1;
-                if (start > end) {
-                    start = 0;
-                }
-            }
-            List<Object> result = inputList.subList(start, end);
-
-            return result;
-        } else {
-            return inputList;
         }
 
     }
@@ -135,6 +133,5 @@ public class Controller extends HttpServlet {
             }
         }
 
-    }
-
+    }*/
 }

@@ -46,6 +46,16 @@
             <artifactId>sensornetwork-ejb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.scream3r</groupId>
+                    <artifactId>jssc</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>org.postgresql</groupId>
+                    <artifactId>postgresql</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
             <groupId>com.github.dmtk</groupId>

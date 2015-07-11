@@ -19,7 +19,10 @@ public interface NetworkEventFacadeLocal {
     List<NetworkEvent> findRange(int[] range);
 
     int count();
-    
-    List<NetworkEvent> findById(Integer id);
-    
+
+    List<NetworkEvent> findById(Integer id, Integer count);
+
+    List<NetworkEvent> findByDate(Integer count);
+
+    Double getAvg(Integer id);
 }

@@ -1,73 +1,16 @@
 @CHARSET "UTF-8";
 .sensor { 
     border: 10px solid #4679bd;
-    border-radius: 150px;
-    height:150px;
-    width:150px;
+    border-radius: 90px;
+    height:90px;
+    width:90px;
 }
 
 .login {
-  width: 20%; 
-  height: 40%;
-  padding: 40px;
-  overflow: auto;
-  margin: auto;
-  position: absolute;
-  top: 0; left: 0; bottom: 0; right: 0;
-}
-
-.image{
-    position: absolute;
-    height: 100%; 
-    width: 100%; 
-}
-
-p.large{
-    font-size: 20px;
-
-}
-p.small{
-    font-size: 15px;
-}
-p#displayTemp{
-    display: none;
-}
-
-#custom-bootstrap-menu.navbar-default .navbar-brand {
-    color: rgba(255, 255, 255, 1);
-}
-#custom-bootstrap-menu.navbar-default {
-    font-size: 14px;
-    background-color: rgba(125, 125, 125, 1);
-    border-width: 0px;
-    border-radius: 7px;
-}
-#custom-bootstrap-menu.navbar-default .navbar-nav>li>a {
-    color: rgba(255, 255, 255, 1);
-    background-color: rgba(125, 125, 125, 1);
-}
-#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:hover,
-#custom-bootstrap-menu.navbar-default .navbar-nav>li>a:focus {
-    color: rgba(40, 47, 145, 1);
-    background-color: rgba(125, 125, 125, 1);
-}
-#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a,
-#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:hover,
-#custom-bootstrap-menu.navbar-default .navbar-nav>.active>a:focus {
-    color: rgba(255, 255, 255, 1);
-    background-color: rgba(121, 131, 163, 1);
-}
-#custom-bootstrap-menu.navbar-default .navbar-toggle {
-    border-color: #7983a3;
-}
-#custom-bootstrap-menu.navbar-default .navbar-toggle:hover,
-#custom-bootstrap-menu.navbar-default .navbar-toggle:focus {
-    background-color: #7983a3;
-}
-#custom-bootstrap-menu.navbar-default .navbar-toggle .icon-bar {
-    background-color: #7983a3;
-}
-#custom-bootstrap-menu.navbar-default .navbar-toggle:hover .icon-bar,
-#custom-bootstrap-menu.navbar-default .navbar-toggle:focus .icon-bar {
-    background-color: #7d7d7d;
+    margin: 0px auto;
+    margin-top: 0px;
+    margin-right: auto;
+    margin-bottom: 0px;
+    margin-left: auto;
+    width: 340px;
 }

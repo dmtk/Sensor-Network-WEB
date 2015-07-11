@@ -10,12 +10,13 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
-
+import org.eclipse.californium.core.CoapClient;
+import org.eclipse.californium.core.CoapHandler;
+import org.eclipse.californium.core.CoapObserveRelation;
+import org.eclipse.californium.core.CoapResponse;
 
 @Singleton
 public class NetworkController {
@@ -26,8 +27,8 @@ public class NetworkController {
     private SensorNodeFacadeLocal sensorNodeFacade;
     @EJB
     private NetworkEventFacadeLocal networkEventFacade;
-         
-    public synchronized void handle(int id, int value) {
+
+    public synchronized void handle(int id, double value) {
 
         if (!activeNodePull.containsKey(id)) {
             SensorNode sensorNode = new SensorNode(id);
@@ -52,39 +53,64 @@ public class NetworkController {
         }
 
     }
-    
-       
-    private String data = "";
-    
+
+    private String data = "";//realtime received(emulated) data
+
+    boolean coapIsConnected = false;
+
     @PostConstruct
-    public void emulate() {
+    public void work() {
         readSensorNodes();//read nodes stored information from DB
+
+        initCoapConnection();
         
-        System.out.println("Comport starts");
-        Thread myThready;
-        myThready = new Thread(new Runnable() {
-            @Override
+        Thread checker = new Thread(new Runnable() {
             public void run() {
-                
-                while (true) {
-                    int value = (int) Math.round(Math.random() * 100 - 20);
-                    int id = (int) Math.round(Math.random() * 7+1);
-                    data = "Sensor " + id + " Value " + value;
-                    handle(id,value);
-                    
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException ex) {
-                        Logger.getLogger(ComPort.class.getName()).log(Level.SEVERE, null, ex);
+                while(true){
+                    if(!coapIsConnected){
+                        initCoapConnection();
+                    }else{
+                        try {
+                            Thread.sleep(600000);//10 min
+                        } catch (InterruptedException ex) {
+                            ex.printStackTrace();
+                        }
                     }
                 }
             }
         });
-        myThready.start();
+        checker.start();
+
     }
     
-     public String getData() {
+    private void initCoapConnection(){
+        CoapClient client = new CoapClient("coap://wsnet.me:5683/SensorNode1");
+        CoapObserveRelation relation = client.observe(new CoapHandler() {
+            @Override
+            public void onLoad(CoapResponse response) {
+
+                int id = 1;
+                double value = Double.parseDouble(response.getResponseText());
+                handle(id, value);
+                data = "Sensor " + 1 + " Value " + value;
+
+            }
+
+            @Override
+            public void onError() {
+                data = "CoAP connection is failed";
+                coapIsConnected = false;
+            }
+        });
+        coapIsConnected = true;
+    }
+
+    public String getData() {
         return data;
+    }
+
+    public void reconnect() {
+
     }
 
     public void readSensorNodes() {
@@ -102,9 +128,9 @@ public class NetworkController {
         }
     }
 
-    public static List getActiveNodePull(){
+    public static List getActiveNodePull() {
 
         return new ArrayList<SensorNode>(activeNodePull.values());
     }
-    
+
 }

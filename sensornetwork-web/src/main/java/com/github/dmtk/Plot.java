@@ -30,25 +30,25 @@ public class Plot extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        Integer nodeId=1;//by default
-        try{
-            nodeId=Integer.parseInt(request.getParameter("nodeId"));
-        }catch(NumberFormatException e){
+
+        Integer nodeId = 1;//by default
+        try {
+            nodeId = Integer.parseInt(request.getParameter("nodeId"));
+        } catch (NumberFormatException e) {
             e.printStackTrace();
         }
-        
-        List listEvents= networkEventFacade.findById(nodeId);
+
+        List listEvents = networkEventFacade.findById(nodeId, 1000);
+
         double[] data = new double[listEvents.size()];
         Iterator it = listEvents.iterator();
-        int j=0;
+        int j = 0;
         while (it.hasNext()) {
-            
-            data[j]=((NetworkEvent)it.next()).getValue();
+
+            data[j] = ((NetworkEvent) it.next()).getValue();
             j++;
         }
-        
-        
-        
+
         Map< String, Object> map = new HashMap<>();
         boolean isValid = false;
         String[] temperature = new String[data.length];
@@ -58,7 +58,7 @@ public class Plot extends HttpServlet {
         isValid = true;
         map.put("temperature", data);
         map.put("isValid", isValid);
-        System.out.println(data);
+        
         write(response, map);
 
     }
