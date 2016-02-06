@@ -71,7 +71,7 @@ public class NetworkController {
                         initCoapConnection();
                     }else{
                         try {
-                            Thread.sleep(600000);//10 min
+                            Thread.sleep(60000);//1 min
                         } catch (InterruptedException ex) {
                             ex.printStackTrace();
                         }
