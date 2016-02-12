@@ -1,6 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+
 <!DOCTYPE html>
 <html>
     <head>
@@ -16,18 +17,10 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
         <!-- end: Mobile Specific -->
 
-        <!-- start: Facebook Open Graph -->
-        <meta property="og:title" content=""/>
-        <meta property="og:description" content=""/>
-        <meta property="og:type" content=""/>
-        <meta property="og:url" content=""/>
-        <meta property="og:image" content=""/>
-        <!-- end: Facebook Open Graph -->
-
         <!-- start: CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
-        <link href="css/bootstrap-responsive.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
+        <link href="css/basic.css" rel="stylesheet">
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Sans:400,700">
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Droid+Serif">
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo">
@@ -38,17 +31,11 @@
         <!--[if lt IE 9]>
           <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
         <![endif]-->
-        <meta charset="utf-8">
-
-        <script src="javascript/jquery-1.11.2.js"></script>
-        <script src="javascript/bootstrap.js"></script>
-        <!-- Bootstrap core CSS
-        <link href="css/bootstrap.css" rel="stylesheet"> -->
-        <link href="css/basic.css" rel="stylesheet">
     </head>
     <body>
 
         <!--start: Header -->
+
         <header>
 
             <!--start: Container -->
@@ -58,62 +45,63 @@
                 <div class="row">
 
                     <!--start: Logo -->
-                    <div class="logo span3">
+                    <div class="logo col-sm-3 col-md-3">
 
-                        <a class="brand" href="#"><img src="/img/logo.png"></a>
+                        <a class="brand" href="#"><img src="img/logo.png"></a>
 
                     </div>
                     <!--end: Logo -->
 
                     <!--start: Navigation -->
-                    <div class="span9">
+                    <div class="col-xs-9 col-sm-9 col-md-9 col-lg-9">
 
                         <div class="navbar navbar-inverse">
-                            <div class="navbar-inner">
-                                <div class="container">
-                                    <a class="btn btn-navbar" data-toggle="collapse" data-target=".nav-collapse">
-                                        <span class="icon-bar"></span>
 
-                                    </a>
-                                    <div class="nav-collapse collapse">
-                                        <ul class="nav">
+                            <div class="hidden-lg hidden-md">
 
-                                            <li><a href="overview">Overview</a></li>
-                                            <li class="dropdown">
-                                                <a href="reports" class="dropdown-toggle" data-toggle="dropdown">Data <b class="caret"></b></a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="reports" >Reports</a></li>
-                                                    <li><a href="analitics" >Analytics</a></li>
-                                                    <li><a href="export" >Export</a></li>
-                                                    <li><a href="graphics" >Graphics</a></li>
-                                                    <li class="divider"></li>
-                                                    <li class="nav-header">Nav header</li>
-                                                    <li><a href="#">Separated link</a></li>
-                                                    <li><a href="#">One more separated link</a></li>
-                                                </ul>
-                                            </li>
+                                <a class="btn btn-navbar" data-toggle="collapse" data-target=".navbar-collapse">
+                                    <span class="icon-bar"></span>
 
+                                </a></div>
+                            <div class="collapse navbar-collapse">
+                                <ul class="nav navbar-nav">
 
-                                            <li><a href="map"> Map</a></li>
-                                            <li><a href="rawdata" >Realtime data</a></li>                                
-                                            <li><a href="settings">Settings</a></li>
-                                            <li class="active"><a href="about">About</a></li>
-                                            <li class="dropdown">
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${user}"/> <b class="caret"></b></a>
-                                                <ul class="dropdown-menu">
-                                                    <li><a href="#">Action</a></li>
-                                                    <li><a href="#">Another action</a></li>
-                                                    <li><a href="#">Something else here</a></li>
-                                                    <li class="divider"></li>
-                                                    <li class="nav-header">Nav header</li>
-                                                    <li><a href="#">Separated link</a></li>
-                                                    <li><a href="#">One more separated link</a></li>
-                                                </ul>
-                                            </li>
+                                    <li><a href="overview">Overview</a></li>
+                                    <li class="dropdown">
+                                        <a href="reports" class="dropdown-toggle" data-toggle="dropdown">Data <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="reports">Reports</a></li>
+                                            <li><a href="analitics">Analytics</a></li>
+                                            <li><a href="export">Export</a></li>
+                                            <li><a href="graphics">Graphics</a></li>
+                                            <li class="divider"></li>
+                                            <li class="nav-header">Nav header</li>
+                                            <li><a href="#">Separated link</a></li>
+                                            <li><a href="#">One more separated link</a></li>
                                         </ul>
-                                    </div>
-                                </div>
+                                    </li>
+
+
+                                    <li><a href="map"> Map</a></li>
+                                    <li><a href="rawdata">Realtime data</a></li>                                
+                                    <li><a href="settings">Settings</a></li>
+                                    <li class="active"><a href="about">About</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${user}"></c:out> <b class="caret"></b></a>
+                                        <ul class="dropdown-menu">
+                                            <li><a href="#">Action</a></li>
+                                            <li><a href="#">Another action</a></li>
+                                            <li><a href="#">Something else here</a></li>
+                                            <li class="divider"></li>
+                                            <li class="nav-header">Nav header</li>
+                                            <li><a href="#">Separated link</a></li>
+                                            <li><a href="#">One more separated link</a></li>
+                                            <li><a href="logout">Logout</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
                             </div>
+
                         </div>
 
                     </div>	
@@ -139,6 +127,8 @@
 
 
 
+
+
             </div>
             <!--end: Container-->
 
@@ -148,7 +138,7 @@
         <!-- end: Wrapper  -->			
 
         <!-- start: Footer Menu -->
-        <div id="footer-menu" class="hidden-tablet hidden-phone">
+        <div id="footer-menu" class="hidden-sm hidden-xs">
 
             <!-- start: Container -->
             <div class="container">
@@ -159,7 +149,7 @@
 
 
                     <!-- start: Footer Menu Links-->
-                    <div class="span9">
+                    <div class="col-lg-9 col-md-9">
 
                         <div id="footer-menu-links">
 
@@ -167,12 +157,12 @@
 
 
                                 <li><a href="overview">Overview</a></li>
-                                <li><a href="reports" >Reports</a></li>
-                                <li><a href="analitics" >Analytics</a></li>
-                                <li><a href="export" >Export</a></li>
-                                <li><a href="graphics" >Graphics</a></li>
+                                <li><a href="reports">Reports</a></li>
+                                <li><a href="analitics">Analytics</a></li>
+                                <li><a href="export">Export</a></li>
+                                <li><a href="graphics">Graphics</a></li>
                                 <li><a href="map"> Map</a></li>
-                                <li><a href="rawdata" >Realtime data</a></li>                                
+                                <li><a href="rawdata">Realtime data</a></li>                                
                                 <li><a href="settings">Settings</a></li>
                                 <li><a href="about">About</a></li>
 
@@ -186,7 +176,7 @@
                     <!-- end: Footer Menu Links-->
 
                     <!-- start: Footer Menu Back To Top -->
-                    <div class="span1">
+                    <div class="col-sm-1 col-md-1">
 
                         <div id="footer-menu-back-to-top">
                             <a href="#"></a>
@@ -213,7 +203,7 @@
             <div class="container">
 
                 <p>
-                    &copy; 2016,  Designed by 
+                    &copy; 2016,  Designed by admin@wsnet.me
                 </p>
 
             </div>
@@ -224,14 +214,13 @@
 
         <!-- start: Java Script -->
         <!-- Placed at the end of the document so the pages load faster -->
-        <script src="js/jquery-1.8.2.js"></script>
-        <script src="js/bootstrap.js"></script>
+        <script src="javascript/jquery-1.11.2.js"></script>
+        <script src="javascript/bootstrap.js"></script>
         <script src="js/flexslider.js"></script>
         <script src="js/carousel.js"></script>
         <script src="js/jquery.cslider.js"></script>
         <script src="js/slider.js"></script>
         <script def src="js/custom.js"></script>
-
 
     </body>
 </html>

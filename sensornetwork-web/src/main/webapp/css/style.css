@@ -1484,7 +1484,7 @@ form#newsletter input[type=submit] {
 @media only screen and (min-width: 960px) {
 	
 	header {
-		height: 64px;
+		height: 70px;
 	}
 	
 	#wrapper {
@@ -1510,7 +1510,7 @@ form#newsletter input[type=submit] {
 @media only screen and (min-width: 768px) and (max-width: 959px) {
 	
 	header {
-		min-height: 64px;
+		min-height: 70px;
 	}
 	
 }
@@ -1520,7 +1520,7 @@ form#newsletter input[type=submit] {
 @media only screen and (max-width: 767px) {
 	
 	header {
-		min-height: 64px;
+		min-height: 70px;
 	}
 	
 }
