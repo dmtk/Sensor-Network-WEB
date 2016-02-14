@@ -80,43 +80,122 @@
                                     <li><a href="about">About</a></li>
                                     <li class="dropdown">
                                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"><c:out value="${user}"></c:out> <b class="caret"></b></a>
-                                        <ul class="dropdown-menu">
-                                            <li><a href="#">Action</a></li>
-                                            <li><a href="#">Another action</a></li>
-                                            <li><a href="#">Something else here</a></li>
-                                            <li class="divider"></li>
-                                            <li class="nav-header">Nav header</li>
-                                            <li><a href="#">Separated link</a></li>
-                                            <li><a href="#">One more separated link</a></li>
-                                            <li><a href="logout">Logout</a></li>
-                                        </ul>
-                                    </li>
-                                </ul>
+                                            <ul class="dropdown-menu">
+                                                <li><a href="#">Action</a></li>
+                                                <li><a href="#">Another action</a></li>
+                                                <li><a href="#">Something else here</a></li>
+                                                <li class="divider"></li>
+                                                <li class="nav-header">Nav header</li>
+                                                <li><a href="#">Separated link</a></li>
+                                                <li><a href="#">One more separated link</a></li>
+                                                <li><a href="logout">Logout</a></li>
+                                            </ul>
+                                        </li>
+                                    </ul>
+                                </div>
+
                             </div>
 
-                        </div>
+                        </div>	
+                        <!--end: Navigation -->
 
-                    </div>	
-                    <!--end: Navigation -->
+                    </div>
+                    <!--end: Row -->
 
                 </div>
-                <!--end: Row -->
+                <!--end: Container-->			
 
-            </div>
-            <!--end: Container-->			
+            </header>
+            <!--end: Header-->
+            <!--start: Wrapper-->
+            <div id="wrapper">
 
-        </header>
-        <!--end: Header-->
-        <!--start: Wrapper-->
-        <div id="wrapper">
+                <!--start: Container -->
+                <div class="container">
+                    <table class="table table-striped table-bordered">
+                        <thead>
+                            <tr>
+                                <th class="col-md-1">ID</th>
+                                <th class="col-md-1">Type</th>
+                                <th class="col-md-1">Last value</th>
+                                <th class="col-md-1">Quantity</th>
+                                <th class="col-md-1">ADC value</th>
+                                <th class="col-md-1">Note</th>
+                                <th class="col-md-1">Date</th>
+                                <th class="col-md-1"></th>
+                                <th class="col-md-1"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <c:forEach var="node" items="${nodes}">
+                            <tr>
+                                <td class="col-md-1"><c:out value="${node.id}"/></td>
+                                <td class="col-md-1"><c:out value="${node.type}"/></td>
+                                <td class="col-md-1"><c:out value="${node.lastMeasuredValue}"/></td>
+                                <td class="col-md-1"><c:out value="${node.measuredQuantity}"/></td>
+                                <td class="col-md-1"><c:out value="${node.adcValue}"/></td>
+                                <td class="col-md-1"><c:out value="${node.note}"/></td>
+                                <td class="col-md-1"><c:out value="${node.loc}"/></td>
+                                <td class="col-md-1"><button type="button" class="btn btn-success" onclick="myFunction()">Edit</button></td>
+                                <td class="col-md-1"><button type="button" class="btn btn-danger" onclick="myFunction()">Check connection</button></td>
+                                <td class="col-md-1"><button type="button" class="btn btn-danger" onclick="myFunction()">Delete</button></td>
+                            </tr>
+                        </c:forEach>
+                    </tbody>
+                </table>
 
-            <!--start: Container -->
-            <div class="container">
 
 
-                <form action="reconnect" method="post">
-                    <button type="submit" class="btn btn-success">Reconnect to CoAP server</button>
-                </form> 
+
+                <button type="button" class="btn btn-success">Reconnect to CoAP server</button>
+
+                <!-- Trigger the modal with a button -->
+                <button type="button" class="btn btn-info" data-toggle="modal" data-target="#myModal">Add CoAP Resource</button>
+
+                <!-- Modal -->
+                <div id="myModal" class="modal fade" role="dialog">
+                    <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                <h4 class="modal-title">CoAP resource options</h4>
+                            </div>
+                            <div class="modal-body">
+                                <label for="name">Name:</label>
+                                <input type="text" class="form-control" id="name">
+                                <label for="name">URI:</label>
+                                <input type="text" class="form-control" id="uri">
+                                <span class="help-block">URI of CoAP Resource</span>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" value="">Observable</label>
+                                </div>
+                                <form class="form-inline" role="form">
+                                    <div class="form-group">
+                                        <label for="latitude">Latitude</label>
+                                        <input class="form-control" type="text" id="latitude">
+
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="longitude">Longitude</label>
+                                        <input class="form-control" type="text" id="longitude">
+
+                                    </div>
+                                </form>
+                                <label for="comment">Comment:</label>
+                                <textarea class="form-control" rows="5" id="comment"></textarea></div>
+
+
+
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <br>
 
 
 
