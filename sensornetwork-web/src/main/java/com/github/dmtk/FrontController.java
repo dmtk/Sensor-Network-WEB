@@ -2,6 +2,7 @@ package com.github.dmtk;
 
 import com.github.dmtk.entity.NetworkEventFacadeLocal;
 import com.github.dmtk.entity.SensorNodeFacadeLocal;
+import com.github.dmtk.entity.UserFacadeLocal;
 import com.github.dmtk.logic.NetworkController;
 import java.io.IOException;
 import java.util.Arrays;
@@ -11,7 +12,6 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 @WebServlet(name = "FrontController", urlPatterns = {
     "/index.htm",
@@ -39,19 +39,20 @@ public class FrontController extends HttpServlet {
     private SensorNodeFacadeLocal sensorNodeFacade;
     @EJB(name = "NetworkController")
     private NetworkController controller;
+    @EJB(name = "User")
+    private UserFacadeLocal userFacadeLocal;
 
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        try{
-            HttpSession session = request.getSession();
-            
+        try {
             Action action = ActionFactory.create(getActionName(request));
-            String url = action.perform(request, response);
-            if (url != null) {
-                getServletContext().getRequestDispatcher(url).forward(request, response);
-            }
-        }catch (Exception ex) {
+                String url = action.perform(request, response);
+                if (url != null) {
+                    getServletContext().getRequestDispatcher(url).forward(request, response);
+                }
+            
+        } catch (Exception ex) {
             throw new RuntimeException(ex + " " + Arrays.toString(ex.getStackTrace()));
         }
 

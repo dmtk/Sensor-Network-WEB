@@ -9,6 +9,7 @@ package com.github.dmtk.dao;
  *
  * @author dmytro
  */
-public class SensorNodeDAO {
+public class SensorNodeDAO extends GenericDAO{
+    
     
 }

@@ -25,7 +25,6 @@
                         <div class="form-group">
                             <label for="login">Login</label>
                             <input type="login" class="form-control" name="login">
-                            <p class="help-block"><a href="guest">Login as a guest</a></p>
                         </div>
                         <div class="form-group">
                             <label for="password">Password</label>

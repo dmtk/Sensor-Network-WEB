@@ -1,6 +1,5 @@
 package com.github.dmtk;
 
-import com.github.dmtk.entity.NetworkEventFacadeLocal;
 import com.github.dmtk.entity.SensorNodeFacadeLocal;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;

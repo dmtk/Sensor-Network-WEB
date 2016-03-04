@@ -4,6 +4,8 @@ import com.github.dmtk.entity.NetworkEventFacadeLocal;
 import com.github.dmtk.entity.NetworkEvent;
 import com.github.dmtk.entity.SensorNodeFacadeLocal;
 import com.github.dmtk.entity.SensorNode;
+import com.github.dmtk.entity.SiteUser;
+import com.github.dmtk.entity.UserFacadeLocal;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -13,10 +15,10 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
-import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
 import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
+import org.eclipse.californium.core.CoapClient;
 
 @Singleton
 public class NetworkController {
@@ -27,6 +29,8 @@ public class NetworkController {
     private SensorNodeFacadeLocal sensorNodeFacade;
     @EJB
     private NetworkEventFacadeLocal networkEventFacade;
+    @EJB
+    private UserFacadeLocal userFacade;
 
     public synchronized void handle(int id, double value) {
 
@@ -54,22 +58,28 @@ public class NetworkController {
 
     }
 
-    private String data = "";//realtime received(emulated) data
+    private String data = "";//realtime received data
 
     boolean coapIsConnected = false;
 
     @PostConstruct
     public void work() {
+        SiteUser s = new SiteUser();
+        s.setEmail("admin@wsnet.me");
+        s.setPassword("");
+        s.setRole(1);
+        s.setUsername("admin");
+        userFacade.create(s);
         readSensorNodes();//read nodes stored information from DB
 
         initCoapConnection();
-        
+
         Thread checker = new Thread(new Runnable() {
             public void run() {
-                while(true){
-                    if(!coapIsConnected){
+                while (true) {
+                    if (!coapIsConnected) {
                         initCoapConnection();
-                    }else{
+                    } else {
                         try {
                             Thread.sleep(60000);//1 min
                         } catch (InterruptedException ex) {
@@ -82,8 +92,35 @@ public class NetworkController {
         checker.start();
 
     }
-    
-    private void initCoapConnection(){
+
+    public void addCoAPConnection(String addr, boolean observable, final int id) {
+        CoapClient client = new CoapClient(addr);
+        if (observable) {
+            CoapObserveRelation relation = client.observe(new CoapHandler() {
+                @Override
+                public void onLoad(CoapResponse response) {
+
+                    double value = Double.parseDouble(response.getResponseText());
+                    handle(id, value);
+                    data = "Sensor " + id + " Value " + value;
+
+                }
+
+                @Override
+                public void onError() {
+                    data = "CoAP connection is failed";
+                    coapIsConnected = false;
+                }
+            });
+            coapIsConnected = true;
+        } else {
+            double value = Double.parseDouble(client.get().getResponseText());
+            handle(id, value);
+            data = "Sensor " + id + " Value " + value;
+        }
+    }
+
+    private void initCoapConnection() {
         CoapClient client = new CoapClient("coap://wsnet.me:5683/SensorNode1");
         CoapObserveRelation relation = client.observe(new CoapHandler() {
             @Override
