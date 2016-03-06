@@ -4,7 +4,6 @@ import com.github.dmtk.entity.NetworkEventFacadeLocal;
 import com.github.dmtk.entity.NetworkEvent;
 import com.github.dmtk.entity.SensorNodeFacadeLocal;
 import com.github.dmtk.entity.SensorNode;
-import com.github.dmtk.entity.SiteUser;
 import com.github.dmtk.entity.UserFacadeLocal;
 import java.util.ArrayList;
 import java.util.Date;
@@ -64,12 +63,12 @@ public class NetworkController {
 
     @PostConstruct
     public void work() {
-        SiteUser s = new SiteUser();
+        /*SiteUser s = new SiteUser();
         s.setEmail("admin@wsnet.me");
         s.setPassword("");
         s.setRole(1);
         s.setUsername("admin");
-        userFacade.create(s);
+        userFacade.create(s);*/
         readSensorNodes();//read nodes stored information from DB
 
         initCoapConnection();

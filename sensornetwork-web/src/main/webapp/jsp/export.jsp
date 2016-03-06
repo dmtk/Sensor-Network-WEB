@@ -24,7 +24,7 @@
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Boogaloo">
         <link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Economica:700,400italic">
         <!-- end: CSS -->
-        
+
     </head>
     <body>
         <!--start: Header -->
@@ -118,7 +118,8 @@
                 <br>
                 <br>
                 <br>
-                //TO DO
+                <a href="export?action=results-to-excel" class="btn btn-primary">Export</a>
+
 
 
 

@@ -13,27 +13,19 @@ import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
 import java.util.Iterator;
 import java.util.Locale;
-import com.github.dmtk.dto.NetworkEventDTO;
 import com.github.dmtk.entity.NetworkEvent;
+import java.util.List;
 
 
 public class ExcelExport {
     
     
         
-    public File exportSpectrum (Collection<NetworkEvent> rows) throws IOException {
-        return exportSpectrum("NetworkEvent", rows);
-    }
-
-    public File exportSpectrum (String header, Collection<NetworkEvent> rows) throws IOException {
-        return writeSpectrum(header, createNewFile(), rows);
-    }
-        
-    public File exportExperiments (Collection<NetworkEventDTO> rows) throws IOException {
+          
+    public File exportExperiments (List<NetworkEvent> rows) throws IOException {
         return writeExperiments(createNewFile(), rows);
     }
     
@@ -48,25 +40,8 @@ public class ExcelExport {
         String filePath = directory + File.separator + "Report" + time + ".xls"; 
         return new File(filePath);
     }
-
-    public File writeSpectrum(String header, File f, Collection <NetworkEvent> report) throws IOException {
-
-        HSSFWorkbook workbook = null;
-        HSSFSheet sheet = null;
-
-        if (f.exists()) {
-            f.delete();
-            f.createNewFile();
-        }
-
-        workbook = new HSSFWorkbook();
-        sheet = workbook.createSheet("NetworkEvents");
-        writeSpectrumTable(header, sheet, report);
-
-        return writeExcelFile(f, workbook);
-    }
         
-    public File writeExperiments(File f, Collection<NetworkEventDTO> report) throws IOException {
+    public File writeExperiments(File f, List<NetworkEvent> report) throws IOException {
 
         HSSFWorkbook workbook = null;
         HSSFSheet sheet = null;
@@ -77,7 +52,7 @@ public class ExcelExport {
         }
 
         workbook = new HSSFWorkbook();
-        sheet = workbook.createSheet("Experiments");
+        sheet = workbook.createSheet("Events");
         writeExperimentsTable(sheet, report);
 
         return writeExcelFile(f, workbook);
@@ -103,35 +78,11 @@ public class ExcelExport {
         }
     }
 
-    private void writeSpectrumTable(String header, Sheet sheet, Collection<NetworkEvent> spectrum) {
+    
+        
+    private void writeExperimentsTable(Sheet sheet, List<NetworkEvent> experiments) {
         Row firstRow = sheet.createRow(0);
-        firstRow.createCell(0).setCellValue(header);
-        firstRow.createCell(4).setCellValue("File was created by System : ");
-        firstRow.createCell(8).setCellValue(dateToString(Calendar.getInstance().getTime()));
-        
-        Row secRow = sheet.createRow(1);
-        secRow.createCell(0).setCellValue("Спектр");
-        
-        Row tableHeader = sheet.createRow(2);
-        tableHeader.createCell(0).setCellValue("Frequency, Hz");
-        tableHeader.createCell(1).setCellValue("Magnitude, dB");
-                
-        Row tableHeaderUkr = sheet.createRow(3);
-        tableHeaderUkr.createCell(0).setCellValue("Частота, Гц");
-        tableHeaderUkr.createCell(1).setCellValue("Величина, дБ");
-        int rowNum = 4;
-        for (Iterator<NetworkEvent> it = spectrum.iterator(); it.hasNext();) {
-            NetworkEvent dataRow = it.next();
-            Row row = sheet.createRow(rowNum);
-            row.createCell(0).setCellValue(dataRow.getSource().getName());
-            row.createCell(1).setCellValue(dataRow.getValue());
-            rowNum++;
-        }
-    }
-        
-    private void writeExperimentsTable(Sheet sheet, Collection<NetworkEventDTO> experiments) {
-        Row firstRow = sheet.createRow(0);
-        firstRow.createCell(0).setCellValue("Experiments Report");
+        firstRow.createCell(0).setCellValue("Network events report");
         firstRow.createCell(4).setCellValue("File was created by System : ");
         firstRow.createCell(8).setCellValue(dateToString(Calendar.getInstance().getTime()));
         
@@ -139,20 +90,16 @@ public class ExcelExport {
         secRow.createCell(0).setCellValue("Events");
         
         Row tableHeader = sheet.createRow(2);
-        tableHeader.createCell(0).setCellValue("Start date and time");
-        tableHeader.createCell(1).setCellValue("Measurement Device");
-        tableHeader.createCell(2).setCellValue("Comment");
-        Row tableHeaderUkr = sheet.createRow(3);
-        tableHeaderUkr.createCell(0).setCellValue("Початок експеременту");
-        tableHeaderUkr.createCell(1).setCellValue("Вимірювальний пристрій");
-        tableHeaderUkr.createCell(2).setCellValue("Коментар");
-        int rowNum = 4;
-        for (Iterator<NetworkEventDTO> it = experiments.iterator(); it.hasNext();) {
-            NetworkEventDTO dataRow = it.next();
+        tableHeader.createCell(0).setCellValue("Id");
+        tableHeader.createCell(1).setCellValue("Value");
+        tableHeader.createCell(2).setCellValue("Date");
+        int rowNum = 3;
+        for (Iterator<NetworkEvent> it = experiments.iterator(); it.hasNext();) {
+            NetworkEvent dataRow = it.next();
             Row row = sheet.createRow(rowNum);
-            row.createCell(0).setCellValue(dateToString(dataRow.getBeginTime()));
-            row.createCell(1).setCellValue(dataRow.getMeasurementDeviceModel());
-            row.createCell(2).setCellValue(dataRow.getComment());
+            row.createCell(0).setCellValue(dataRow.getId());
+            row.createCell(1).setCellValue(dataRow.getValue());
+            row.createCell(2).setCellValue(dateToString(dataRow.getDate()));
             rowNum++;
         }
     }
@@ -162,74 +109,5 @@ public class ExcelExport {
         return dateFormat.format(date);
     }
 
-    private void setNullableData(Object data, Cell cell) {
-        if (data == null) {
-            cell.setCellValue("not set");
-        } else {
-            if (data instanceof Date) {
-                cell.setCellValue((Date) data);
-            } else if (data instanceof Boolean) {
-                cell.setCellValue((Boolean) data);
-            } else if (data instanceof String) {
-                cell.setCellValue((String) data);
-            } else if (data instanceof Number) {
-                cell.setCellValue(((Number) data).doubleValue());
-            }
-        }
-    }
-
-//    public File write(String path, List<List> data) throws IOException {
-//
-//        HSSFWorkbook workbook = null;
-//        HSSFSheet sheet = null;
-//        File f = new File(path);
-//
-//        if (!f.exists()) {
-//            workbook = new HSSFWorkbook();
-//            sheet = workbook.createSheet("Sorting time");
-//            formTable(sheet, data);
-//
-//        } else {
-//            try (FileInputStream in = new FileInputStream(new File(path));) {
-//
-//                workbook = new HSSFWorkbook(in);
-//                sheet = workbook.getSheetAt(0);
-//                formTable(sheet, data);
-//            }
-//        }
-//        try (FileOutputStream out = new FileOutputStream(f)) {
-//            workbook.write(out);
-//            return f;
-//        }
-//    }
-//    private void writeTable(Sheet sheet, List<List> data) {
-//        int rownum = 0;
-//        for (List dataRow : data) {
-//            Row row = sheet.getRow(rownum);
-//            if (row == null) {
-//                row = sheet.createRow(rownum);
-//            }
-//            rownum++;
-//
-//            int cellnum = 0;
-//            for (Object obj : dataRow) {
-//                Cell cell = row.getCell(cellnum);
-//                if (cell == null) {
-//                    cell = row.createCell(cellnum);
-//                }
-//                cellnum++;
-//
-//                if (obj instanceof Date)
-//                    cell.setCellValue((Date) obj);
-//                else if (obj instanceof Boolean)
-//                    cell.setCellValue((Boolean) obj);
-//                else if (obj instanceof String)
-//                    cell.setCellValue((String) obj);
-//                else if (obj instanceof Number) {
-//                    cell.setCellValue(((Number) obj).doubleValue());
-//                }
-//            }
-//        }
-//    }
 }
 

@@ -42,6 +42,8 @@ public class FrontController extends HttpServlet {
     @EJB(name = "User")
     private UserFacadeLocal userFacadeLocal;
 
+    
+    
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
