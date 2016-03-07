@@ -15,9 +15,10 @@ import javax.servlet.http.HttpServletResponse;
 @WebServlet(urlPatterns = {"/update"})
 public class Update extends HttpServlet {
 
-    @EJB
+    
+    @EJB(name = "NetworkController")
     private NetworkController controller;
-
+    
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {

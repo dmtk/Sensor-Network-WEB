@@ -1,4 +1,4 @@
-package com.github.dmtk;
+package com.github.dmtk.action;
 
 import com.github.dmtk.entity.NetworkEventFacadeLocal;
 import com.github.dmtk.logic.ExcelExport;
@@ -40,7 +40,7 @@ class ExportAction implements Action {
         String action = request.getParameter("action");
         if ("results-to-excel".equals(action)) {
             try {
-                File exelFile = new ExcelExport().exportExperiments(networkEventFacade.findAll());
+                File exelFile = new ExcelExport().exportExperiments(networkEventFacade.findByDate(1000));
                 sendFile("experiments.xls", exelFile, response);
             } catch (ServletException | IOException ex) {
                 Logger.getLogger(ExportAction.class.getName()).log(Level.SEVERE, null, ex);

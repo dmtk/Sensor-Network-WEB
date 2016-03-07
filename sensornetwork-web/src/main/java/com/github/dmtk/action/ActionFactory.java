@@ -1,9 +1,9 @@
-package com.github.dmtk;
+package com.github.dmtk.action;
 
 import java.util.HashMap;
 import java.util.Map;
 
-class ActionFactory {
+public class ActionFactory {
 
     /**
      * Map of actions
@@ -41,7 +41,6 @@ class ActionFactory {
         map.put("authenticate", LoginAction.class);
         map.put("about", AboutAction.class);
         map.put("overview", OverviewAction.class);
-        map.put("guest", GuestAction.class);
         map.put("reports", ReportsAction.class);
         map.put("graphics", GraphicsAction.class);
         map.put("map", MapAction.class);

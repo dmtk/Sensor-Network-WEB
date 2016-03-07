@@ -1,4 +1,4 @@
-package com.github.dmtk;
+package com.github.dmtk.action;
 
 import com.github.dmtk.entity.NetworkEventFacadeLocal;
 import javax.naming.InitialContext;

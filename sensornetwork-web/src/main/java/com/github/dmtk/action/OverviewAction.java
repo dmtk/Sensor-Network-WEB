@@ -1,4 +1,4 @@
-package com.github.dmtk;
+package com.github.dmtk.action;
 
 import com.github.dmtk.entity.NetworkEventFacadeLocal;
 import com.github.dmtk.entity.SensorNodeFacadeLocal;
@@ -7,19 +7,18 @@ import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author dmytro
- */
-class MapAction implements Action{
+public class OverviewAction implements Action {
+
     
+    private NetworkEventFacadeLocal networkEventFacade;
     private SensorNodeFacadeLocal sensorNodeFacade;
 
     
-    public MapAction() {
+    public OverviewAction() {
         try {
         
             InitialContext ic = new InitialContext();
+            networkEventFacade = (NetworkEventFacadeLocal) ic.lookup("java:comp/env/NetworkEventFacade");
             sensorNodeFacade = (SensorNodeFacadeLocal) ic.lookup("java:comp/env/SensorNodeFacade");
             
             
@@ -31,7 +30,9 @@ class MapAction implements Action{
     @Override
     public String perform(HttpServletRequest request, HttpServletResponse response) {
 
+        int itemsPerWebPage = 20;
+        request.setAttribute("events", networkEventFacade.findByDate(itemsPerWebPage));
         request.setAttribute("nodes", sensorNodeFacade.findAll());
-        return "/jsp/map.jsp";
+        return "/jsp/overview.jsp";
     }
 }

@@ -1,4 +1,4 @@
-package com.github.dmtk;
+package com.github.dmtk.action;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
