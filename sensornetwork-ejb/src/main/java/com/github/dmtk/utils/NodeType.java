@@ -1,4 +1,4 @@
-package com.github.dmtk.logic;
+package com.github.dmtk.utils;
 
 public enum NodeType {
   SENSOR {

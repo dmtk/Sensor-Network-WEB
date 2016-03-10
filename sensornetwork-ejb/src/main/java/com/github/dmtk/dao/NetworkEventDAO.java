@@ -1,5 +1,6 @@
-package com.github.dmtk.entity;
+package com.github.dmtk.dao;
 
+import com.github.dmtk.entity.NetworkEvent;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -8,7 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 @Stateless
-public class NetworkEventFacade extends AbstractFacade<NetworkEvent> implements NetworkEventFacadeLocal {
+public class NetworkEventDAO extends GenericDAO<NetworkEvent> implements NetworkEventDAOLocal {
 
     @PersistenceContext(unitName = "sensornetwork-ejb")
     private EntityManager em;
@@ -18,7 +19,7 @@ public class NetworkEventFacade extends AbstractFacade<NetworkEvent> implements 
         return em;
     }
 
-    public NetworkEventFacade() {
+    public NetworkEventDAO() {
         super(NetworkEvent.class);
     }
 

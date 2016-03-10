@@ -1,4 +1,4 @@
-package com.github.dmtk.logic;
+package com.github.dmtk.utils;
 
 import java.io.Serializable;
 

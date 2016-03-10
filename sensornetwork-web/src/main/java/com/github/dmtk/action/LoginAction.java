@@ -1,7 +1,7 @@
 package com.github.dmtk.action;
 
 import com.github.dmtk.entity.SiteUser;
-import com.github.dmtk.entity.UserFacadeLocal;
+import com.github.dmtk.dao.UserDAOLocal;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,13 +14,13 @@ import javax.servlet.http.HttpSession;
  */
 public class LoginAction implements Action {
 
-    private UserFacadeLocal userFacadeLocal;
+    private UserDAOLocal userFacadeLocal;
 
     public LoginAction() {
         try {
 
             InitialContext ic = new InitialContext();
-            userFacadeLocal = (UserFacadeLocal) ic.lookup("java:comp/env/User");
+            userFacadeLocal = (UserDAOLocal) ic.lookup("java:comp/env/User");
 
         } catch (NamingException ex) {
 

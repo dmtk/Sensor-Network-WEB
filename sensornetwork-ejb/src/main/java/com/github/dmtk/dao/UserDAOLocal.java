@@ -1,10 +1,11 @@
-package com.github.dmtk.entity;
+package com.github.dmtk.dao;
 
+import com.github.dmtk.entity.SiteUser;
 import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface UserFacadeLocal {
+public interface UserDAOLocal {
 
     void create(SiteUser user);
 

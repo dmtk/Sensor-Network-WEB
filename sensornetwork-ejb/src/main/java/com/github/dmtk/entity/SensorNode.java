@@ -1,7 +1,7 @@
 package com.github.dmtk.entity;
 
-import com.github.dmtk.logic.Location;
-import com.github.dmtk.logic.NodeType;
+import com.github.dmtk.utils.Location;
+import com.github.dmtk.utils.NodeType;
 import java.io.Serializable;
 import javax.persistence.Entity;
 import javax.persistence.Id;

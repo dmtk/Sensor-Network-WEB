@@ -1,6 +1,6 @@
 package com.github.dmtk.action;
 
-import com.github.dmtk.entity.NetworkEventFacadeLocal;
+import com.github.dmtk.dao.NetworkEventDAOLocal;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
@@ -8,14 +8,14 @@ import javax.servlet.http.HttpServletResponse;
 
 public class ReportsAction implements Action {
 
-    NetworkEventFacadeLocal networkEventFacade;
+    NetworkEventDAOLocal networkEventFacade;
 
     public ReportsAction() {
 
         try {
 
             InitialContext ic = new InitialContext();
-            networkEventFacade = (NetworkEventFacadeLocal) ic.lookup("java:comp/env/NetworkEventFacade");
+            networkEventFacade = (NetworkEventDAOLocal) ic.lookup("java:comp/env/NetworkEventFacade");
 
         } catch (NamingException ex) {
 

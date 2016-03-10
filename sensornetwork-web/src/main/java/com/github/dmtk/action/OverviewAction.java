@@ -1,7 +1,7 @@
 package com.github.dmtk.action;
 
-import com.github.dmtk.entity.NetworkEventFacadeLocal;
-import com.github.dmtk.entity.SensorNodeFacadeLocal;
+import com.github.dmtk.dao.NetworkEventDAOLocal;
+import com.github.dmtk.dao.SensorNodeDAOLocal;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
@@ -10,16 +10,16 @@ import javax.servlet.http.HttpServletResponse;
 public class OverviewAction implements Action {
 
     
-    private NetworkEventFacadeLocal networkEventFacade;
-    private SensorNodeFacadeLocal sensorNodeFacade;
+    private NetworkEventDAOLocal networkEventFacade;
+    private SensorNodeDAOLocal sensorNodeFacade;
 
     
     public OverviewAction() {
         try {
         
             InitialContext ic = new InitialContext();
-            networkEventFacade = (NetworkEventFacadeLocal) ic.lookup("java:comp/env/NetworkEventFacade");
-            sensorNodeFacade = (SensorNodeFacadeLocal) ic.lookup("java:comp/env/SensorNodeFacade");
+            networkEventFacade = (NetworkEventDAOLocal) ic.lookup("java:comp/env/NetworkEventFacade");
+            sensorNodeFacade = (SensorNodeDAOLocal) ic.lookup("java:comp/env/SensorNodeFacade");
             
             
         } catch (NamingException ex) {

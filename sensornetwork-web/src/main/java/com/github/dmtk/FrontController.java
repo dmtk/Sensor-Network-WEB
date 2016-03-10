@@ -2,9 +2,9 @@ package com.github.dmtk;
 
 import com.github.dmtk.action.Action;
 import com.github.dmtk.action.ActionFactory;
-import com.github.dmtk.entity.NetworkEventFacadeLocal;
-import com.github.dmtk.entity.SensorNodeFacadeLocal;
-import com.github.dmtk.entity.UserFacadeLocal;
+import com.github.dmtk.dao.NetworkEventDAOLocal;
+import com.github.dmtk.dao.SensorNodeDAOLocal;
+import com.github.dmtk.dao.UserDAOLocal;
 import com.github.dmtk.logic.NetworkController;
 import java.io.IOException;
 import java.util.Arrays;
@@ -33,14 +33,14 @@ import javax.servlet.http.HttpSession;
 
 public class FrontController extends HttpServlet {
 
-    @EJB(name = "NetworkEventFacade", beanInterface = NetworkEventFacadeLocal.class)
-    private NetworkEventFacadeLocal networkEventFacade;
-    @EJB(name = "SensorNodeFacade", beanInterface = SensorNodeFacadeLocal.class)
-    private SensorNodeFacadeLocal sensorNodeFacade;
+    @EJB(name = "NetworkEventFacade", beanInterface = NetworkEventDAOLocal.class)
+    private NetworkEventDAOLocal networkEventFacade;
+    @EJB(name = "SensorNodeFacade", beanInterface = SensorNodeDAOLocal.class)
+    private SensorNodeDAOLocal sensorNodeFacade;
     @EJB(name = "NetworkController")
     private NetworkController controller;
     @EJB(name = "User")
-    private UserFacadeLocal userFacadeLocal;
+    private UserDAOLocal userFacadeLocal;
     
     @Override
     public void service(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

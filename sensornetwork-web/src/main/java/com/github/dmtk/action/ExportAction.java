@@ -1,7 +1,7 @@
 package com.github.dmtk.action;
 
-import com.github.dmtk.entity.NetworkEventFacadeLocal;
-import com.github.dmtk.logic.ExcelExport;
+import com.github.dmtk.dao.NetworkEventDAOLocal;
+import com.github.dmtk.utils.ExcelExport;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -20,14 +20,14 @@ import javax.servlet.http.HttpServletResponse;
  */
 class ExportAction implements Action {
 
-    NetworkEventFacadeLocal networkEventFacade;
+    NetworkEventDAOLocal networkEventFacade;
 
     public ExportAction() {
 
         try {
 
             InitialContext ic = new InitialContext();
-            networkEventFacade = (NetworkEventFacadeLocal) ic.lookup("java:comp/env/NetworkEventFacade");
+            networkEventFacade = (NetworkEventDAOLocal) ic.lookup("java:comp/env/NetworkEventFacade");
 
         } catch (NamingException ex) {
 

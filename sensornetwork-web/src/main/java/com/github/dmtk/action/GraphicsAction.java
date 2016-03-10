@@ -1,6 +1,6 @@
 package com.github.dmtk.action;
 
-import com.github.dmtk.entity.SensorNodeFacadeLocal;
+import com.github.dmtk.dao.SensorNodeDAOLocal;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 import javax.servlet.http.HttpServletRequest;
@@ -8,11 +8,11 @@ import javax.servlet.http.HttpServletResponse;
 
 public class GraphicsAction implements Action {
 
-    private SensorNodeFacadeLocal sensorNodeFacade;
+    private SensorNodeDAOLocal sensorNodeFacade;
     public GraphicsAction() {
         try {
             InitialContext ic = new InitialContext();
-            sensorNodeFacade = (SensorNodeFacadeLocal) ic.lookup("java:comp/env/SensorNodeFacade");
+            sensorNodeFacade = (SensorNodeDAOLocal) ic.lookup("java:comp/env/SensorNodeFacade");
         } catch (NamingException ex) {
             
         }

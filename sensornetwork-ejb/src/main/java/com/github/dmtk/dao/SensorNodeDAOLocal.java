@@ -1,10 +1,11 @@
-package com.github.dmtk.entity;
+package com.github.dmtk.dao;
 
+import com.github.dmtk.entity.SensorNode;
 import java.util.List;
 import javax.ejb.Local;
 
 @Local
-public interface SensorNodeFacadeLocal {
+public interface SensorNodeDAOLocal {
 
     void create(SensorNode sensorNode);
 

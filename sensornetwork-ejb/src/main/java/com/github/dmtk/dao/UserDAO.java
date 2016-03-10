@@ -1,12 +1,13 @@
-package com.github.dmtk.entity;
+package com.github.dmtk.dao;
 
+import com.github.dmtk.entity.SiteUser;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
 @Stateless
-public class UserFacade extends AbstractFacade<SiteUser> implements UserFacadeLocal {
+public class UserDAO extends GenericDAO<SiteUser> implements UserDAOLocal {
     @PersistenceContext(unitName = "sensornetwork-ejb")
     private EntityManager em;
 
@@ -15,7 +16,7 @@ public class UserFacade extends AbstractFacade<SiteUser> implements UserFacadeLo
         return em;
     }
 
-    public UserFacade() {
+    public UserDAO() {
         super(SiteUser.class);
     }
     

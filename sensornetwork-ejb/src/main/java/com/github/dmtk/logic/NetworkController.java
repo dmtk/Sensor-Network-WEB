@@ -1,11 +1,10 @@
 package com.github.dmtk.logic;
 
-import com.github.dmtk.entity.NetworkEventFacadeLocal;
+import com.github.dmtk.dao.NetworkEventDAOLocal;
 import com.github.dmtk.entity.NetworkEvent;
-import com.github.dmtk.entity.SensorNodeFacadeLocal;
+import com.github.dmtk.dao.SensorNodeDAOLocal;
 import com.github.dmtk.entity.SensorNode;
-import com.github.dmtk.entity.SiteUser;
-import com.github.dmtk.entity.UserFacadeLocal;
+import com.github.dmtk.utils.EventLabelTrigger;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -15,23 +14,23 @@ import java.util.Map;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import org.eclipse.californium.core.CoapHandler;
 import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
 import org.eclipse.californium.core.CoapClient;
 
 @Singleton
+@Startup
 public class NetworkController {
 
     private static Map<Integer, SensorNode> activeNodePull = new HashMap<Integer, SensorNode>();
 
     @EJB
-    private SensorNodeFacadeLocal sensorNodeFacade;
+    private SensorNodeDAOLocal sensorNodeFacade;
     @EJB
-    private NetworkEventFacadeLocal networkEventFacade;
-    @EJB
-    private UserFacadeLocal userFacade;
-
+    private NetworkEventDAOLocal networkEventFacade;
+    
     public synchronized void handle(int id, double value) {
 
         if (!activeNodePull.containsKey(id)) {
@@ -64,13 +63,6 @@ public class NetworkController {
 
     @PostConstruct
     public void work() {
-
-        /*SiteUser s = new SiteUser();
-        s.setEmail("admin@wsnet.me");
-        s.setPassword("");
-        s.setRole(1);
-        s.setUsername("admin");
-        userFacade.create(s);*/
 
         readSensorNodes();//read nodes stored information from DB
 
@@ -155,7 +147,7 @@ public class NetworkController {
     public void readSensorNodes() {
         try {
             List<SensorNode> list = sensorNodeFacade.findAll();
-            System.out.println(list.size());
+            
             Iterator i = list.iterator();
             while (i.hasNext()) {
                 SensorNode temp = (SensorNode) i.next();

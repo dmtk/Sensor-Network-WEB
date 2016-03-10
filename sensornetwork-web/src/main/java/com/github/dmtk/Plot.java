@@ -1,7 +1,7 @@
 package com.github.dmtk;
 
 import com.github.dmtk.entity.NetworkEvent;
-import com.github.dmtk.entity.NetworkEventFacadeLocal;
+import com.github.dmtk.dao.NetworkEventDAOLocal;
 import com.google.gson.Gson;
 import java.io.IOException;
 import java.util.HashMap;
@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 public class Plot extends HttpServlet {
 
     @EJB
-    private NetworkEventFacadeLocal networkEventFacade;
+    private NetworkEventDAOLocal networkEventFacade;
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)

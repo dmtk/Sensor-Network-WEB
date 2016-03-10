@@ -5,3 +5,8 @@
 /sensornetwork-ejb/target/
 /sensornetwork-web/target/
 /sensornetwork-ear/target/
+/sensornetwork-ejb/nb-configuration.xml
+/sensornetwork-web/nb-configuration.xml
+/sensornetwork-ear/nb-configuration.xml
+/sensornetwork-web/lib/
+
