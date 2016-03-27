@@ -31,9 +31,11 @@ public class LoginAction implements Action {
     public String perform(HttpServletRequest request, HttpServletResponse response) {
 
         if (request.getParameter("login") != null) {
-            SiteUser user = userFacadeLocal.find(request.getParameter("login").trim().toLowerCase());
+            
+            String login = (String) request.getParameter("login").trim().toLowerCase();
+            SiteUser user = userFacadeLocal.find(login);
             if (user != null && request.getParameter("password").equals(user.getPassword())) {
-                String login = (String) request.getParameter("login");
+                
                 String password = (String) request.getParameter("password");
                 boolean authenticated = true;
                 HttpSession session = request.getSession();
@@ -42,8 +44,15 @@ public class LoginAction implements Action {
                 session.setAttribute("authenticated", authenticated);
                 return new OverviewAction().perform(request, response);
 
-            }else{
+            }else if("guest".equals(login)){
                 
+                boolean authenticated = true;
+                HttpSession session = request.getSession();
+                session.setAttribute("user", "guest");
+                session.setAttribute("authenticated", authenticated);
+                return new OverviewAction().perform(request, response);
+            }else{
+                request.setAttribute("error", "Wrong username/password");
             }
         }
 
