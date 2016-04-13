@@ -25,24 +25,13 @@
                     <c:when test="${activePage==\"charts\"}">
                         <%@include file="jspf/charts.jspf" %>
                     </c:when>
+                    <c:when test="${activePage==\"export\"}">
+                        <%@include file="jspf/export.jspf" %>
+                    </c:when>
                     <c:otherwise>
                         <%@include file="jspf/table.jspf" %> 
                     </c:otherwise>
                 </c:choose>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
             </div>
         </div>
 
