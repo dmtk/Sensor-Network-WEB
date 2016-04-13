@@ -1,0 +1,23 @@
+<div class="col-md-2 sidebar">
+    <ul class="nav nav-sidebar">
+
+        <c:forEach var="menuItem" items="${menu}">
+
+            <c:choose> 
+                <c:when test="${activePage==menuItem.key}">
+                    <li><a href="<c:out value="${menuItem.key}"/>" ><b> <c:out value="${menuItem.value}"/></b></a></li>
+                </c:when>
+                <c:otherwise>
+                    <li><a href="<c:out value="${menuItem.key}"/>" ><c:out value="${menuItem.value}"/></a></li> 
+                </c:otherwise>
+            </c:choose>
+
+
+
+
+        </c:forEach> 
+
+
+    </ul>
+
+</div>

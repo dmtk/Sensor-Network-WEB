@@ -1,12 +1,4 @@
-/dist/
-/build/
-/nbproject/private/
+/lib/
 /target/
-/sensornetwork-ejb/target/
-/sensornetwork-web/target/
-/sensornetwork-ear/target/
-/sensornetwork-ejb/nb-configuration.xml
-/sensornetwork-web/nb-configuration.xml
-/sensornetwork-ear/nb-configuration.xml
-/sensornetwork-web/lib/
-
+/src/main/webapp/WEB-INF/jdbc.properties
+/nb-configuration.xml
