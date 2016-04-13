@@ -4,13 +4,18 @@ import com.github.dmtk.entity.Measurement;
 import com.github.dmtk.logic.NetworkController;
 import com.github.dmtk.logic.MeasurementService;
 import com.github.dmtk.logic.SensorService;
+import com.github.dmtk.utils.ExcelExport;
 import com.google.gson.Gson;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -142,5 +147,40 @@ public class FrontController {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(new Gson().toJson(map));
+    }
+
+    @RequestMapping(value = "/export", method = RequestMethod.GET)
+    public String export(HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("activePage", "export");
+        request.setAttribute("menu", menu);
+        String action = request.getParameter("action");
+        if ("results-to-excel".equals(action)) {
+            try {
+                File exelFile = new ExcelExport().exportExperiments(measurementService.getList());
+                sendFile("experiments.xls", exelFile, response);
+            } catch (IOException ex) {
+
+            } catch (ServletException ex) {
+
+            }
+        }
+        return "main";
+
+    }
+
+    private void sendFile(String fileName, File excelFile, HttpServletResponse response) throws ServletException, IOException {
+        response.setContentType("application/vnd.ms-excel");
+        response.setHeader("Content-disposition", "attachment; filename=" + fileName);
+        OutputStream out = response.getOutputStream();
+        FileInputStream in = new FileInputStream(excelFile);
+        byte[] buffer = new byte[4096];
+        int length;
+        while ((length = in.read(buffer)) > 0) {
+            out.write(buffer, 0, length);
+        }
+        in.close();
+        out.flush();
+        excelFile.delete();
     }
 }
