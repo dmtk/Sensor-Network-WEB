@@ -36,11 +36,11 @@ public class FrontController {
     private final Properties menu = new Properties();
 
     FrontController() {
-        menu.setProperty("overview", "Overview");
+        menu.setProperty("options", "Options");
         menu.setProperty("charts", "Charts");
         menu.setProperty("datalog", "DataLog");
         menu.setProperty("export", "Export");
-        menu.setProperty("options", "Options");
+        menu.setProperty("overview", "Overview");
 
     }
 
@@ -48,7 +48,7 @@ public class FrontController {
     public String login(HttpServletRequest request, HttpServletResponse response) {
 
         request.setAttribute("activePage", "login");
-
+        request.setAttribute("error", request.getParameter("error"));
         return "login";
     }
 
@@ -73,8 +73,9 @@ public class FrontController {
     @RequestMapping(value = "/datalog", method = RequestMethod.GET)
     public String perform4(HttpServletRequest request, HttpServletResponse response) {
 
+        int sensorId=1;
         request.setAttribute("activePage", "datalog");
-        request.setAttribute("measurements", measurementService.getList());
+        request.setAttribute("measurements", measurementService.findBySensorId(sensorId));
         request.setAttribute("menu", menu);
         return "main";
     }
@@ -97,14 +98,14 @@ public class FrontController {
     @RequestMapping(value = "/plot", method = RequestMethod.POST)
     public void perform5(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        Integer nodeId = 1;//by default
+        Integer sensorId = 1;//by default
         try {
-            nodeId = Integer.parseInt(request.getParameter("nodeId"));
+            sensorId = Integer.parseInt(request.getParameter("nodeId"));
         } catch (NumberFormatException e) {
-            e.printStackTrace();
+            
         }
 
-        List listEvents = measurementService.getList();
+        List listEvents = measurementService.findBySensorId(sensorId);
 
         double[] data = new double[listEvents.size()];
         Iterator it = listEvents.iterator();

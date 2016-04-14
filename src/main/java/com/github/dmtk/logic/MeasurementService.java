@@ -22,6 +22,12 @@ public class MeasurementService {
     public List<Measurement> getList() {
         return measurementDAO.getList();
     }
+    
+    @Transactional
+    public List<Measurement> getList(int resultsCount) {
+        return measurementDAO.getList(resultsCount);
+    }
+            
 
     @Transactional
     public void remove(Long id) {
@@ -31,5 +37,10 @@ public class MeasurementService {
     @Transactional
     public Measurement retrive(Long id) {
         return measurementDAO.retrive(id);
+    }
+    
+    @Transactional
+    public List<Measurement> findBySensorId(int id) {
+        return measurementDAO.findBySensorId(id);
     }
 }
