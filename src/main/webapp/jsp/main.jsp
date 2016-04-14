@@ -21,7 +21,11 @@
             <%@include file="jspf/nav-sidebar.jspf" %>
 
             <div class="col-md-10 main">
-                <c:choose> 
+                <c:choose>
+                    <c:when test="${activePage==\"overview\"}">
+                        <%@include file="jspf/livecharts.jspf" %>
+                         <%@include file="jspf/table.jspf" %> 
+                    </c:when>
                     <c:when test="${activePage==\"charts\"}">
                         <%@include file="jspf/charts.jspf" %>
                     </c:when>

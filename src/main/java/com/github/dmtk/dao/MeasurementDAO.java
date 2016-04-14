@@ -43,4 +43,9 @@ public class MeasurementDAO {
         Query query=sessionFactory.getCurrentSession().getNamedQuery("findBySensorId").setInteger("sensorId",id);
         return query.list();
     }
+    
+    public Measurement getLastBySensorId(Integer id) {
+        Query query=sessionFactory.getCurrentSession().getNamedQuery("findBySensorIdOrderByDate").setInteger("sensorId",id);
+        return (Measurement) query.setMaxResults(1).uniqueResult();
+    }
 }

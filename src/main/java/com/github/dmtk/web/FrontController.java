@@ -143,12 +143,27 @@ public class FrontController {
         write(response, map);
 
     }
+    
+    @RequestMapping(value = "/livedata")
+    public void livedata(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        double[] arr = new double[2];
+        Measurement m= measurementService.findBySensorIdOrderByDate(1);
+        arr[0]=m.getDate().getTime();
+        arr[1]=m.getValue();
+        response.getWriter().write(new Gson().toJson(arr));
+
+    }
 
     private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(new Gson().toJson(map));
     }
+    
+    
 
     @RequestMapping(value = "/export", method = RequestMethod.GET)
     public String export(HttpServletRequest request, HttpServletResponse response) {
