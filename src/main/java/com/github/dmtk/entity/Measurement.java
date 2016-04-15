@@ -44,11 +44,11 @@ public class Measurement implements Serializable {
         this.id = id;
     }
 
-    public Integer getSource() {
+    public Integer getSensor() {
         return sensorId;
     }
 
-    public void setSource(Integer sourceId) {
+    public void setSensor(Integer sourceId) {
         this.sensorId = sourceId;
     }
 

@@ -36,12 +36,12 @@ public class NetworkController {
     public void handle(int id, double value) {
 
         if (!activeNodePull.containsKey(id)) {
-            Sensor sensorNode = new Sensor(id);
-
+            Sensor sensorNode = new Sensor();
+            sensorNode.setId(id);
             activeNodePull.put(id, sensorNode);
             sensorNodeService.save(sensorNode);
             Measurement n = new Measurement();
-            n.setSource(id);
+            n.setSensor(id);
             n.setDate(new Date());
             n.setValue(value);
             EventLabelTrigger.chooseLabel(n);
@@ -51,7 +51,7 @@ public class NetworkController {
             sensorNodeService.save(activeNodePull.get(id));
             Measurement n = new Measurement();
             n.setDate(new Date());
-            n.setSource(id);
+            n.setSensor(id);
             n.setValue(value);
             EventLabelTrigger.chooseLabel(n);
             networkEventService.save(n);

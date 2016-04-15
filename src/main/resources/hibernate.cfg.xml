@@ -3,7 +3,5 @@
 <hibernate-configuration>
   <session-factory>
     <property name="hibernate.hbm2ddl.auto">create</property>
-    <mapping class="com.github.dmtk.entity.Sensor"/>
-    <mapping class="com.github.dmtk.entity.Measurement"/>
   </session-factory>
 </hibernate-configuration>

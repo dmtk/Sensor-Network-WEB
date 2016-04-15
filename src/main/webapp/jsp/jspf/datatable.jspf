@@ -12,7 +12,7 @@
         <tbody>
         <c:forEach var="measurement" items="${measurements}">
             <tr class="<c:out value="${measurement.label}"/>">
-            <td class="col-md-1"><c:out value="${measurement.source}"/></td>
+            <td class="col-md-1"><c:out value="${measurement.sensor}"/></td>
             <td class="col-md-1"><c:out value="${measurement.value}"/></td>
             <td class="col-md-2"><fmt:formatDate type="both" value="${measurement.date}"/></td>
             <td class="col-md-1"><span class="label label-<c:out value="${measurement.label}"/>"><c:out value="${measurement.label}"/></span></td>
