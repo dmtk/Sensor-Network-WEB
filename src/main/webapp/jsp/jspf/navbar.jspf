@@ -1,23 +1,50 @@
-<nav class="navbar navbar-default navbar-static-top" role="navigation">
+<nav class="navbar navbar-default">
     <div class="container-fluid">
-        
-            <div class="navbar-header">
-                <a class="navbar-brand" href="overview"><img src="img/logo.png"></a>
-            </div>
-            <div id="navbar" class="navbar-collapse collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown">User<c:out value="${user}"></c:out> <b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li class="nav-header">Nav header</li>
-                            <li><a href="#">Separated link</a></li>
-                            <li><a href="#">One more separated link</a></li>
-                            <li class="divider"></li>
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
 
-                            <li><a href="logout">Logout</a></li>
-                        </ul>
-                    </li>
-                </ul>                    
-            </div>
-    </div>
+            <a class="navbar-brand" href="overview"><img src="img/logo.png"></a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav nav-tabs">
+
+                <c:forEach var="menuItem" items="${menu}">
+
+                    <c:choose> 
+                        <c:when test="${activePage==menuItem.key}">
+                            <li class="active" role="presentation"><a href="<c:out value="${menuItem.key}"/>" ><c:out value="${menuItem.value}"/></a></li>
+                        </c:when>
+                        <c:otherwise>
+                            <li role="presentation"><a href="<c:out value="${menuItem.key}"/>" ><c:out value="${menuItem.value}"/></a></li> 
+                        </c:otherwise>
+                    </c:choose>
+
+
+
+
+                </c:forEach> 
+
+
+            </ul>
+
+
+            <ul class="nav navbar-nav navbar-right">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown">User<c:out value="${user}"></c:out> <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li class="nav-header">Nav header</li>
+                        <li><a href="#">Separated link</a></li>
+                        <li><a href="#">One more separated link</a></li>
+                        <li class="divider"></li>
+
+                        <li><a href="logout">Logout</a></li>
+                    </ul>
+                </li>
+
+
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
 </nav>

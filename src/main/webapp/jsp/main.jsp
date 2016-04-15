@@ -18,13 +18,13 @@
         <div class="container-fluid">
 
 
-            <%@include file="jspf/nav-sidebar.jspf" %>
 
-            <div class="col-md-10 main">
+
+            <div class="main">
                 <c:choose>
                     <c:when test="${activePage==\"overview\"}">
                         <%@include file="jspf/livecharts.jspf" %>
-                         <%@include file="jspf/table.jspf" %> 
+                        <%@include file="jspf/table.jspf" %> 
                     </c:when>
                     <c:when test="${activePage==\"charts\"}">
                         <%@include file="jspf/charts.jspf" %>
