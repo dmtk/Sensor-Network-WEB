@@ -32,6 +32,9 @@
                     <c:when test="${activePage==\"export\"}">
                         <%@include file="jspf/export.jspf" %>
                     </c:when>
+                    <c:when test="${activePage==\"sensors\"}">
+                        <%@include file="jspf/sensors.jspf" %>
+                    </c:when>
                     <c:otherwise>
                         <%@include file="jspf/table.jspf" %> 
                     </c:otherwise>

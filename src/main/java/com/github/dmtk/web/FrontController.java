@@ -94,6 +94,15 @@ public class FrontController {
         request.setAttribute("sensors", sensorService.getList());
         return "main";
     }
+    
+    @RequestMapping(value = "/sensors", method = RequestMethod.GET)
+    public String sensors(HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("activePage", "sensors");
+        request.setAttribute("menu", menu);
+        request.setAttribute("sensors", sensorService.getList());
+        return "main";
+    }
 
     @RequestMapping(value = "/plot", method = RequestMethod.POST)
     public void perform5(HttpServletRequest request, HttpServletResponse response) throws IOException {
