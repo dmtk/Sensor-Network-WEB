@@ -14,12 +14,7 @@
     </head>
     <body>
         <%@include file="jspf/navbar.jspf" %>
-
         <div class="container-fluid">
-
-
-
-
             <div class="main">
                 <c:choose>
                     <c:when test="${activePage==\"overview\"}">
@@ -34,6 +29,9 @@
                     </c:when>
                     <c:when test="${activePage==\"sensors\"}">
                         <%@include file="jspf/sensors.jspf" %>
+                    </c:when>
+                    <c:when test="${activePage==\"options\"}">
+                        <%@include file="jspf/options.jspf" %>
                     </c:when>
                     <c:otherwise>
                         <%@include file="jspf/table.jspf" %> 

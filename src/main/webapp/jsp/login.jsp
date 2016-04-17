@@ -11,15 +11,16 @@
     </head>
     <body>
         <div class="container">
-            <form class="form-signin" role="form" action='/Sensor-Network-WEB/j_spring_security_check' method="post">
+            <form class="form-signin" role="form" action='/Sensor-Network-WEB/login' method="post">
                 <div class="form-group">
-                    <label for="j_username">Login</label>
-                    <input type="text" class="form-control" name="j_username">
+                    <label for="username">Login</label>
+                    <input type="text" class="form-control" name="username">
                 </div>
                 <div class="form-group">
-                    <label for="j_password">Password</label>
-                    <input type="password" class="form-control" name="j_password">
+                    <label for="password">Password</label>
+                    <input type="password" class="form-control" name="password">
                 </div>
+                <input type="hidden"  name="${_csrf.parameterName}"   value="${_csrf.token}"/>
                 <button type="submit" class="btn btn-success">Sign In</button>
             </form>
             <c:choose> 

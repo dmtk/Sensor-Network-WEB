@@ -1,6 +1,7 @@
 package com.github.dmtk.web;
 
 import com.github.dmtk.entity.Measurement;
+import com.github.dmtk.entity.Sensor;
 import com.github.dmtk.logic.NetworkController;
 import com.github.dmtk.logic.MeasurementService;
 import com.github.dmtk.logic.SensorService;
@@ -41,6 +42,7 @@ public class FrontController {
         menu.setProperty("datalog", "DataLog");
         menu.setProperty("export", "Export");
         menu.setProperty("overview", "Overview");
+        menu.setProperty("sensors", "Sensors");
 
     }
 
@@ -61,19 +63,10 @@ public class FrontController {
         return "main";
     }
 
-    @RequestMapping(value = "/options", method = RequestMethod.GET)
-    public String perform2(HttpServletRequest request, HttpServletResponse response) {
-
-        request.setAttribute("activePage", "options");
-        request.setAttribute("measurements", measurementService.getList());
-        request.setAttribute("menu", menu);
-        return "main";
-    }
-
     @RequestMapping(value = "/datalog", method = RequestMethod.GET)
     public String perform4(HttpServletRequest request, HttpServletResponse response) {
 
-        int sensorId=1;
+        int sensorId = 1;
         request.setAttribute("activePage", "datalog");
         request.setAttribute("measurements", measurementService.findBySensorId(sensorId));
         request.setAttribute("menu", menu);
@@ -94,7 +87,7 @@ public class FrontController {
         request.setAttribute("sensors", sensorService.getList());
         return "main";
     }
-    
+
     @RequestMapping(value = "/sensors", method = RequestMethod.GET)
     public String sensors(HttpServletRequest request, HttpServletResponse response) {
 
@@ -104,6 +97,37 @@ public class FrontController {
         return "main";
     }
 
+    @RequestMapping(value = "/options", method = RequestMethod.GET)
+    public String options(HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("activePage", "options");
+        request.setAttribute("menu", menu);
+        String action = request.getParameter("action");
+        if ("edit".equals(action)) {
+            String idStr = request.getParameter("sensorId");
+            if (idStr != null) {
+                Long sensorId = Long.parseLong(idStr);
+                request.setAttribute("sensor", sensorService.retrive(sensorId));
+            }
+        }
+
+        return "main";
+    }
+
+    @RequestMapping(value = "/save", method = RequestMethod.GET)
+    public String perform20(HttpServletRequest request, HttpServletResponse response) throws IOException {
+
+        Sensor sensor = new Sensor();
+        String idStr = request.getParameter("sensor_id");
+        Integer sensorId = Integer.parseInt(idStr);
+        sensor.setId(sensorId);
+        sensor.setMeasuredQuantity(request.getParameter("sensor_measuredQuantity"));
+        sensor.setName(request.getParameter("sensor_name"));
+        sensor.setCoapURI(request.getParameter("sensor_coapURI"));
+        sensorService.save(sensor);
+        return "redirect:overview";
+    }
+
     @RequestMapping(value = "/plot", method = RequestMethod.POST)
     public void perform5(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -111,7 +135,7 @@ public class FrontController {
         try {
             sensorId = Integer.parseInt(request.getParameter("nodeId"));
         } catch (NumberFormatException e) {
-            
+
         }
 
         List listEvents = measurementService.findBySensorId(sensorId);
@@ -152,16 +176,16 @@ public class FrontController {
         write(response, map);
 
     }
-    
+
     @RequestMapping(value = "/livedata")
     public void livedata(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         double[] arr = new double[2];
-        Measurement m= measurementService.findBySensorIdOrderByDate(1);
-        arr[0]=m.getDate().getTime();
-        arr[1]=m.getValue();
+        Measurement m = measurementService.findBySensorIdOrderByDate(1);
+        arr[0] = m.getDate().getTime();
+        arr[1] = m.getValue();
         response.getWriter().write(new Gson().toJson(arr));
 
     }
@@ -171,8 +195,6 @@ public class FrontController {
         response.setCharacterEncoding("UTF-8");
         response.getWriter().write(new Gson().toJson(map));
     }
-    
-    
 
     @RequestMapping(value = "/export", method = RequestMethod.GET)
     public String export(HttpServletRequest request, HttpServletResponse response) {
