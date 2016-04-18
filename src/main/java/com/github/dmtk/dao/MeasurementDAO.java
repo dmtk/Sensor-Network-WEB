@@ -13,8 +13,8 @@ public class MeasurementDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-    public void save(Measurement user) {
-        sessionFactory.getCurrentSession().saveOrUpdate(user);
+    public void save(Measurement measurement) {
+        sessionFactory.getCurrentSession().saveOrUpdate(measurement);
     }
 
     @SuppressWarnings("unchecked")
@@ -47,5 +47,10 @@ public class MeasurementDAO {
     public Measurement getLastBySensorId(Integer id) {
         Query query=sessionFactory.getCurrentSession().getNamedQuery("findBySensorIdOrderByDate").setInteger("sensorId",id);
         return (Measurement) query.setMaxResults(1).uniqueResult();
+    }
+    
+    public List<Measurement> getListBySensorIdOrderByDate(Integer id,  int resultsCount) {
+        Query query=sessionFactory.getCurrentSession().getNamedQuery("findBySensorIdOrderByDate").setInteger("sensorId",id);
+        return query.setMaxResults(resultsCount).list();
     }
 }

@@ -14,8 +14,8 @@ public class MeasurementService {
     private MeasurementDAO measurementDAO;
 
     @Transactional
-    public void save(Measurement event) {
-        measurementDAO.save(event);
+    public void save(Measurement measurement) {
+        measurementDAO.save(measurement);
     }
 
     @Transactional
