@@ -96,7 +96,7 @@ public class FrontController {
         request.setAttribute("sensors", sensorService.getList());
         return "main";
     }
-
+    
     @RequestMapping(value = "/options", method = RequestMethod.GET)
     public String options(HttpServletRequest request, HttpServletResponse response) {
 
@@ -115,7 +115,7 @@ public class FrontController {
     }
 
     @RequestMapping(value = "/save", method = RequestMethod.GET)
-    public String perform20(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public String save(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         Sensor sensor = new Sensor();
         String idStr = request.getParameter("sensor_id");
@@ -124,6 +124,7 @@ public class FrontController {
         sensor.setMeasuredQuantity(request.getParameter("sensor_measuredQuantity"));
         sensor.setName(request.getParameter("sensor_name"));
         sensor.setCoapURI(request.getParameter("sensor_coapURI"));
+        controller.addCoAPConnection(sensor);
         sensorService.save(sensor);
         return "redirect:overview";
     }
@@ -163,19 +164,7 @@ public class FrontController {
 
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST)
-    public void update(HttpServletRequest request, HttpServletResponse response) throws IOException {
-
-        Map<String, Object> map = new HashMap<String, Object>();
-        boolean isValid = false;
-        String temperature;
-        isValid = true;
-        temperature = controller.getData();
-        map.put("temperature", temperature);
-        map.put("isValid", isValid);
-        write(response, map);
-
-    }
+    
 
     @RequestMapping(value = "/livedata")
     public void livedata(HttpServletRequest request, HttpServletResponse response) throws IOException {
@@ -207,9 +196,9 @@ public class FrontController {
                 File exelFile = new ExcelExport().exportExperiments(measurementService.getList());
                 sendFile("experiments.xls", exelFile, response);
             } catch (IOException ex) {
-
+                    //TO DO Log4j
             } catch (ServletException ex) {
-
+                    //TO DO Log4j
             }
         }
         return "main";

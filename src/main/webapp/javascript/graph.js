@@ -4,9 +4,16 @@ $(document).ready(function () {
 
 function show()
 {
-
     var e = document.getElementById("sel1");
     var nodeId = e.options[e.selectedIndex].text;
+
+    var token = $("meta[name='_csrf']").attr("content");
+    var header = $("meta[name='_csrf_header']").attr("content");
+    $.ajaxSetup({
+        beforeSend: function (xhr) {
+            xhr.setRequestHeader(header, token);
+        }
+    });
     $.ajax({
         url: 'plot',
         type: 'post',

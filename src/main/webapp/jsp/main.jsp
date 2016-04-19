@@ -5,7 +5,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <meta charset="utf-8">
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
         <title><c:out value="${activePage}"/></title>
         <script src="javascript/jquery-1.11.2.js"></script>
         <script src="javascript/bootstrap.js"></script>
