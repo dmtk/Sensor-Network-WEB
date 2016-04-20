@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
 import org.eclipse.californium.core.CoapClient;
@@ -37,19 +39,25 @@ public class NetworkController {
         n.setValue(value);
         EventLabelTrigger.chooseLabel(n);
         measurementService.save(n);
-        
+
     }
 
     @PostConstruct
     public void startListeners() {
 
-        Sensor sensor1 = new Sensor();
-        sensor1.setId(1);
-        sensor1.setCoapURI("coap://wsnet.me:5683/SensorNode2/Temperature");
-        sensor1.setMeasuredQuantity("Temp");
-        sensor1.setName("DS18B20");
+        CoapClient client = new CoapClient("coap://wsnet.me:5683/.well-known/core");
+        CoapResponse response = client.get();
+        String text = response.getResponseText();
+        List<String> uri = new ArrayList<String>();
+        Pattern p = Pattern.compile("<([\\d\\w/]{1,})>");
+        Matcher m = p.matcher(text);
+        while (m.find()) {
+            Sensor sensor1 = new Sensor();
+            sensor1.setCoapURI(m.group(1));
+            sensor1.setMeasuredQuantity("Temp");
+            sensorService.save(sensor1);
+        }
 
-        sensorService.save(sensor1);
         List<Sensor> list = sensorService.getList();
         for (Sensor sensor : list) {
             addCoAPConnection(sensor);

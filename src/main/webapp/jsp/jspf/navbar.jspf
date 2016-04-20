@@ -34,7 +34,7 @@
             <ul class="nav navbar-nav navbar-right">
 
                 <sec:authorize access="hasRole('ANONYMOUS')">
-                    <li>Sign In</li>
+                    <li><a href="login">Sign In</a></li>
                 </sec:authorize>
                 <sec:authorize access="hasRole('ADMIN')">
                     <li class="dropdown">

@@ -2,6 +2,8 @@ package com.github.dmtk.entity;
 
 import java.io.Serializable;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -12,6 +14,7 @@ public class Sensor implements Serializable {
 
     
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     
     private String name = "Name";
@@ -34,13 +37,11 @@ public class Sensor implements Serializable {
         this.name = name;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
-        this.setId((Integer) id);
-    }
+    
 
     
     public String getMeasuredQuantity() {
