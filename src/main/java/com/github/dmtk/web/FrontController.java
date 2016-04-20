@@ -20,6 +20,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
+
+import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -46,19 +50,36 @@ public class FrontController {
 
     }
 
+    private void handleRequest(HttpServletRequest request) {
+        request.setAttribute("menu", menu);
+    }
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String login(HttpServletRequest request, HttpServletResponse response) {
 
         request.setAttribute("activePage", "login");
         request.setAttribute("error", request.getParameter("error"));
+        if (request.getParameter("logout") != null) {
+            request.setAttribute("logout", "You have been logged out successfully");
+        }
         return "login";
+    }
+
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth != null) {
+            new SecurityContextLogoutHandler().logout(request, response, auth);
+        }
+        return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
     }
 
     @RequestMapping(value = "/overview", method = RequestMethod.GET)
     public String perform(HttpServletRequest request, HttpServletResponse response) {
 
+        handleRequest(request);
         request.setAttribute("activePage", "overview");
-        request.setAttribute("menu", menu);
+
         request.setAttribute("measurements", measurementService.getList());
         return "main";
     }
@@ -66,24 +87,23 @@ public class FrontController {
     @RequestMapping(value = "/datalog", method = RequestMethod.GET)
     public String perform4(HttpServletRequest request, HttpServletResponse response) {
 
-        int sensorId = 1;
+        handleRequest(request);
         request.setAttribute("activePage", "datalog");
-        request.setAttribute("measurements", measurementService.findBySensorId(sensorId));
-        request.setAttribute("menu", menu);
+        request.setAttribute("measurements", measurementService.getList());
         return "main";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String perform1(HttpServletRequest request, HttpServletResponse response) {
+    public String perform34(HttpServletRequest request, HttpServletResponse response) {
 
         return "redirect:overview";
     }
 
     @RequestMapping(value = "/charts", method = RequestMethod.GET)
-    public String perform3(HttpServletRequest request, HttpServletResponse response) {
+    public String charts(HttpServletRequest request, HttpServletResponse response) {
 
         request.setAttribute("activePage", "charts");
-        request.setAttribute("menu", menu);
+        handleRequest(request);
         request.setAttribute("sensors", sensorService.getList());
         return "main";
     }
@@ -92,16 +112,16 @@ public class FrontController {
     public String sensors(HttpServletRequest request, HttpServletResponse response) {
 
         request.setAttribute("activePage", "sensors");
-        request.setAttribute("menu", menu);
+        handleRequest(request);
         request.setAttribute("sensors", sensorService.getList());
         return "main";
     }
-    
+
     @RequestMapping(value = "/options", method = RequestMethod.GET)
     public String options(HttpServletRequest request, HttpServletResponse response) {
 
         request.setAttribute("activePage", "options");
-        request.setAttribute("menu", menu);
+        handleRequest(request);
         String action = request.getParameter("action");
         if ("edit".equals(action)) {
             String idStr = request.getParameter("sensorId");
@@ -126,7 +146,7 @@ public class FrontController {
         sensor.setCoapURI(request.getParameter("sensor_coapURI"));
         controller.addCoAPConnection(sensor);
         sensorService.save(sensor);
-        return "redirect:overview";
+        return "redirect:sensors";
     }
 
     @RequestMapping(value = "/plot", method = RequestMethod.POST)
@@ -164,8 +184,6 @@ public class FrontController {
 
     }
 
-    
-
     @RequestMapping(value = "/livedata")
     public void livedata(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
@@ -189,16 +207,16 @@ public class FrontController {
     public String export(HttpServletRequest request, HttpServletResponse response) {
 
         request.setAttribute("activePage", "export");
-        request.setAttribute("menu", menu);
+        handleRequest(request);
         String action = request.getParameter("action");
         if ("results-to-excel".equals(action)) {
             try {
                 File exelFile = new ExcelExport().exportExperiments(measurementService.getList());
                 sendFile("experiments.xls", exelFile, response);
             } catch (IOException ex) {
-                    //TO DO Log4j
+                //TO DO Log4j
             } catch (ServletException ex) {
-                    //TO DO Log4j
+                //TO DO Log4j
             }
         }
         return "main";

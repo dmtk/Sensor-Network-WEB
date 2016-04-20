@@ -32,7 +32,11 @@
                                     <strong>Wrong login or password!</strong>
                                 </div> 
                             </c:when>
-
+                            <c:when test="${not empty logout}">
+                                <div class="alert alert-success">
+                                    <c:out value="${logout}"/>
+                                </div> 
+                            </c:when>
                         </c:choose>
                     </div>
                 </div></div></div>

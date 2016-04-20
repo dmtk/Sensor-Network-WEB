@@ -45,7 +45,7 @@ public class NetworkController {
 
         Sensor sensor1 = new Sensor();
         sensor1.setId(1);
-        sensor1.setCoapURI("coap://wsnet.me:5683/SensorNode4/Temperature");
+        sensor1.setCoapURI("coap://wsnet.me:5683/SensorNode2/Temperature");
         sensor1.setMeasuredQuantity("Temp");
         sensor1.setName("DS18B20");
 
