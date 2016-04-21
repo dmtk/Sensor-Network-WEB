@@ -18,10 +18,10 @@
             </tr>
         <c:forEach var="sensor" items="${sensors}">
             <tr>
-                <td class="col-md-1"><c:out value="${sensor.id}"/></td>
-            <td class="col-md-1"><c:out value="${sensor.name}"/></td>
-            <td class="col-md-1"><c:out value="${sensor.measuredQuantity}"/></td>
-            <td class="col-md-1"><c:out value="${sensor.coapURI}"/></td>
+                <td class="col-md-1"><a href="options?sensorId=${sensor.id}&action=edit"><c:out value="${sensor.id}"/></a></td>
+                <td class="col-md-1"><c:out value="${sensor.name}"/></td>
+                <td class="col-md-1"><c:out value="${sensor.measuredQuantity}"/></td>
+                <td class="col-md-1"><c:out value="${sensor.coapURI}"/></td>
             </tr>
         </c:forEach> 
         </tbody>
