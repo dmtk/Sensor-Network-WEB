@@ -21,8 +21,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Singleton
-
-public class NetworkController {
+public class NetworkController{
 
     private static Map<Integer, Sensor> activeSensorPull = new HashMap<Integer, Sensor>();
 
@@ -45,25 +44,30 @@ public class NetworkController {
     @PostConstruct
     public void startListeners() {
 
-        CoapClient client = new CoapClient("coap://wsnet.me:5683/.well-known/core");
-        CoapResponse response = client.get();
-        String text = response.getResponseText();
-        List<String> uri = new ArrayList<String>();
-        Pattern p = Pattern.compile("<([\\d\\w/]{1,})>");
-        Matcher m = p.matcher(text);
-        while (m.find()) {
-            Sensor sensor1 = new Sensor();
-            sensor1.setCoapURI(m.group(1));
-            sensor1.setMeasuredQuantity("Temp");
-            sensorService.save(sensor1);
+        try {
+            String url = "coap://192.168.1.1:5683";
+            CoapClient client = new CoapClient(url + "/.well-known/core");
+            CoapResponse response = client.get();
+            String text = response.getResponseText();
+            Pattern p = Pattern.compile("<([\\d\\w/]{1,})>");
+            Matcher m = p.matcher(text);
+            while (m.find()) {
+                Sensor sensor1 = new Sensor();
+                sensor1.setCoapURI(url + m.group(1));
+                sensor1.setMeasuredQuantity("Temp");
+                sensorService.save(sensor1);
+            }
+        } catch (Exception ex) {
+            
+        }
+            List<Sensor> list = sensorService.getList();
+            for (Sensor sensor : list) {
+                addCoAPConnection(sensor);
+            }
+
         }
 
-        List<Sensor> list = sensorService.getList();
-        for (Sensor sensor : list) {
-            addCoAPConnection(sensor);
-        }
-
-    }
+    
 
     public void addCoAPConnection(Sensor sensor) {
         CoapClient client = new CoapClient(sensor.getCoapURI());
@@ -91,13 +95,11 @@ public class NetworkController {
         };
 
         CoapHandlerImpl ch = new CoapHandlerImpl(sensor);
-
         CoapObserveRelation relation = client.observe(ch);
 
     }
 
     public static List getActiveNodePull() {
-
         return new ArrayList<Sensor>(activeSensorPull.values());
     }
 

@@ -11,8 +11,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Properties;
@@ -22,7 +20,6 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-
 import org.springframework.security.web.authentication.logout.SecurityContextLogoutHandler;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -149,48 +146,44 @@ public class FrontController {
         return "redirect:sensors";
     }
 
-    @RequestMapping(value = "/plot", method = RequestMethod.POST)
+    @RequestMapping(value = "/plot")
     public void perform5(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        Integer sensorId = 1;//by default
+        Integer sensorId = 2;//by default
         try {
             sensorId = Integer.parseInt(request.getParameter("nodeId"));
         } catch (NumberFormatException e) {
 
         }
 
-        List listEvents = measurementService.findBySensorId(sensorId);
+        List<Measurement> listEvents = measurementService.findBySensorId(sensorId);
 
-        double[] data = new double[listEvents.size()];
-        Iterator it = listEvents.iterator();
-        int j = 0;
-        while (it.hasNext()) {
-
-            data[j] = ((Measurement) it.next()).getValue();
-            j++;
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        double[][] arr = new double[listEvents.size()][2];
+        int i = 0;
+        for (Measurement m : listEvents) {
+            arr[i][0] = m.getDate().getTime();
+            arr[i][1] = m.getValue();
+            i++;
         }
-
-        Map< String, Object> map = new HashMap< String, Object>();
-        boolean isValid = false;
-        String[] temperature = new String[data.length];
-        for (int i = 0; i < data.length; i++) {
-            temperature[i] = String.valueOf(data[i]);
-        }
-        isValid = true;
-        map.put("temperature", data);
-        map.put("isValid", isValid);
-
-        write(response, map);
+        response.getWriter().write(new Gson().toJson(arr));
 
     }
 
     @RequestMapping(value = "/livedata")
     public void livedata(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
+        Integer sensorId = 2;//by default
+        try {
+            sensorId = Integer.parseInt(request.getParameter("nodeId"));
+        } catch (NumberFormatException e) {
+
+        }
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         double[] arr = new double[2];
-        Measurement m = measurementService.findBySensorIdOrderByDate(1);
+        Measurement m = measurementService.findBySensorIdOrderByDate(sensorId);
         arr[0] = m.getDate().getTime();
         arr[1] = m.getValue();
         response.getWriter().write(new Gson().toJson(arr));

@@ -1,5 +1,5 @@
 <div id="chart"></div>
-
+<div id="container1"></div>
 
 <script src="javascript/livechart.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>
