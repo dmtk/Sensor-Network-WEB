@@ -1,6 +1,12 @@
 var chart; // global
 
 $(document).ready(function() {
+    Highcharts.setOptions({
+        global: {
+            timezoneOffset: -3 * 60
+        }
+    });
+    
     chart = new Highcharts.Chart({
         chart: {
             renderTo: 'chart',

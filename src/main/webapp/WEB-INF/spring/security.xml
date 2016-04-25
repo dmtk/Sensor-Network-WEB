@@ -14,15 +14,31 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
         <intercept-url pattern="/**" access="hasAnyRole('ANONYMOUS','USER','ADMIN')" />
         <form-login login-page="/login" default-target-url="/"
                     authentication-failure-url="/login?error=true" />
-        
     </http>	
 
-    <authentication-manager>
+    <!--<authentication-manager>
         <authentication-provider>
             <user-service>
                 <user name="admin" password="a" authorities="ROLE_USER, ROLE_ADMIN" />
                 <user name="user" password="a" authorities="ROLE_USER" />
             </user-service>
         </authentication-provider>
+    </authentication-manager>-->
+    
+    <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11" />
+    </beans:bean>
+      
+    <beans:bean id='userDetailsService' class='com.github.dmtk.web.CustomUserDetailsService'>
+    </beans:bean>
+
+    <beans:bean id="daoAuthenticationProvider" class="org.springframework.security.authentication.dao.DaoAuthenticationProvider">
+        <beans:property name="userDetailsService" ref="userDetailsService"/>
+        <beans:property name="passwordEncoder" ref="encoder"/>
+    </beans:bean>
+    
+    <authentication-manager>
+        <authentication-provider ref="daoAuthenticationProvider" />
     </authentication-manager>
+    
 </beans:beans>   

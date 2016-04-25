@@ -21,7 +21,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 @Singleton
-public class NetworkController{
+public class NetworkController {
 
     private static Map<Integer, Sensor> activeSensorPull = new HashMap<Integer, Sensor>();
 
@@ -45,7 +45,7 @@ public class NetworkController{
     public void startListeners() {
 
         try {
-            String url = "coap://192.168.1.1:5683";
+            String url = "coap://wsnet.me:5683";
             CoapClient client = new CoapClient(url + "/.well-known/core");
             CoapResponse response = client.get();
             String text = response.getResponseText();
@@ -58,16 +58,14 @@ public class NetworkController{
                 sensorService.save(sensor1);
             }
         } catch (Exception ex) {
-            
+            //TO DO Log4j
         }
-            List<Sensor> list = sensorService.getList();
-            for (Sensor sensor : list) {
-                addCoAPConnection(sensor);
-            }
-
+        List<Sensor> list = sensorService.getList();
+        for (Sensor sensor : list) {
+            addCoAPConnection(sensor);
         }
 
-    
+    }
 
     public void addCoAPConnection(Sensor sensor) {
         CoapClient client = new CoapClient(sensor.getCoapURI());
@@ -82,8 +80,14 @@ public class NetworkController{
             @Override
             public void onLoad(CoapResponse response) {
 
-                double value = Double.parseDouble(response.getResponseText());
-                handle(sensor.getId(), value);
+                try {
+                    double value = Double.parseDouble(response.getResponseText());
+                    handle(sensor.getId(), value);
+                } catch (NumberFormatException ex) {
+                    
+                        //TO DO Log4j
+                        
+                }
 
             }
 

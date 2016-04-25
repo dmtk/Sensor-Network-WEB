@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    Highcharts.setOptions({
+        global: {
+            timezoneOffset: -3 * 60
+        }
+    });
     show();
     draw();
 });
