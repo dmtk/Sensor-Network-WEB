@@ -12,11 +12,12 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
-import java.util.Map;
 import java.util.Properties;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -35,6 +36,7 @@ public class FrontController {
     @Autowired
     private SensorService sensorService;
 
+    private final static Logger log = LogManager.getLogger(NetworkController.class);
     private final Properties menu = new Properties();
 
     FrontController() {
@@ -68,7 +70,7 @@ public class FrontController {
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
         }
-        return "redirect:/login?logout";//You can redirect wherever you want, but generally it's a good practice to show login screen again.
+        return "redirect:/login?logout";
     }
 
     @RequestMapping(value = "/overview", method = RequestMethod.GET)
@@ -152,8 +154,8 @@ public class FrontController {
         Integer sensorId = 2;//by default
         try {
             sensorId = Integer.parseInt(request.getParameter("nodeId"));
-        } catch (NumberFormatException e) {
-
+        } catch (NumberFormatException ex) {
+            log.error(ex);
         }
 
         List<Measurement> listEvents = measurementService.findBySensorId(sensorId);
@@ -177,8 +179,8 @@ public class FrontController {
         Integer sensorId = 2;//by default
         try {
             sensorId = Integer.parseInt(request.getParameter("nodeId"));
-        } catch (NumberFormatException e) {
-
+        } catch (NumberFormatException ex) {
+            log.error(ex);
         }
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -190,12 +192,7 @@ public class FrontController {
 
     }
 
-    private void write(HttpServletResponse response, Map<String, Object> map) throws IOException {
-        response.setContentType("application/json");
-        response.setCharacterEncoding("UTF-8");
-        response.getWriter().write(new Gson().toJson(map));
-    }
-
+    
     @RequestMapping(value = "/export", method = RequestMethod.GET)
     public String export(HttpServletRequest request, HttpServletResponse response) {
 
@@ -207,9 +204,9 @@ public class FrontController {
                 File exelFile = new ExcelExport().exportExperiments(measurementService.getList());
                 sendFile("experiments.xls", exelFile, response);
             } catch (IOException ex) {
-                //TO DO Log4j
+                log.error(ex);
             } catch (ServletException ex) {
-                //TO DO Log4j
+                log.error(ex);
             }
         }
         return "main";

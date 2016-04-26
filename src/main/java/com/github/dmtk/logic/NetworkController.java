@@ -12,12 +12,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
 import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+ 
 
 @Service
 @Singleton
@@ -25,6 +28,7 @@ public class NetworkController {
 
     private static Map<Integer, Sensor> activeSensorPull = new HashMap<Integer, Sensor>();
 
+    private final static Logger log = LogManager.getLogger(NetworkController.class);
     @Autowired
     private SensorService sensorService;
     @Autowired
@@ -58,7 +62,7 @@ public class NetworkController {
                 sensorService.save(sensor1);
             }
         } catch (Exception ex) {
-            //TO DO Log4j
+            log.error(ex);
         }
         List<Sensor> list = sensorService.getList();
         for (Sensor sensor : list) {
@@ -84,16 +88,14 @@ public class NetworkController {
                     double value = Double.parseDouble(response.getResponseText());
                     handle(sensor.getId(), value);
                 } catch (NumberFormatException ex) {
-                    
-                        //TO DO Log4j
-                        
+                    log.error(sensor.getCoapURI()+" error parsing value "+ex);
                 }
 
             }
 
             @Override
             public void onError() {
-                activeSensorPull.remove(sensor.getId());
+                log.error(sensor.getCoapURI()+" CoAP connection error");
             }
 
         };
