@@ -2,7 +2,7 @@ package com.github.dmtk.web;
 
 import com.github.dmtk.entity.Measurement;
 import com.github.dmtk.entity.Sensor;
-import com.github.dmtk.logic.NetworkController;
+import com.github.dmtk.logic.CoapEngine;
 import com.github.dmtk.logic.MeasurementService;
 import com.github.dmtk.logic.SensorService;
 import com.github.dmtk.utils.ExcelExport;
@@ -30,13 +30,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class FrontController {
 
     @Autowired
-    private NetworkController controller;
+    private CoapEngine controller;
     @Autowired
     private MeasurementService measurementService;
     @Autowired
     private SensorService sensorService;
 
-    private final static Logger log = LogManager.getLogger(NetworkController.class);
+    private final static Logger log = LogManager.getLogger(CoapEngine.class);
     private final Properties menu = new Properties();
 
     FrontController() {
@@ -46,6 +46,7 @@ public class FrontController {
         menu.setProperty("export", "Export");
         menu.setProperty("overview", "Overview");
         menu.setProperty("sensors", "Sensors");
+        menu.setProperty("about", "About");
 
     }
 
@@ -78,8 +79,16 @@ public class FrontController {
 
         handleRequest(request);
         request.setAttribute("activePage", "overview");
+        request.setAttribute("sensors", sensorService.getList());
+        request.setAttribute("measurements", measurementService.getListOrderByDate(1000));
+        return "main";
+    }
+    
+    @RequestMapping(value = "/about", method = RequestMethod.GET)
+    public String about(HttpServletRequest request, HttpServletResponse response) {
 
-        request.setAttribute("measurements", measurementService.getList());
+        handleRequest(request);
+        request.setAttribute("activePage", "about");
         return "main";
     }
 
@@ -88,7 +97,7 @@ public class FrontController {
 
         handleRequest(request);
         request.setAttribute("activePage", "datalog");
-        request.setAttribute("measurements", measurementService.getList());
+        request.setAttribute("measurements", measurementService.getListOrderByDate(1000));
         return "main";
     }
 
@@ -176,7 +185,7 @@ public class FrontController {
     @RequestMapping(value = "/livedata")
     public void livedata(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        Integer sensorId = 2;//by default
+        Integer sensorId = 12;//by default
         try {
             sensorId = Integer.parseInt(request.getParameter("nodeId"));
         } catch (NumberFormatException ex) {
@@ -192,7 +201,6 @@ public class FrontController {
 
     }
 
-    
     @RequestMapping(value = "/export", method = RequestMethod.GET)
     public String export(HttpServletRequest request, HttpServletResponse response) {
 

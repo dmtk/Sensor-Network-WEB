@@ -3,7 +3,6 @@ package com.github.dmtk.logic;
 import com.github.dmtk.entity.Measurement;
 import com.github.dmtk.entity.Sensor;
 import com.github.dmtk.utils.EventLabelTrigger;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -20,30 +19,18 @@ import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
- 
 
 @Service
 @Singleton
-public class NetworkController {
+public class CoapEngine {
 
-    private static Map<Integer, Sensor> activeSensorPull = new HashMap<Integer, Sensor>();
-
-    private final static Logger log = LogManager.getLogger(NetworkController.class);
+    private static final Map<Integer, CoapObserveRelation> activeCoAPConnection = new HashMap<Integer, CoapObserveRelation>();
+    private final static Logger log = LogManager.getLogger(CoapEngine.class);
+    
     @Autowired
     private SensorService sensorService;
     @Autowired
     private MeasurementService measurementService;
-
-    public void handle(int id, double value) {
-
-        Measurement n = new Measurement();
-        n.setDate(new Date());
-        n.setSensor(id);
-        n.setValue(value);
-        EventLabelTrigger.chooseLabel(n);
-        measurementService.save(n);
-
-    }
 
     @PostConstruct
     public void startListeners() {
@@ -56,9 +43,11 @@ public class NetworkController {
             Pattern p = Pattern.compile("<([\\d\\w/]{1,})>");
             Matcher m = p.matcher(text);
             while (m.find()) {
+                String uri=m.group(1);
                 Sensor sensor1 = new Sensor();
-                sensor1.setCoapURI(url + m.group(1));
-                sensor1.setMeasuredQuantity("Temp");
+                sensor1.setCoapURI(url + uri);
+                sensor1.setMeasuredQuantity(uri.substring(uri.lastIndexOf("/")));
+                sensor1.setName(uri);
                 sensorService.save(sensor1);
             }
         } catch (Exception ex) {
@@ -66,6 +55,7 @@ public class NetworkController {
         }
         List<Sensor> list = sensorService.getList();
         for (Sensor sensor : list) {
+
             addCoAPConnection(sensor);
         }
 
@@ -86,27 +76,38 @@ public class NetworkController {
 
                 try {
                     double value = Double.parseDouble(response.getResponseText());
-                    handle(sensor.getId(), value);
+                    save(value);
                 } catch (NumberFormatException ex) {
-                    log.error(sensor.getCoapURI()+" error parsing value "+ex);
+                    log.error(sensor.getCoapURI() + " not a number, remove from active coap observe connections pull " + ex);
+                    CoapObserveRelation relation = activeCoAPConnection.get(sensor.getId());
+                    relation.reactiveCancel();
+                    activeCoAPConnection.remove(sensor.getId());
                 }
 
             }
 
             @Override
             public void onError() {
-                log.error(sensor.getCoapURI()+" CoAP connection error");
+                log.error(sensor.getCoapURI() + " CoAP connection error");
             }
 
-        };
+            public void save(double value) {
+
+                Measurement m = new Measurement();
+                m.setDate(new Date());
+                m.setSensor(sensor);
+                m.setValue(value);
+                EventLabelTrigger.chooseLabel(m);
+                measurementService.save(m);
+
+            }
+
+        }
 
         CoapHandlerImpl ch = new CoapHandlerImpl(sensor);
         CoapObserveRelation relation = client.observe(ch);
+        activeCoAPConnection.put(sensor.getId(), relation);
 
-    }
-
-    public static List getActiveNodePull() {
-        return new ArrayList<Sensor>(activeSensorPull.values());
     }
 
 }

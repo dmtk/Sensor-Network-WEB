@@ -25,6 +25,11 @@ public class MeasurementDAO {
     public List<Measurement> getList(int resultsCount) {
         return sessionFactory.getCurrentSession().createQuery("from Measurement").setMaxResults(resultsCount).list();
     }
+    
+    public List<Measurement> getListOrderByDate(int resultsCount) {
+        Query query=sessionFactory.getCurrentSession().getNamedQuery("getOrderByDate");
+        return query.setMaxResults(resultsCount).list();
+    }
 
     public void remove(Long id) {
         Measurement country = (Measurement) sessionFactory.getCurrentSession().load(Measurement.class, id);

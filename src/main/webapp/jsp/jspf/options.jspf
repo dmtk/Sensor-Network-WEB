@@ -1,4 +1,9 @@
 <div class="table-responsive" align="left">
+    <script language="javascript" src="com.github.dmtk.web.Main/com.github.dmtk.web.Main.nocache.js"></script>
+
+    <p>This is an AJAX application that retrieves a random quote from
+        the Random Quote service every second. The data is retrieved
+        and the quote updated without refreshing the page!</p>
     <table class="table table-striped table-bordered">
         <thead>
             <tr>

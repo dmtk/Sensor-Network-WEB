@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -15,8 +16,9 @@ import javax.persistence.TemporalType;
 @Entity
 @Table (name = "measurements")
 @NamedQueries({
-    @NamedQuery(name = "findBySensorId", query = "SELECT m FROM Measurement m WHERE m.sensorId = :sensorId"),
-    @NamedQuery(name = "findBySensorIdOrderByDate", query = "SELECT m FROM Measurement m WHERE m.sensorId = :sensorId ORDER BY m.date DESC"),
+    @NamedQuery(name = "findBySensorId", query = "SELECT m FROM Measurement m WHERE m.sensor.id = :sensorId"),
+    @NamedQuery(name = "findBySensorIdOrderByDate", query = "SELECT m FROM Measurement m WHERE m.sensor.id = :sensorId ORDER BY m.date DESC"),
+    @NamedQuery(name = "getOrderByDate", query = "SELECT m FROM Measurement m ORDER BY m.date DESC"),
 })
 
 public class Measurement implements Serializable {
@@ -24,7 +26,10 @@ public class Measurement implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private Integer sensorId;
+    
+    @ManyToOne
+    private Sensor sensor;
+    
     private @Temporal(TemporalType.TIMESTAMP)
     java.util.Date date;
     private Double value;
@@ -42,12 +47,12 @@ public class Measurement implements Serializable {
         this.id = id;
     }
 
-    public Integer getSensor() {
-        return sensorId;
+    public Sensor getSensor() {
+        return sensor;
     }
 
-    public void setSensor(Integer sourceId) {
-        this.sensorId = sourceId;
+    public void setSensor(Sensor sensor) {
+        this.sensor = sensor;
     }
 
     public Date getDate() {

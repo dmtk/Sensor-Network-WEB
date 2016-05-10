@@ -48,4 +48,12 @@ public class MeasurementService {
     public Measurement findBySensorIdOrderByDate(Integer id) {
         return measurementDAO.getLastBySensorId(id);
     }
+    @Transactional
+    public List<Measurement> findBySensorIdOrderByDate(Integer id,  int resultsCount) {
+        return measurementDAO.getListBySensorIdOrderByDate(id, resultsCount);
+    }
+    @Transactional
+    public List<Measurement> getListOrderByDate(int resultsCount) {
+        return measurementDAO.getListOrderByDate(resultsCount);
+    }
 }

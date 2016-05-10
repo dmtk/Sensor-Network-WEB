@@ -1,4 +1,3 @@
-
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
@@ -12,6 +11,7 @@
         <script src="javascript/bootstrap.js"></script>
         <!-- Bootstrap core CSS -->
         <link href="css/bootstrap.css" rel="stylesheet">
+        
     </head>
     <body>
         <%@include file="jspf/navbar.jspf" %>
@@ -34,13 +34,16 @@
                     <c:when test="${activePage==\"options\"}">
                         <%@include file="jspf/options.jspf" %>
                     </c:when>
+                    <c:when test="${activePage==\"about\"}">
+                        <%@include file="jspf/about.jspf" %>                        
+                    </c:when>
                     <c:otherwise>
                         <%@include file="jspf/table.jspf" %> 
                     </c:otherwise>
 
 
                 </c:choose>
-               
+
             </div>
         </div>
 

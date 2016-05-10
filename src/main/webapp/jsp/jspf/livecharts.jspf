@@ -1,3 +1,11 @@
+<div class="form-group center-block" style="width: 10%;">
+    <label for="sel1">Select sensor:</label>
+    <select class="form-control" id="sel1" onChange="javascript:show();">
+        <c:forEach var="sensor" items="${sensors}">
+            <option><c:out value="${sensor.id}"/></option>                      
+        </c:forEach>
+    </select>
+</div>
 <div id="chart"></div>
 <div id="container1"></div>
 

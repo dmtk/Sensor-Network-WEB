@@ -16,7 +16,8 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
     <resources mapping="/css/**" location="/css/" />
     <resources mapping="/img/**" location="/img/" />
     <resources mapping="/javascript/**" location="/javascript/" />
-
+    <resources mapping="/fonts/**" location="/fonts/" />
+    <resources mapping="/com.github.dmtk.web.Main/**" location="/com.github.dmtk.web.Main/" />
     <!-- Resolves views selected for rendering by @Controllers to .jsp resources in the /jsp directory -->
     <beans:bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
         <beans:property name="prefix" value="/jsp/" />

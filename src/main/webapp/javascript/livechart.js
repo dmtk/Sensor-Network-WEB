@@ -1,12 +1,34 @@
 var chart; // global
+var nodeId;
+var e;
+var sensorName;
 
-$(document).ready(function() {
+$(document).ready(function () {
     Highcharts.setOptions({
         global: {
-            timezoneOffset: -3 * 60
+            timezoneOffset: -3 * 60//GMT+3 reinvent the wheel)
         }
     });
+    show();
+
+
+});
+
+function show() {
     
+    e = document.getElementById("sel1");
+    nodeId = e.options[e.selectedIndex].text;
+    
+    $.ajax({
+        url: 'sensor/'+nodeId+'/name',
+        type: 'get',
+        dataType: 'text',
+        success: function (data) {
+            sensorName=data;
+      
+        }
+    });
+
     chart = new Highcharts.Chart({
         chart: {
             renderTo: 'chart',
@@ -16,7 +38,7 @@ $(document).ready(function() {
             }
         },
         title: {
-            text: 'Live random data'
+            text: 'Live data'
         },
         xAxis: {
             type: 'datetime',
@@ -32,25 +54,26 @@ $(document).ready(function() {
             }
         },
         series: [{
-            name: 'Random data',
-            data: []
-        }]
-    });        
-});
+                name: sensorName,
+                data: []
+            }]
+    });
+}
 
 function requestData() {
     $.ajax({
         url: 'livedata',
-        success: function(point) {
+        data: "nodeId=" + nodeId,
+        success: function (point) {
             var series = chart.series[0],
-                shift = series.data.length > 20; // shift if the series is 
-                                                 // longer than 20
+                    shift = series.data.length > 30; // shift if the series is 
+            // longer than 20
 
             // add the point
             chart.series[0].addPoint(point, true, shift);
-            
+
             // call it again after one second
-            setTimeout(requestData, 1000);    
+            setTimeout(requestData, 4000);
         },
         cache: false
     });
