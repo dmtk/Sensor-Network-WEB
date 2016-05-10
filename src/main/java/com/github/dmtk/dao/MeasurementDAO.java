@@ -54,6 +54,15 @@ public class MeasurementDAO {
         return (Measurement) query.setMaxResults(1).uniqueResult();
     }
     
+    public Measurement getLastBySensorName(String name) {
+        Query query=sessionFactory.getCurrentSession().getNamedQuery("findBySensorNameOrderByDate").setString("sensorName",name);
+        return (Measurement) query.setMaxResults(1).uniqueResult();
+    }
+    public List<Measurement> getListBySensorNameOrderByDate(String name,  int resultsCount) {
+        Query query=sessionFactory.getCurrentSession().getNamedQuery("findBySensorNameOrderByDate").setString("sensorName",name);
+        return query.setMaxResults(resultsCount).list();
+    }
+    
     public List<Measurement> getListBySensorIdOrderByDate(Integer id,  int resultsCount) {
         Query query=sessionFactory.getCurrentSession().getNamedQuery("findBySensorIdOrderByDate").setInteger("sensorId",id);
         return query.setMaxResults(resultsCount).list();

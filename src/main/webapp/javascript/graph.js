@@ -1,4 +1,9 @@
+var defaultSelectedItem = 'SensorNode1/Pressure_BMP180';
+
 $(document).ready(function () {
+    var element = document.getElementById('sel1');
+    element.value = defaultSelectedItem;
+    
     Highcharts.setOptions({
         global: {
             timezoneOffset: -3 * 60
@@ -8,17 +13,17 @@ $(document).ready(function () {
     draw();
 });
 
-
+var sensorName;
 function show()
 {
     var e = document.getElementById("sel1");
-    var nodeId = e.options[e.selectedIndex].text;
+    var sensorName = e.options[e.selectedIndex].text;
 
     $.ajax({
         url: 'plot',
         type: 'get',
         dataType: 'json',
-        data: "nodeId=" + nodeId,
+        data: "sensorName=" + sensorName,
         success: function (data) {
 
             plot1(data);
@@ -27,7 +32,9 @@ function show()
     });
 }
 
+
 function plot1(data) {
+    
     $('#chart').highcharts({
         chart: {
             zoomType: 'x'
@@ -74,7 +81,7 @@ function plot1(data) {
             }
         },
         series: [{
-                name: 'Data',
+                name: sensorName,
                 data: data
             }]
     });

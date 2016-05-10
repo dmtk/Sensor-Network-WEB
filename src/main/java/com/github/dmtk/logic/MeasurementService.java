@@ -45,13 +45,25 @@ public class MeasurementService {
     }
     
     @Transactional
-    public Measurement findBySensorIdOrderByDate(Integer id) {
+    public Measurement getLastBySensorId(Integer id) {
         return measurementDAO.getLastBySensorId(id);
     }
+    
+    @Transactional
+    public Measurement getLastBySensorName(String  name) {
+        return measurementDAO.getLastBySensorName(name);
+    }
+    
     @Transactional
     public List<Measurement> findBySensorIdOrderByDate(Integer id,  int resultsCount) {
         return measurementDAO.getListBySensorIdOrderByDate(id, resultsCount);
     }
+    
+    @Transactional
+    public List<Measurement> getListBySensorNameOrderByDate(String name,  int resultsCount) {
+        return measurementDAO.getListBySensorNameOrderByDate(name, resultsCount);
+    }
+    
     @Transactional
     public List<Measurement> getListOrderByDate(int resultsCount) {
         return measurementDAO.getListOrderByDate(resultsCount);

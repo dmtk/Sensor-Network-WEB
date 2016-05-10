@@ -19,6 +19,7 @@ import javax.persistence.TemporalType;
     @NamedQuery(name = "findBySensorId", query = "SELECT m FROM Measurement m WHERE m.sensor.id = :sensorId"),
     @NamedQuery(name = "findBySensorIdOrderByDate", query = "SELECT m FROM Measurement m WHERE m.sensor.id = :sensorId ORDER BY m.date DESC"),
     @NamedQuery(name = "getOrderByDate", query = "SELECT m FROM Measurement m ORDER BY m.date DESC"),
+    @NamedQuery(name = "findBySensorNameOrderByDate", query = "SELECT m FROM Measurement m WHERE m.sensor.name = :sensorName ORDER BY m.date DESC"),
 })
 
 public class Measurement implements Serializable {

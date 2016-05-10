@@ -1,9 +1,13 @@
 var chart; // global
-var nodeId;
 var e;
 var sensorName;
+var defaultSelectedItem = 'SensorNode1/Pressure_BMP180';
 
 $(document).ready(function () {
+
+    var element = document.getElementById('sel1');
+    element.value = defaultSelectedItem;
+
     Highcharts.setOptions({
         global: {
             timezoneOffset: -3 * 60//GMT+3 reinvent the wheel)
@@ -15,19 +19,11 @@ $(document).ready(function () {
 });
 
 function show() {
-    
+
     e = document.getElementById("sel1");
-    nodeId = e.options[e.selectedIndex].text;
-    
-    $.ajax({
-        url: 'sensor/'+nodeId+'/name',
-        type: 'get',
-        dataType: 'text',
-        success: function (data) {
-            sensorName=data;
-      
-        }
-    });
+    sensorName = e.options[e.selectedIndex].text;
+
+
 
     chart = new Highcharts.Chart({
         chart: {
@@ -63,7 +59,7 @@ function show() {
 function requestData() {
     $.ajax({
         url: 'livedata',
-        data: "nodeId=" + nodeId,
+        data: "sensorName=" + sensorName,
         success: function (point) {
             var series = chart.series[0],
                     shift = series.data.length > 30; // shift if the series is 

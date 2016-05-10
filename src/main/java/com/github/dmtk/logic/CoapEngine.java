@@ -47,7 +47,7 @@ public class CoapEngine {
                 Sensor sensor1 = new Sensor();
                 sensor1.setCoapURI(url + uri);
                 sensor1.setMeasuredQuantity(uri.substring(uri.lastIndexOf("/")));
-                sensor1.setName(uri);
+                sensor1.setName(uri.substring(1));
                 sensorService.save(sensor1);
             }
         } catch (Exception ex) {
@@ -101,7 +101,6 @@ public class CoapEngine {
                 measurementService.save(m);
 
             }
-
         }
 
         CoapHandlerImpl ch = new CoapHandlerImpl(sensor);
@@ -109,5 +108,4 @@ public class CoapEngine {
         activeCoAPConnection.put(sensor.getId(), relation);
 
     }
-
 }

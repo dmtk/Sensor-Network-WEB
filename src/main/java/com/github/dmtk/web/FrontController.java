@@ -83,7 +83,7 @@ public class FrontController {
         request.setAttribute("measurements", measurementService.getListOrderByDate(1000));
         return "main";
     }
-    
+
     @RequestMapping(value = "/about", method = RequestMethod.GET)
     public String about(HttpServletRequest request, HttpServletResponse response) {
 
@@ -160,14 +160,16 @@ public class FrontController {
     @RequestMapping(value = "/plot")
     public void perform5(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        Integer sensorId = 2;//by default
+        String sensorName = "";//by default
+        int maxPoints=1000;
+        
         try {
-            sensorId = Integer.parseInt(request.getParameter("nodeId"));
+            sensorName =request.getParameter("sensorName");
         } catch (NumberFormatException ex) {
             log.error(ex);
         }
 
-        List<Measurement> listEvents = measurementService.findBySensorId(sensorId);
+        List<Measurement> listEvents = measurementService.getListBySensorNameOrderByDate(sensorName,maxPoints);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
@@ -185,16 +187,12 @@ public class FrontController {
     @RequestMapping(value = "/livedata")
     public void livedata(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
-        Integer sensorId = 12;//by default
-        try {
-            sensorId = Integer.parseInt(request.getParameter("nodeId"));
-        } catch (NumberFormatException ex) {
-            log.error(ex);
-        }
+        String sensorName = "";
+        sensorName = request.getParameter("sensorName");
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");
         double[] arr = new double[2];
-        Measurement m = measurementService.findBySensorIdOrderByDate(sensorId);
+        Measurement m = measurementService.getLastBySensorName(sensorName);
         arr[0] = m.getDate().getTime();
         arr[1] = m.getValue();
         response.getWriter().write(new Gson().toJson(arr));
