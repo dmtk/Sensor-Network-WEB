@@ -23,6 +23,6 @@ http://www.springframework.org/schema/context http://www.springframework.org/sch
         <beans:property name="prefix" value="/jsp/" />
         <beans:property name="suffix" value=".jsp" />
     </beans:bean>
-	
+    
     <context:component-scan base-package="com.github.dmtk.web" />
 </beans:beans>

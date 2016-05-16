@@ -20,7 +20,6 @@
                 <c:choose>
                     <c:when test="${activePage==\"overview\"}">
                         <%@include file="jspf/livecharts.jspf" %>
-                        <%@include file="jspf/table.jspf" %> 
                     </c:when>
                     <c:when test="${activePage==\"charts\"}">
                         <%@include file="jspf/charts.jspf" %>
@@ -38,7 +37,7 @@
                         <%@include file="jspf/about.jspf" %>                        
                     </c:when>
                     <c:otherwise>
-                        <%@include file="jspf/table.jspf" %> 
+                        <%@include file="jspf/measurements.jspf" %> 
                     </c:otherwise>
 
 
@@ -46,6 +45,6 @@
 
             </div>
         </div>
-
+<script language="javascript" src="com.github.dmtk.web.Main/com.github.dmtk.web.Main.nocache.js"></script>
     </body>
 </html>

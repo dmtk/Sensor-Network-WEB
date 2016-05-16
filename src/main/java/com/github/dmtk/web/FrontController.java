@@ -11,6 +11,7 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import javax.servlet.ServletException;
@@ -97,7 +98,29 @@ public class FrontController {
 
         handleRequest(request);
         request.setAttribute("activePage", "datalog");
-        request.setAttribute("measurements", measurementService.getListOrderByDate(1000));
+        String page = request.getParameter("pageNumber");
+        String pageSize = request.getParameter("pageSize");
+        int pageNumber = 1;
+        int pageSizeNumber = 10;
+        
+        if (page != null && pageSize != null) {
+            try {
+                pageNumber = Integer.parseInt(page);
+                pageSizeNumber = Integer.parseInt(pageSize);
+            } catch (NumberFormatException ex) {
+                log.error(ex);
+            }
+        }
+        
+        List<Integer> pages=new LinkedList();
+        int lastPageNumber=(int) (measurementService.getCount()/pageSizeNumber);
+        for(int i=1;i<lastPageNumber;i++){
+            pages.add(i);
+        }
+        request.setAttribute("pages", pages);
+        request.setAttribute("pageNumber", pageNumber);
+        request.setAttribute("pageSize", pageSizeNumber);
+        request.setAttribute("measurements", measurementService.getPage(pageNumber, pageSizeNumber));
         return "main";
     }
 
@@ -161,15 +184,15 @@ public class FrontController {
     public void perform5(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String sensorName = "";//by default
-        int maxPoints=1000;
-        
+        int maxPoints = 1000;
+
         try {
-            sensorName =request.getParameter("sensorName");
+            sensorName = request.getParameter("sensorName");
         } catch (NumberFormatException ex) {
             log.error(ex);
         }
 
-        List<Measurement> listEvents = measurementService.getListBySensorNameOrderByDate(sensorName,maxPoints);
+        List<Measurement> listEvents = measurementService.getListBySensorNameOrderByDate(sensorName, maxPoints);
 
         response.setContentType("application/json");
         response.setCharacterEncoding("UTF-8");

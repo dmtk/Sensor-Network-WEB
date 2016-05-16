@@ -1,32 +1,27 @@
 package com.github.dmtk.web.server;
 
+import com.github.dmtk.entity.Measurement;
+import com.github.dmtk.logic.MeasurementService;
 import com.google.gwt.user.server.rpc.RemoteServiceServlet;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import com.github.dmtk.web.client.sampleservice.GWTService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 
 /**
  *
  * @author nbuser
  */
+@Configurable
 public class GWTServiceImpl extends RemoteServiceServlet implements GWTService {
 
-    private Random randomizer = new Random();
+    @Autowired
+    private MeasurementService measurementService;
     private static final long serialVersionUID = -15020842597334403L;
-    private static List quotes = new ArrayList();
-
-    static {
-        quotes.add("No great thing is created suddenly - Epictetus");
-        quotes.add("Well done is better than well said - Ben Franklin");
-        quotes.add("No wind favors he who has no destined port - Montaigne");
-        quotes.add("Sometimes even to live is an act of courage - Seneca");
-        quotes.add("Know thyself - Socrates");
-    }
-
+    
     public String myMethod() {
-        return (String) quotes.get(randomizer.nextInt(5));
+        Measurement m= measurementService.getLast();
+        return m.getSensor().getName()+" "+m.getValue();
     }
 
 }

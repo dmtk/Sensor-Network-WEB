@@ -14,23 +14,23 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
-@Table (name = "measurements")
+@Table(name = "measurements")
 @NamedQueries({
     @NamedQuery(name = "findBySensorId", query = "SELECT m FROM Measurement m WHERE m.sensor.id = :sensorId"),
     @NamedQuery(name = "findBySensorIdOrderByDate", query = "SELECT m FROM Measurement m WHERE m.sensor.id = :sensorId ORDER BY m.date DESC"),
     @NamedQuery(name = "getOrderByDate", query = "SELECT m FROM Measurement m ORDER BY m.date DESC"),
     @NamedQuery(name = "findBySensorNameOrderByDate", query = "SELECT m FROM Measurement m WHERE m.sensor.name = :sensorName ORDER BY m.date DESC"),
-})
+    @NamedQuery(name = "getCount", query = "SELECT COUNT(m) FROM Measurement m"),})
 
 public class Measurement implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     @ManyToOne
     private Sensor sensor;
-    
+
     private @Temporal(TemporalType.TIMESTAMP)
     java.util.Date date;
     private Double value;
