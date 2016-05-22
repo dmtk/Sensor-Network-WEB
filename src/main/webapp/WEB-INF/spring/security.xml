@@ -23,15 +23,6 @@ http://www.springframework.org/schema/security/spring-security-4.0.xsd">
         <csrf disabled="true"/>
     </http>	
 
-    <!--<authentication-manager>
-        <authentication-provider>
-            <user-service>
-                <user name="admin" password="a" authorities="ROLE_USER, ROLE_ADMIN" />
-                <user name="user" password="a" authorities="ROLE_USER" />
-            </user-service>
-        </authentication-provider>
-    </authentication-manager>-->
-    
     <beans:bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
         <beans:constructor-arg name="strength" value="11" />
     </beans:bean>

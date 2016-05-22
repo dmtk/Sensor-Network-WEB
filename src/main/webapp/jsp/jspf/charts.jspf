@@ -1,8 +1,4 @@
-
-
-
-
-<div class="form-group center-block" style="width: 10%;">
+<div class="form-group center-block" style="width: 30%;">
     <label for="sel1">Select sensor:</label>
     <select class="form-control" id="sel1" onChange="javascript:show();">
         <c:forEach var="sensor" items="${sensors}">
@@ -13,7 +9,7 @@
 <div id="chart"></div>
 
 
-<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>
+<!--<div id="container1" style="min-width: 310px; height: 400px; margin: 0 auto"></div>-->
 
 <script src="javascript/graph.js"></script>
 <script src="http://code.highcharts.com/highcharts.js"></script>

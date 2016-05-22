@@ -3,7 +3,6 @@ package com.github.dmtk.dao;
 
 import com.github.dmtk.entity.Group;
 import java.util.List;
-import javax.persistence.NoResultException;
 import org.hibernate.Query;
 
 public class GroupDAO extends GenericDAO<Group> {
@@ -23,7 +22,7 @@ public class GroupDAO extends GenericDAO<Group> {
      *
      * @param name - name
      * @return Group
-     * @throws NoResultException - if group with this name doesn't exist
+     * 
      */
     public Group findByName(String name) {
         Query query = sessionFactory.getCurrentSession().getNamedQuery("findByName");
@@ -37,7 +36,7 @@ public class GroupDAO extends GenericDAO<Group> {
      * @param pageNumber
      * @param paginationStep
      * @return List of Group which name contains partOfName string
-     * @throws NoResultException - if group with this name doesn't exist
+     * 
      */
     public List<Group> searchByName(String partOfName, int pageNumber, int paginationStep) {
         Query query = sessionFactory.getCurrentSession().getNamedQuery("searchByName");

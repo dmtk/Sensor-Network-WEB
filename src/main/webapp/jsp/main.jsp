@@ -30,6 +30,9 @@
                     <c:when test="${activePage==\"sensors\"}">
                         <%@include file="jspf/sensors.jspf" %>
                     </c:when>
+                    <c:when test="${activePage==\"sensornodes\"}">
+                        <%@include file="jspf/sensorNodes.jspf" %>
+                    </c:when>
                     <c:when test="${activePage==\"options\"}">
                         <%@include file="jspf/options.jspf" %>
                     </c:when>
@@ -45,6 +48,6 @@
 
             </div>
         </div>
-<script language="javascript" src="com.github.dmtk.web.Main/com.github.dmtk.web.Main.nocache.js"></script>
+
     </body>
 </html>

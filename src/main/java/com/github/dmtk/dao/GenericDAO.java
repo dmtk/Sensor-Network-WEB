@@ -1,26 +1,29 @@
 package com.github.dmtk.dao;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
+import org.hibernate.Criteria;
 
-
-import org.hibernate.Query;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Order;
 import org.springframework.beans.factory.annotation.Autowired;
-
 
 public class GenericDAO<T> {
 
     protected Class<T> entityClass;
 
-    
     @Autowired
     protected SessionFactory sessionFactory;
+
+    public GenericDAO() {
+
+        entityClass = (Class<T>) ((ParameterizedType) getClass().getGenericSuperclass()).getActualTypeArguments()[0];
+    }
 
     public void save(T entity) {
         sessionFactory.getCurrentSession().saveOrUpdate(entity);
     }
 
-    @SuppressWarnings("unchecked")
     public List<T> getList() {
         return sessionFactory.getCurrentSession().createQuery("from " + entityClass.getSimpleName()).list();
     }
@@ -33,23 +36,17 @@ public class GenericDAO<T> {
     }
 
     public T retrive(Long id) {
-        org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("from "+ entityClass.getSimpleName()+" where id = :id");
+        org.hibernate.Query q = sessionFactory.getCurrentSession().createQuery("from " + entityClass.getSimpleName() + " where id = :id");
         q.setLong("id", id);
         return (T) q.uniqueResult();
     }
 
-      
+    public List<T> getPage(int pageNumber, int pageSize, String sortingParam) {
+        Criteria criteria = sessionFactory.getCurrentSession().createCriteria(entityClass);
+        criteria.addOrder(Order.desc(sortingParam));
+        criteria.setFirstResult((pageNumber - 1) * pageSize);
+        criteria.setMaxResults(pageSize);
+        return (List<T>) criteria.list();
 
-    public List<T> getPage(int pageNumber, int pageSize) {
-        if (pageNumber <= 0) {
-            throw new IllegalArgumentException("Argument 'pageNumber' <= 0");
-        }
-        if (pageSize <= 0) {
-            throw new IllegalArgumentException("Argument 'pageSize' <= 0");
-        }
-        Query query = sessionFactory.getCurrentSession().createQuery("From " + entityClass.getSimpleName());
-        query.setFirstResult((pageNumber - 1) * pageSize);
-        query.setMaxResults(pageSize);
-        return (List<T>) query.list();
     }
 }

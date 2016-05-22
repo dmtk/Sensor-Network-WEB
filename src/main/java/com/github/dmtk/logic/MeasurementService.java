@@ -74,8 +74,8 @@ public class MeasurementService {
     }
 
     @Transactional
-    public List<Measurement> getPage(int pageNumber, int pageSize) {
-        return measurementDAO.getPage(pageNumber, pageSize);
+    public List<Measurement> getPage(int pageNumber, int pageSize, String sortingParam) {
+        return measurementDAO.getPage(pageNumber, pageSize, sortingParam);
     }
 
     @Transactional

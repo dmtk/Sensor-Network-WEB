@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
@@ -17,9 +18,14 @@ public class Sensor implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Integer id;
     
-    private String name = "Name";
-    private String measuredQuantity = "Temperature";
+    private String name = "";
+    private String measuredQuantity = "";
     private String coapURI="";
+    
+    @ManyToOne
+    private SensorNode sensorNode;
+
+    
     
     public void setId(Integer id) {
         this.id = id;
@@ -60,7 +66,13 @@ public class Sensor implements Serializable {
         this.coapURI = coapURI;
     }
     
-    
+    public SensorNode getSensorNode() {
+        return sensorNode;
+    }
+
+    public void setSensorNode(SensorNode sensorNode) {
+        this.sensorNode = sensorNode;
+    }
 
     @Override
     public int hashCode() {

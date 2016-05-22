@@ -4,6 +4,7 @@ import com.github.dmtk.entity.Measurement;
 import com.github.dmtk.entity.Sensor;
 import com.github.dmtk.logic.CoapEngine;
 import com.github.dmtk.logic.MeasurementService;
+import com.github.dmtk.logic.SensorNodeService;
 import com.github.dmtk.logic.SensorService;
 import com.github.dmtk.utils.ExcelExport;
 import com.google.gson.Gson;
@@ -36,6 +37,8 @@ public class FrontController {
     private MeasurementService measurementService;
     @Autowired
     private SensorService sensorService;
+    @Autowired
+    SensorNodeService sensorNodeService;
 
     private final static Logger log = LogManager.getLogger(CoapEngine.class);
     private final Properties menu = new Properties();
@@ -47,6 +50,7 @@ public class FrontController {
         menu.setProperty("export", "Export");
         menu.setProperty("overview", "Overview");
         menu.setProperty("sensors", "Sensors");
+        menu.setProperty("sensornodes", "Sensor nodes");
         menu.setProperty("about", "About");
 
     }
@@ -67,7 +71,7 @@ public class FrontController {
     }
 
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logoutPage(HttpServletRequest request, HttpServletResponse response) {
+    public String logout(HttpServletRequest request, HttpServletResponse response) {
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         if (auth != null) {
             new SecurityContextLogoutHandler().logout(request, response, auth);
@@ -76,7 +80,7 @@ public class FrontController {
     }
 
     @RequestMapping(value = "/overview", method = RequestMethod.GET)
-    public String perform(HttpServletRequest request, HttpServletResponse response) {
+    public String overview(HttpServletRequest request, HttpServletResponse response) {
 
         handleRequest(request);
         request.setAttribute("activePage", "overview");
@@ -94,7 +98,7 @@ public class FrontController {
     }
 
     @RequestMapping(value = "/datalog", method = RequestMethod.GET)
-    public String perform4(HttpServletRequest request, HttpServletResponse response) {
+    public String datalog(HttpServletRequest request, HttpServletResponse response) {
 
         handleRequest(request);
         request.setAttribute("activePage", "datalog");
@@ -102,7 +106,7 @@ public class FrontController {
         String pageSize = request.getParameter("pageSize");
         int pageNumber = 1;
         int pageSizeNumber = 10;
-        
+
         if (page != null && pageSize != null) {
             try {
                 pageNumber = Integer.parseInt(page);
@@ -111,21 +115,35 @@ public class FrontController {
                 log.error(ex);
             }
         }
-        
-        List<Integer> pages=new LinkedList();
-        int lastPageNumber=(int) (measurementService.getCount()/pageSizeNumber);
-        for(int i=1;i<lastPageNumber;i++){
+        request.setAttribute("activePage", "datalog");
+
+        List<Integer> pages = new LinkedList();
+        int lastPageNumber = (int) (measurementService.getCount() / pageSizeNumber);
+
+        int step = 4;
+
+        int previous = pageNumber - step < 1 ? 1 : pageNumber - step;
+        int next = pageNumber + step > lastPageNumber ? lastPageNumber : pageNumber + step;
+
+        if (pageNumber == 1) {
+            pages.add(1);
+        }
+
+        for (int i = previous + 1; i < next; i++) {
             pages.add(i);
         }
+        
+        request.setAttribute("previous", previous);
+        request.setAttribute("next", next);
         request.setAttribute("pages", pages);
         request.setAttribute("pageNumber", pageNumber);
         request.setAttribute("pageSize", pageSizeNumber);
-        request.setAttribute("measurements", measurementService.getPage(pageNumber, pageSizeNumber));
+        request.setAttribute("measurements", measurementService.getPage(pageNumber, pageSizeNumber, "date"));//sort by date
         return "main";
     }
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    public String perform34(HttpServletRequest request, HttpServletResponse response) {
+    public String index(HttpServletRequest request, HttpServletResponse response) {
 
         return "redirect:overview";
     }
@@ -145,6 +163,15 @@ public class FrontController {
         request.setAttribute("activePage", "sensors");
         handleRequest(request);
         request.setAttribute("sensors", sensorService.getList());
+        return "main";
+    }
+
+    @RequestMapping(value = "/sensornodes", method = RequestMethod.GET)
+    public String sensorNodes(HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("activePage", "sensornodes");
+        handleRequest(request);
+        request.setAttribute("sensorNodes", sensorNodeService.getList());
         return "main";
     }
 
@@ -181,7 +208,7 @@ public class FrontController {
     }
 
     @RequestMapping(value = "/plot")
-    public void perform5(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void plot(HttpServletRequest request, HttpServletResponse response) throws IOException {
 
         String sensorName = "";//by default
         int maxPoints = 1000;
@@ -230,7 +257,8 @@ public class FrontController {
         String action = request.getParameter("action");
         if ("results-to-excel".equals(action)) {
             try {
-                File exelFile = new ExcelExport().exportExperiments(measurementService.getList());
+                Integer resultsCount = 1000;
+                File exelFile = new ExcelExport().exportExperiments(measurementService.getListOrderByDate(resultsCount));
                 sendFile("experiments.xls", exelFile, response);
             } catch (IOException ex) {
                 log.error(ex);

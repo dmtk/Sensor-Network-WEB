@@ -1,9 +1,9 @@
 package com.github.dmtk.dao;
 
-import com.github.dmtk.entity.Sensor;
+import com.github.dmtk.entity.SensorNode;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public class SensorDAO extends GenericDAO<Sensor>{
+public class SensorNodeDAO extends GenericDAO<SensorNode>{
 
 }

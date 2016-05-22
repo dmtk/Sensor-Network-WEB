@@ -2,6 +2,7 @@ package com.github.dmtk.logic;
 
 import com.github.dmtk.entity.Measurement;
 import com.github.dmtk.entity.Sensor;
+import com.github.dmtk.entity.SensorNode;
 import com.github.dmtk.utils.EventLabelTrigger;
 import java.util.Date;
 import java.util.HashMap;
@@ -22,6 +23,7 @@ import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.CannotCreateTransactionException;
 
 @Service
 @Singleton
@@ -35,18 +37,30 @@ public class CoapEngine {
     private SensorService sensorService;
     @Autowired
     private MeasurementService measurementService;
+    @Autowired
+    private SensorNodeService sensorNodeService;
 
     @PostConstruct
-    public void startListeners() {
+    public void startUp() {
 
         String url = "coap://wsnet.me:5683";
         parseCoapResources(url);
-        List<Sensor> list = sensorService.getList();
-        for (Sensor sensor : list) {
+        startCoapObserveRelations();
 
-            addCoAPConnection(sensor);
-        }
+    }
 
+    public void startCoapObserveRelations() {
+        Thread t = new Thread(new Runnable() {
+
+            public void run() {
+                List<Sensor> list = sensorService.getList();
+                for (Sensor sensor : list) {
+
+                    addCoAPConnection(sensor);
+                }
+            }
+        });
+        t.start();
     }
 
     public void parseCoapResources(String url) {
@@ -56,13 +70,24 @@ public class CoapEngine {
         String text = response.getResponseText();
         Pattern p = Pattern.compile("<([\\d\\w/]{1,})>");
         Matcher m = p.matcher(text);
+
         while (m.find()) {
             String uri = m.group(1);
             Sensor sensor1 = new Sensor();
             sensor1.setCoapURI(url + uri);
-            sensor1.setMeasuredQuantity(uri.substring(uri.lastIndexOf("/") + 1));
-            sensor1.setName(uri.substring(1));
-            sensorService.save(sensor1);
+
+            String quantityStr = uri.substring(uri.lastIndexOf("/") + 1);
+
+            if (quantityStr.startsWith("SensorNode")) {
+                SensorNode sn = new SensorNode();
+                sn.setName(quantityStr);
+                sensorNodeService.save(sn);
+            } else {
+                sensor1.setMeasuredQuantity(quantityStr);
+                sensor1.setName(uri.substring(1));
+                sensorService.save(sensor1);
+            }
+
         }
     }
 
@@ -80,8 +105,8 @@ public class CoapEngine {
             public void onLoad(CoapResponse response) {
 
                 String str = response.getResponseText();
-                
-                if (!str.isEmpty()&&NumberUtils.isNumber(str)) {
+
+                if (!str.isEmpty() && NumberUtils.isNumber(str)) {
                     double value = Double.parseDouble(str);
                     save(value);
                 } else {
@@ -108,7 +133,11 @@ public class CoapEngine {
                 m.setSensor(sensor);
                 m.setValue(value);
                 EventLabelTrigger.chooseLabel(m);
-                measurementService.save(m);
+                try {
+                    measurementService.save(m);
+                } catch (CannotCreateTransactionException ex) {
+                    log.error("Cannot create transaction " + sensor.getName());
+                }
 
             }
         }
