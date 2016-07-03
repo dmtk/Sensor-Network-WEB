@@ -1,4 +1,4 @@
-var defaultSelectedItem = 'SensorNode1/Pressure_BMP180';
+var defaultSelectedItem = 'SensorNode1/Temperature_DS18B20';
 
 $(document).ready(function () {
     var element = document.getElementById('sel1');

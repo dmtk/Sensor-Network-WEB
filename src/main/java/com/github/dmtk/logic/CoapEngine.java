@@ -4,14 +4,14 @@ import com.github.dmtk.entity.Measurement;
 import com.github.dmtk.entity.Sensor;
 import com.github.dmtk.entity.SensorNode;
 import com.github.dmtk.utils.EventLabelTrigger;
+import java.util.Collection;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
+import java.util.Set;
 import javax.annotation.PostConstruct;
 import javax.inject.Singleton;
 import org.apache.commons.lang.NumberUtils;
@@ -21,6 +21,7 @@ import org.eclipse.californium.core.CoapClient;
 import org.eclipse.californium.core.CoapHandler;
 import org.eclipse.californium.core.CoapObserveRelation;
 import org.eclipse.californium.core.CoapResponse;
+import org.eclipse.californium.core.WebLink;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.CannotCreateTransactionException;
@@ -29,8 +30,8 @@ import org.springframework.transaction.CannotCreateTransactionException;
 @Singleton
 public class CoapEngine {
 
-    private static final Map<Integer, CoapObserveRelation> activeCoAPConnection = new HashMap<Integer, CoapObserveRelation>();
-    private static final Map<Integer, CoapObserveRelation> unactiveCoAPConnection = new HashMap<Integer, CoapObserveRelation>();
+    private static final Map<Integer, Sensor> activeCoAPConnection = new HashMap<Integer, Sensor>();
+    private static final Map<Integer, Sensor> unactiveCoAPConnection = new HashMap<Integer, Sensor>();
     private final static Logger log = LogManager.getLogger(CoapEngine.class);
 
     @Autowired
@@ -44,8 +45,12 @@ public class CoapEngine {
     public void startUp() {
 
         String url = "coap://wsnet.me:5683";
-        parseCoapResources(url);
-        startCoapObserveRelations();
+        try {
+            parseCoapResources(url);
+            startCoapObserveRelations();
+        } catch (Exception e) {
+            log.error(e);
+        }
 
     }
 
@@ -53,12 +58,33 @@ public class CoapEngine {
         Thread t = new Thread(new Runnable() {
 
             public void run() {
-                List<Sensor> list = sensorService.getList();
-                for (Sensor sensor : list) {
+
+                try {
+                    List<Sensor> list = sensorService.getList();
+                    createConnections(list);
+
+                    while (true) {
+                        try {
+                            Thread.sleep(300000);
+                            if (!unactiveCoAPConnection.isEmpty()) {
+                                createConnections(unactiveCoAPConnection.values());
+                            }
+                        } catch (InterruptedException ex) {
+                            log.error(ex);
+                        }
+                    }
+                } catch (Exception ex) {
+                    log.error(ex.getStackTrace());
+                }
+            }
+
+            private void createConnections(Collection<Sensor> collection) {
+                for (Sensor sensor : collection) {
 
                     addCoAPConnection(sensor);
                 }
             }
+
         });
         t.start();
     }
@@ -66,13 +92,12 @@ public class CoapEngine {
     public void parseCoapResources(String url) {
 
         CoapClient client = new CoapClient(url + "/.well-known/core");
-        CoapResponse response = client.get();
-        String text = response.getResponseText();
-        Pattern p = Pattern.compile("<([\\d\\w/]{1,})>");
-        Matcher m = p.matcher(text);
 
-        while (m.find()) {
-            String uri = m.group(1);
+        Set<WebLink> links = client.discover();
+
+        for (WebLink w : links) {
+
+            String uri = w.getURI();//m.group(1);
             Sensor sensor1 = new Sensor();
             sensor1.setCoapURI(url + uri);
 
@@ -89,6 +114,7 @@ public class CoapEngine {
             }
 
         }
+
     }
 
     public void addCoAPConnection(Sensor sensor) {
@@ -105,24 +131,15 @@ public class CoapEngine {
             public void onLoad(CoapResponse response) {
 
                 String str = response.getResponseText();
+                double value = Double.parseDouble(str);
+                save(value);
 
-                if (!str.isEmpty() && NumberUtils.isNumber(str)) {
-                    double value = Double.parseDouble(str);
-                    save(value);
-                } else {
-                    log.error(sensor.getCoapURI() + " not a number, remove from active coap observe connections pull ");
-                    CoapObserveRelation relation = activeCoAPConnection.get(sensor.getId());
-                    relation.proactiveCancel();
-                    activeCoAPConnection.remove(sensor.getId());
-                }
             }
 
             @Override
             public void onError() {
                 log.error(sensor.getCoapURI() + " CoAP connection error");
-                CoapObserveRelation relation = activeCoAPConnection.get(sensor.getId());
-                relation.proactiveCancel();
-                unactiveCoAPConnection.put(sensor.getId(), relation);
+                unactiveCoAPConnection.put(sensor.getId(), sensor);
                 activeCoAPConnection.remove(sensor.getId());
             }
 
@@ -143,8 +160,15 @@ public class CoapEngine {
         }
 
         CoapHandlerImpl ch = new CoapHandlerImpl(sensor);
-        CoapObserveRelation relation = client.observe(ch);
-        activeCoAPConnection.put(sensor.getId(), relation);
+        CoapResponse resp = client.get();
+        String str = resp.getResponseText();
+        if (!str.isEmpty() && NumberUtils.isNumber(str)) {
+            CoapObserveRelation relation = client.observe(ch);
+            activeCoAPConnection.put(sensor.getId(), sensor);
+        } else {
+            log.error(sensor.getCoapURI() + " response does not contain a number");
+
+        }
 
     }
 

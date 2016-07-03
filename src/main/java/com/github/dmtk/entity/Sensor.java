@@ -1,12 +1,8 @@
 package com.github.dmtk.entity;
 
 import java.io.Serializable;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
+import java.util.List;
+import javax.persistence.*;
 
 
 @Entity
@@ -25,8 +21,10 @@ public class Sensor implements Serializable {
     @ManyToOne
     private SensorNode sensorNode;
 
-    
-    
+    //bi-directional many-to-one association to Measurement
+    @OneToMany(mappedBy="sensor")
+    private List<Measurement> mesurements;
+
     public void setId(Integer id) {
         this.id = id;
     }

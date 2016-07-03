@@ -2,6 +2,8 @@ package com.github.dmtk.web;
 
 import com.github.dmtk.entity.Measurement;
 import com.github.dmtk.entity.Sensor;
+import com.github.dmtk.jms.server.JmsMessageListener;
+import com.github.dmtk.jms.client.JmsMessageProducer;
 import com.github.dmtk.logic.CoapEngine;
 import com.github.dmtk.logic.MeasurementService;
 import com.github.dmtk.logic.SensorNodeService;
@@ -15,6 +17,8 @@ import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
+import java.util.logging.Level;
+import javax.jms.JMSException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -38,9 +42,11 @@ public class FrontController {
     @Autowired
     private SensorService sensorService;
     @Autowired
-    SensorNodeService sensorNodeService;
+    private SensorNodeService sensorNodeService;
+   
+    
 
-    private final static Logger log = LogManager.getLogger(CoapEngine.class);
+    private final static Logger log = LogManager.getLogger(FrontController.class);
     private final Properties menu = new Properties();
 
     FrontController() {
@@ -81,7 +87,7 @@ public class FrontController {
 
     @RequestMapping(value = "/overview", method = RequestMethod.GET)
     public String overview(HttpServletRequest request, HttpServletResponse response) {
-
+        
         handleRequest(request);
         request.setAttribute("activePage", "overview");
         request.setAttribute("sensors", sensorService.getList());
@@ -173,6 +179,13 @@ public class FrontController {
         handleRequest(request);
         request.setAttribute("sensorNodes", sensorNodeService.getList());
         return "main";
+    }
+    
+    @RequestMapping(value = "/start", method = RequestMethod.GET)
+    public String admin(HttpServletRequest request, HttpServletResponse response) {
+
+        controller.startUp();
+        return "redirect:datalog";
     }
 
     @RequestMapping(value = "/options", method = RequestMethod.GET)

@@ -16,7 +16,7 @@ import javax.persistence.Table;
 public class SensorNode implements Serializable {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name="";
