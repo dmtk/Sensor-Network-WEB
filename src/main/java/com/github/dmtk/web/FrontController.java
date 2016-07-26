@@ -2,8 +2,6 @@ package com.github.dmtk.web;
 
 import com.github.dmtk.entity.Measurement;
 import com.github.dmtk.entity.Sensor;
-import com.github.dmtk.jms.server.JmsMessageListener;
-import com.github.dmtk.jms.client.JmsMessageProducer;
 import com.github.dmtk.logic.CoapEngine;
 import com.github.dmtk.logic.MeasurementService;
 import com.github.dmtk.logic.SensorNodeService;
@@ -17,8 +15,6 @@ import java.io.OutputStream;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import java.util.logging.Level;
-import javax.jms.JMSException;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -36,7 +32,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class FrontController {
 
     @Autowired
-    private CoapEngine controller;
+    private CoapEngine engine;
     @Autowired
     private MeasurementService measurementService;
     @Autowired
@@ -171,6 +167,24 @@ public class FrontController {
         request.setAttribute("sensors", sensorService.getList());
         return "main";
     }
+    
+    @RequestMapping(value = "/unactive", method = RequestMethod.GET)
+    public String unactiveSensors(HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("activePage", "sensors");
+        handleRequest(request);
+        request.setAttribute("sensors", engine.getUnactiveConnection());
+        return "main";
+    }
+    
+    @RequestMapping(value = "/active", method = RequestMethod.GET)
+    public String activeSensors(HttpServletRequest request, HttpServletResponse response) {
+
+        request.setAttribute("activePage", "sensors");
+        handleRequest(request);
+        request.setAttribute("sensors", engine.getActiveConnection());
+        return "main";
+    }
 
     @RequestMapping(value = "/sensornodes", method = RequestMethod.GET)
     public String sensorNodes(HttpServletRequest request, HttpServletResponse response) {
@@ -184,7 +198,7 @@ public class FrontController {
     @RequestMapping(value = "/start", method = RequestMethod.GET)
     public String admin(HttpServletRequest request, HttpServletResponse response) {
 
-        controller.startUp();
+        engine.startUp();
         return "redirect:datalog";
     }
 
@@ -215,7 +229,7 @@ public class FrontController {
         sensor.setMeasuredQuantity(request.getParameter("sensor_measuredQuantity"));
         sensor.setName(request.getParameter("sensor_name"));
         sensor.setCoapURI(request.getParameter("sensor_coapURI"));
-        controller.addCoAPConnection(sensor);
+        engine.addCoAPConnection(sensor);
         sensorService.save(sensor);
         return "redirect:sensors";
     }
