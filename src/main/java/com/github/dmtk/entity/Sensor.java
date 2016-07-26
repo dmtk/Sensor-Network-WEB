@@ -74,27 +74,52 @@ public class Sensor implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 5;
+        hash = 29 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 29 * hash + (this.name != null ? this.name.hashCode() : 0);
+        hash = 29 * hash + (this.measuredQuantity != null ? this.measuredQuantity.hashCode() : 0);
+        hash = 29 * hash + (this.coapURI != null ? this.coapURI.hashCode() : 0);
+        hash = 29 * hash + (this.sensorNode != null ? this.sensorNode.hashCode() : 0);
+        hash = 29 * hash + (this.mesurements != null ? this.mesurements.hashCode() : 0);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-
-        if (!(object instanceof Sensor)) {
+    public boolean equals(Object obj) {
+        if (obj == null) {
             return false;
         }
-        Sensor other = (Sensor) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Sensor other = (Sensor) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if ((this.name == null) ? (other.name != null) : !this.name.equals(other.name)) {
+            return false;
+        }
+        if ((this.measuredQuantity == null) ? (other.measuredQuantity != null) : !this.measuredQuantity.equals(other.measuredQuantity)) {
+            return false;
+        }
+        if ((this.coapURI == null) ? (other.coapURI != null) : !this.coapURI.equals(other.coapURI)) {
+            return false;
+        }
+        if (this.sensorNode != other.sensorNode && (this.sensorNode == null || !this.sensorNode.equals(other.sensorNode))) {
+            return false;
+        }
+        if (this.mesurements != other.mesurements && (this.mesurements == null || !this.mesurements.equals(other.mesurements))) {
             return false;
         }
         return true;
     }
 
+    
     @Override
     public String toString() {
-        return "com.github.dmtk.NewEntity[ id=" + id + " ]";
+        return "Sensor{" + "id=" + id + ", name=" + name + ", measuredQuantity=" + measuredQuantity + ", coapURI=" + coapURI + ", sensorNode=" + sensorNode + ", mesurements=" + mesurements + '}';
     }
+
+    
 
 }

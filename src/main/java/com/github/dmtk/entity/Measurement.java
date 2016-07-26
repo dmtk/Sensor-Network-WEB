@@ -86,4 +86,50 @@ public class Measurement implements Serializable {
         this.value = value;
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 71 * hash + (this.id != null ? this.id.hashCode() : 0);
+        hash = 71 * hash + (this.sensor != null ? this.sensor.hashCode() : 0);
+        hash = 71 * hash + (this.date != null ? this.date.hashCode() : 0);
+        hash = 71 * hash + (this.value != null ? this.value.hashCode() : 0);
+        hash = 71 * hash + (this.label != null ? this.label.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Measurement other = (Measurement) obj;
+        if (this.id != other.id && (this.id == null || !this.id.equals(other.id))) {
+            return false;
+        }
+        if (this.sensor != other.sensor && (this.sensor == null || !this.sensor.equals(other.sensor))) {
+            return false;
+        }
+        if (this.date != other.date && (this.date == null || !this.date.equals(other.date))) {
+            return false;
+        }
+        if (this.value != other.value && (this.value == null || !this.value.equals(other.value))) {
+            return false;
+        }
+        if ((this.label == null) ? (other.label != null) : !this.label.equals(other.label)) {
+            return false;
+        }
+        return true;
+    }
+
+    
+    @Override
+    public String toString() {
+        return "Measurement{" + "id=" + id + ", sensor=" + sensor + ", date=" + date + ", value=" + value + ", label=" + label + '}';
+    }
+    
+    
+
 }
